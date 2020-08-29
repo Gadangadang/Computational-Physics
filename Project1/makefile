@@ -1,7 +1,7 @@
 all: compile execute
 
 compile:
-	c++ -O3 -o program.x program.cpp  -larmadillo -llapack -lblas
+	c++ -O3 -o main.x main.cpp  -larmadillo -llapack -lblas
 
 execute:
-	./main.exe 1 2 -3
+	./main.x 
