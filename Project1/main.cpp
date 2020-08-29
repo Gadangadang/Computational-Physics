@@ -13,6 +13,7 @@ using namespace std;
 using namespace arma;
 ofstream ofile;
 inline double f(double x){return 100*exp(-10*x);}
+inline double exactfunc(double x){return 1-(1-exp(-10))*x-exp(-10*x);}
 
 int main(int argc, char const *argv[]) {
   /* code */
@@ -35,6 +36,7 @@ int main(int argc, char const *argv[]) {
 
   for (int i = 0; i<n; i++) e(i) =1;
   for (int i =0; i<n; i++) d(i) = -2;
+
   for (int i =0; i<n; i++){
     g(i) = h*h*f( (i) * h);
     x(i) = i*h;
@@ -54,7 +56,6 @@ int main(int argc, char const *argv[]) {
     dtilde(i) = -(i+1)/i;
     gtilde(i) = g(i) - gtilde(i-1)/(dtilde(i-1));
   }
-
   //Backward Part
 
   v(n-1) = gtilde(n-1)/dtilde(n-1);
@@ -65,6 +66,7 @@ int main(int argc, char const *argv[]) {
     ofile << setprecision(2) << v(i) << " " <<
     i << endl;
   }
+
 
 
 
