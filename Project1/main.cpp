@@ -44,7 +44,7 @@ int main(int argc, char const *argv[]) {
     dtilde(i) = -(i+1)/i;
     gtilde(i) = g(i) - gtilde(i-1)/(dtilde(i-1));
   }
-
+  delete [] g;
   //Backward Part
 
   v(n-1) = gtilde(n-1)/dtilde(n-1);
