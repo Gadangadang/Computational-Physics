@@ -4,12 +4,13 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
+using namespace std;
 
-
-int int main(int argc, char const *argv[]) {
+int main(int argc, char const *argv[]) {
   /* code */
   // Define matrix size
-  int n = atof(argv[1])
+  int n = atof(argv[1]);
+  cout << n << endl;
 
 
 
