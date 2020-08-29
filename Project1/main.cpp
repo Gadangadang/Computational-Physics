@@ -14,7 +14,7 @@ int main(int argc, char const *argv[]) {
   cout << n << endl;
 
   // Solve equation Av = b,
-  double v[n];
+  
 
 
 
