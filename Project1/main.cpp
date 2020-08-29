@@ -21,12 +21,12 @@ int main(int argc, char const *argv[]) {
   cout << "Dimension of vectors:" << n << endl;
 
   // Define vectors to solve equation Av = b
-  vec new v(n);
-  vec new g(n);
-  vec new gtilde(n);
-  vec new d(n);
-  vec new dtilde(n);
-  vec new e(n);
+  new vec v(n);
+  new vec g(n);
+  new vec gtilde(n);
+  new vec d(n);
+  new vec dtilde(n);
+  new vec e(n);
 
   for (int i = 0; i<n; i++) e(i) =1;
   for (int i =0; i<n; i++) d(i) = -2;
