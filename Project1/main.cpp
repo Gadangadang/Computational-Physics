@@ -21,12 +21,12 @@ int main(int argc, char const *argv[]) {
   cout << "Dimension of vectors:" << n << endl;
 
   // Define vectors to solve equation Av = b
-  new vec v(n);
-  new vec g(n);
-  new vec gtilde(n);
-  new vec d(n);
-  new vec dtilde(n);
-  new vec e(n);
+  vec v(n);
+  vec g(n);
+  vec gtilde(n);
+  vec d(n);
+  vec dtilde(n);
+  vec e(n);
 
   for (int i = 0; i<n; i++) e(i) =1;
   for (int i =0; i<n; i++) d(i) = -2;
@@ -44,7 +44,6 @@ int main(int argc, char const *argv[]) {
     dtilde(i) = -(i+1)/i;
     gtilde(i) = g(i) - gtilde(i-1)/(dtilde(i-1));
   }
-  delete [] g;
   //Backward Part
 
   v(n-1) = gtilde(n-1)/dtilde(n-1);
