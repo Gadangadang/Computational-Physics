@@ -14,6 +14,9 @@ int main(int argc, char const *argv[]) {
 
   // Define matrix size
   int n = atof(argv[1]);
+  double h = 1./(n+1);
+  cout << "Time step :" << h << endl;
+  cout << "Dimension of vectors:" << n << endl;
 
   // Define vectors to solve equation Av = b
   vec v(n);
