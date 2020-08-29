@@ -38,13 +38,21 @@ int main(int argc, char const *argv[]) {
 
   for (int i = 1; i<n; i++)
   {
-    g(i) = h*h*f(i*h);
-    dtilde(i) = d(i) - 1./dtilde(i-1);
+    //i+2 to make sure we get x in [0,1]
+
+    g(i) = h*h*f( (i+2) * h);
+    dtilde(i) = -(i+1)/i;
     gtilde(i) = g(i) - gtilde(i-1)/(dtilde(i-1));
   }
 
   //Backward Part
-  
+
+  v(n-1) = gtilde(n-1)/dtilde(n-1);
+
+  for (int i = n-2; i>0; i--)
+  {
+    v(i) = (gtilde(i) - v(i+1))/dtilde(i);
+  }
 
 
 
