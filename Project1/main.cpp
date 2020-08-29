@@ -15,7 +15,7 @@ int main(int argc, char const *argv[]) {
 
   // Solve equation Av = b,
   double v[n];
-
+  double g[n];
 
 
 
