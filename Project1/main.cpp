@@ -14,7 +14,6 @@ int main(int argc, char const *argv[]) {
 
   // Define matrix size
   int n = atof(argv[1]);
-  cout << n << endl;
 
   // Define vectors to solve equation Av = b
   vec v(n);
@@ -23,6 +22,7 @@ int main(int argc, char const *argv[]) {
   vec d(n);
   vec dtilde(n);
   vec e(n);
+
 
   cout << v << endl;
 
