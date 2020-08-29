@@ -11,7 +11,7 @@ int main(int argc, char const *argv[]) {
   // Define matrix size
   int n = atof(argv[1]);
   cout << n << endl;
-
+  double a = 2;
 
 
   return 0;
