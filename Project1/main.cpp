@@ -12,6 +12,10 @@ int main(int argc, char const *argv[]) {
   int n = atof(argv[1]);
   cout << n << endl;
 
+  // Solve equation Av = b,
+  double v[n];
+
+
 
 
   return 0;
