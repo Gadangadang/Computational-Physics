@@ -15,7 +15,7 @@ for line in data:
 
 y_value = np.asarray(y_value)
 
-plt.plot(x_value,y_value/(-10), label="Numerical solve")
+plt.plot(x_value,y_value, label="Numerical solve")
 plt.plot(x_value, y_exact, label="Exact solution" )
 plt.legend()
 plt.show()
