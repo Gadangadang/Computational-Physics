@@ -15,16 +15,16 @@ using namespace arma;
 ofstream ofile;
 
 inline double f(double x){return 100*exp(-10*x);}
-inline double exactfunc(double x){return 1-(1-exp(-10))*x-exp(-10*x);}
+inline double exactfunc(double x){return 1-(1-exp(-10))*x-exp(-10*x);}//Function for excact solution
 
 int main(int argc, char const *argv[]) {
   /* code */
   string outfilename;
   outfilename = "values.txt";
-  ofile.open(outfilename);
+  ofile.open(outfilename);//Creats text-file for python, plot-code
   // Define matrix size
-  int n = atof(argv[1]);
-  double h = 1./(n);
+  int n = atof(argv[1]); //Dimensions of vectors
+  double h = 1./(n); //Timestep
   cout << "Time step :" << h << endl;
   cout << "Dimension of vectors:" << n << endl;
 
@@ -39,12 +39,12 @@ int main(int argc, char const *argv[]) {
   vec sol(n+1);
 
 
-  for (int i = 0; i<n; i++) e(i) =1;
+  for (int i = 0; i<n; i++) e(i) =1; //Setting values for e and d
   for (int i =0; i<n; i++) d(i) = -2;
 
   for (int i =0; i<n; i++){
-    g(i) = -h*h*f( (i) * h);
-    x(i) = i*h;
+    g(i) = -h*h*f( (i) * h);//Creating values for g with f(x)
+    x(i) = i*h; //x-values for plotting
   }
 
 
@@ -78,7 +78,7 @@ int main(int argc, char const *argv[]) {
 
   }
 
-  for (int i = 0; i<n; i++){
+  for (int i = 0; i<n; i++){//Writing calculated values for plot-code
     ofile << setprecision(15) << v(i) << " " << x(i) << " " << sol(i) << endl;
   }
 

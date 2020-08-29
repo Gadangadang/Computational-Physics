@@ -17,5 +17,7 @@ y_value = np.asarray(y_value)
 
 plt.plot(x_value,y_value, label="Numerical solve")
 plt.plot(x_value, y_exact, label="Exact solution" )
+plt.xlabel('x=(0,1)')
+plt.ylabel('u(x)')
 plt.legend()
 plt.show()
