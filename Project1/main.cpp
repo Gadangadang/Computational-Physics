@@ -30,6 +30,7 @@ int main(int argc, char const *argv[]) {
   vec dtilde(n);
   vec e(n);
 
+
   for (int i = 0; i<n; i++) e(i) =1;
   for (int i =0; i<n; i++) d(i) = -2;
 
