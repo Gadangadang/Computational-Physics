@@ -26,13 +26,13 @@ int main(int argc, char const *argv[]) {
   cout << "Dimension of vectors:" << n << endl;
 
   // Define vectors to solve equation Av = b
-  vec v(n);
-  vec x(n);
-  vec g(n);
-  vec gtilde(n);
-  vec d(n);
-  vec dtilde(n);
-  vec e(n);
+  vec v(n+1);
+  vec x(n+1);
+  vec g(n+1);
+  vec gtilde(n+1);
+  vec d(n+1);
+  vec dtilde(n+1);
+  vec e(n+1);
 
 
   for (int i = 0; i<n; i++) e(i) =1;
@@ -61,14 +61,21 @@ int main(int argc, char const *argv[]) {
 
   v(n-1) = gtilde(n-1)/dtilde(n-1);
 
+  //exact solution
+  vec sol(n);
+  for (int i= 0; i <n; i++){
+    sol(i) = exactfunc(i*h);
+  }
+
   for (int i = n-2; i>0; i--)
   {
     v(i) = (gtilde(i) - v(i+1))/dtilde(i);
-    ofile << setprecision(2) << v(i) << " " <<
-    i << endl;
+
   }
 
-
+  for (int i = 0; i<n; i++){
+    ofile << setprecision(15) << v(i) << " " << x(i) << " "<< sol(i) << endl;
+  }
 
 
 
