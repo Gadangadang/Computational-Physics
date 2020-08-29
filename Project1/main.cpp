@@ -4,17 +4,21 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
+#include <fstream>
+#include <iomanip>
+#include <string>
 #include "armadillo"
 
 using namespace std;
 using namespace arma;
-
+ofstream ofile;
 inline double f(double x){return 100*exp(-10*x);}
 inline double exactfunc(double x){return 1-(1-exp(-10))*x-exp(-10*x);}
 
 int main(int argc, char const *argv[]) {
   /* code */
-
+  string outfilename;
+  outfilename = "values.txt";
   // Define matrix size
   int n = atof(argv[1]);
   double h = 1./(n);
@@ -44,7 +48,7 @@ int main(int argc, char const *argv[]) {
   gtilde(0) = g(0);
 
   //Forward Part
-
+  ofile.open(outfilename);
   for (int i = 1; i<n; i++)
   {
     //i+2 to make sure we get x in [0,1]
@@ -60,6 +64,8 @@ int main(int argc, char const *argv[]) {
   for (int i = n-2; i>0; i--)
   {
     v(i) = (gtilde(i) - v(i+1))/dtilde(i);
+    ofile << setprecision(2) << v(i) << " " <<
+    i << endl;
   }
 
 
