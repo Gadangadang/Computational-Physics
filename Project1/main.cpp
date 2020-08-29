@@ -15,9 +15,15 @@ int main(int argc, char const *argv[]) {
   cout << n << endl;
 
   // Solve equation Av = b,
-  vec v = randu<vec>(n);
-  double g = 2;
+  vec v(n);
+  vec g(n);
+  vec gtilde(n);
+  vec d(n);
+  vec dtilde(n);
+  vec e(n);
+
   cout << v << endl;
+
 
 
 
