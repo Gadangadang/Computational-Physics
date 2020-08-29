@@ -43,14 +43,14 @@ int main(int argc, char const *argv[]) {
   for (int i =0; i<n; i++) d(i) = -2;
 
   for (int i =0; i<n; i++){
-    g(i) = -h*h*f( (i) * h);
+    g(i) = -h*h*f(i*h);
     x(i) = i*h;
   }
 
 
   dtilde(0) = d(0);
   gtilde(0) = g(0);
-  v(0)=0;
+  v(0)= 0 ;
   v(n) = 1;
 
   //Forward Part
