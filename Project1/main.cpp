@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <cmath>
 using namespace std;
+using namespace arma;
 
 int main(int argc, char const *argv[]) {
   /* code */
