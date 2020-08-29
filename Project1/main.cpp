@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
+#include "armadillo"
 using namespace std;
 using namespace arma;
 
@@ -14,7 +15,8 @@ int main(int argc, char const *argv[]) {
   cout << n << endl;
 
   // Solve equation Av = b,
-
+  vec v = randu<vec>(n);
+  cout << v << endl;
 
 
 
