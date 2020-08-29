@@ -9,7 +9,7 @@
 using namespace std;
 using namespace arma;
 
-double f(double x){return 100*exp(-10*x)};
+double f(double x){return 100*exp(-10*x);}
 
 int main(int argc, char const *argv[]) {
   /* code */
@@ -31,16 +31,22 @@ int main(int argc, char const *argv[]) {
   for (int i = 0; i<n; i++) e(i) =1;
   for (int i =0; i<n; i++) d(i) = -2;
 
-  dtilde(0) = 1;
+  dtilde(0) = d(0);
+  gtilde(0) = g(0);
+
+  //Forward Part
 
   for (int i = 1; i<n; i++)
   {
-    dtilde(i) = d(i) - 1./dtilde(i-1)
-    gtilde(i) = g(i) - gtilde(i-1)./(dtilde(i-1))
+    g(i) = h*h*f(i*h);
+    dtilde(i) = d(i) - 1./dtilde(i-1);
+    gtilde(i) = g(i) - gtilde(i-1)/(dtilde(i-1));
   }
 
+  //Backward Part
+  
 
-  cout << dtilde << endl;
+
 
 
 
