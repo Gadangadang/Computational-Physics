@@ -16,6 +16,7 @@ int main(int argc, char const *argv[]) {
 
   // Solve equation Av = b,
   vec v = randu<vec>(n);
+  double g = 2;
   cout << v << endl;
 
 
