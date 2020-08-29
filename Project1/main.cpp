@@ -9,19 +9,20 @@
 using namespace std;
 using namespace arma;
 
-double f(double x){return 100*exp(-10*x);}
+inline double f(double x){return 100*exp(-10*x);}
 
 int main(int argc, char const *argv[]) {
   /* code */
 
   // Define matrix size
   int n = atof(argv[1]);
-  double h = 1./(n+1);
+  double h = 1./(n);
   cout << "Time step :" << h << endl;
   cout << "Dimension of vectors:" << n << endl;
 
   // Define vectors to solve equation Av = b
   vec v(n);
+  vec x(n);
   vec g(n);
   vec gtilde(n);
   vec d(n);
@@ -30,6 +31,11 @@ int main(int argc, char const *argv[]) {
 
   for (int i = 0; i<n; i++) e(i) =1;
   for (int i =0; i<n; i++) d(i) = -2;
+  for (int i =0; i<n; i++){
+    g(i) = h*h*f( (i) * h);
+    x(i) = i*h;
+  }
+
 
   dtilde(0) = d(0);
   gtilde(0) = g(0);
@@ -40,11 +46,11 @@ int main(int argc, char const *argv[]) {
   {
     //i+2 to make sure we get x in [0,1]
 
-    g(i) = h*h*f( (i+2) * h);
+
     dtilde(i) = -(i+1)/i;
     gtilde(i) = g(i) - gtilde(i-1)/(dtilde(i-1));
   }
-  delete [] g;
+
   //Backward Part
 
   v(n-1) = gtilde(n-1)/dtilde(n-1);
