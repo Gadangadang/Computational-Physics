@@ -4,4 +4,4 @@ compile:
 	c++ -O3 -o main.x main.cpp  -larmadillo -llapack -lblas
 
 execute:
-	./main.x 100000
+	./main.x 1000
