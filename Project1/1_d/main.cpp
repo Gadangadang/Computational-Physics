@@ -72,9 +72,6 @@ int main(int argc, char const *argv[]) {
     //Forward Part
     for (int i = 1; i<n; i++)
     {
-      //i+2 to make sure we get x in [0,1]
-
-
       dtilde(i) = d(i)-1./dtilde(i-1);
       gtilde(i) = g(i) - gtilde(i-1)/(dtilde(i-1));
     }
@@ -96,12 +93,11 @@ int main(int argc, char const *argv[]) {
 
     for (int i = 0; i<n; i++){
       relerr(i) = relativeerror(v(i),sol(i));
-      //cout << relerr(i) << endl;
       }
 
 
+    //Print and write out log10 of relative error for a given n
     cout << log10(max(relerr)) << endl;
-
     ofile << setprecision(15) << n << " " << log10(max(relerr)) << endl;
 
   }
