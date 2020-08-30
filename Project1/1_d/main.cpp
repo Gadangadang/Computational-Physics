@@ -33,7 +33,7 @@ int main(int argc, char const *argv[]) {
   vec errlist(ex);
   vec nvals(ex);
 
-  for (int p = 1; p < ex; p++){
+  for (int p = 1; p <= ex; p++){
 
     int n = (int) pow(10,p);
 
