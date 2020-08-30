@@ -16,6 +16,7 @@ ofstream ofile;
 
 inline double f(double x){return 100*exp(-10*x);}
 inline double exactfunc(double x){return 1-(1-exp(-10))*x-exp(-10*x);}
+inline double relativeerror(double sol, double exac){return fabs((sol-exac)/exac);}
 
 int main(int argc, char const *argv[]) {
   /* code */
@@ -79,9 +80,21 @@ int main(int argc, char const *argv[]) {
   }
 
   for (int i = 0; i<n; i++){
+    ofile << setprecision(15) << v(i);
+    ofile << setprecision(15) << x(i);
+    ofile << setprecision(15) << sol(i);
 
-    ofile << setprecision(15) << v(i) << " " << x(i) << " " << sol(i) << endl;
+    if (i == 0){ //correct for nan value in first error calc
+      ofile << setprecision(15) << 0 << endl;
+    }
+    else{
+      ofile << setprecision(15) << relativeerror(v(i),sol(i)) << endl;
+    }
+
+
   }
+
+
 
 
 
