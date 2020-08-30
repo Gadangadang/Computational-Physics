@@ -94,11 +94,7 @@ int main(int argc, char const *argv[]) {
 
   }
 
-
-
-
-
-
+  ofile.close()
 
 
   return 0;
