@@ -53,7 +53,7 @@ int main(int argc, char const *argv[]) {
     vec b(n);
     vec v(n);
     vec x(n);
-    vec sol(n);
+    vec exac(n);
 
     A(0,0) = -2; A(0,1) = 1; x(0) = h; b(0) = -h*h*f(x(0));
     x(n-1) = x(0) + (n-1)*h; b(n-1) = -h*h*f(x(n-1));
@@ -72,8 +72,8 @@ int main(int argc, char const *argv[]) {
     v = solve(A,b);
 
     for (int i = 0; i<n; i++){
-      sol(i) = exactfunc(i*h);
-      ofile << setprecision(15) << v(i) << " " << x(i) << " " << sol(i) << endl;
+      exac(i) = exactfunc(i*h);
+      ofile << setprecision(15) << v(i) << " " << x(i) << " " << exac(i) << endl;
     }
     ofile.close();
   }
