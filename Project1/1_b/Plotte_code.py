@@ -32,6 +32,7 @@ plt.plot(x2_value, y2_value,"g--",label="n=1000" )
 plt.xlabel('x=(0,1)')
 plt.ylabel('u(x)')
 plt.legend()
+plt.savefig("1_b.jpeg")
 plt.show()
 
 data.close()
