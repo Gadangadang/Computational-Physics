@@ -5,3 +5,4 @@ compile:
 
 execute:
 	./main.x 1000
+	python Plotte_code.py
