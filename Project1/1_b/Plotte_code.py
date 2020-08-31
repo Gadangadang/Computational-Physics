@@ -12,6 +12,7 @@ x1_value = []
 data2 = open('valn2.txt', 'r')
 y2_value = []
 x2_value = []
+ex_vals = []
 
 for line in data:
     y_value.append(float(line.split(' ')[0]))
@@ -24,11 +25,12 @@ for line in data1:
 for line in data2:
     y2_value.append(float(line.split(' ')[0]))
     x2_value.append(float(line.split(' ')[1]))
+    ex_vals.append(float(line.split(" ")[2]))
 
-plt.plot(x_value,y_value,"r-", label="n=10")
-plt.plot(x1_value, y1_value,"b^", label="n=100" )
-plt.plot(x2_value, y2_value,"g--",label="n=1000" )
-
+plt.plot(x2_value, ex_vals, "k-",label="Exact solution")
+plt.plot(x_value,y_value,"r--", label="n=10")
+plt.plot(x1_value, y1_value,"r--", label="n=100" )
+plt.plot(x2_value, y2_value,"y--",label="n=1000" )
 plt.xlabel('x=(0,1)')
 plt.ylabel('u(x)')
 plt.legend()
