@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <string>
 #include "armadillo"
+#include "time.h"
 
 using namespace std;
 using namespace arma;
@@ -20,14 +21,25 @@ inline double relativeerror(double sol, double exac){return fabs((sol-exac)/exac
 
 int main(int argc, char const *argv[]) {
   /* code */
-  string outfilename;
-  outfilename = "values.txt";
-  ofile.open(outfilename);
+
   // Define matrix size
 
   int ex = atof(argv[1]);
   for (int i = 1; i <=ex; i++)
   {
+    string outfilename ;
+    if (i == 1){
+
+    outfilename = "valn0.txt";
+    }
+    else if (i == 2){
+    outfilename = "valn1.txt";
+    }
+    else if (i == 3){
+    outfilename = "valn2.txt";
+    }
+
+    ofile.open(outfilename);
     int n = (int) pow(10,i);
     double h = 1./(n);
     cout << "Time step :" << h << endl;
@@ -42,7 +54,8 @@ int main(int argc, char const *argv[]) {
     vec dtilde(n+1);
     vec e(n+1);
     vec sol(n+1);
-
+    clock_t start, finish;
+    start = clock();
 
     for (int i = 0; i<n; i++) e(i) =1;
     for (int i =0; i<n; i++) d(i) = -2;
@@ -82,11 +95,14 @@ int main(int argc, char const *argv[]) {
       v(i) = (gtilde(i) - v(i+1))/dtilde(i);
 
     }
+    finish = clock();
+    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
+    cout << setprecision(10) << "N="<< n+1<< ":  Time used  for computing=" << timeused  << endl;
 
     for (int i = 0; i<n; i++){
-      ofile << setprecision(15) << v(i);
-      ofile << setprecision(15) << x(i);
-      ofile << setprecision(15) << sol(i);
+      ofile << setprecision(15) << v(i)<< " ";
+      ofile << setprecision(15) << x(i) << " ";
+      ofile << setprecision(15) << sol(i) << " ";
 
       if (i == 0){ //correct for nan value in first error calc
         ofile << setprecision(15) << 0 << endl;
@@ -98,7 +114,7 @@ int main(int argc, char const *argv[]) {
 
     }
 
-    ofile.close()
+    ofile.close();
     }
 
   return 0;
