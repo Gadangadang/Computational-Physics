@@ -9,9 +9,11 @@
 #include <string>
 #include "armadillo"
 #include "time.h"
+#include <stdio.h>
 
 using namespace std;
 using namespace arma;
+
 
 
 ofstream ofile;
@@ -28,18 +30,26 @@ int main(int argc, char const *argv[]) {
 
   for (int i=1; i<= ex; i++){
     string outfilename ;
-    if (i == 1){
 
-    outfilename = "valn0.txt";
+    //Formats name of lists from amount of loops needed
+    if (ex < 10){
+
+      char poop[9];
+      sprintf(poop, "valn%d.txt", i );
+      outfilename = poop;
+      ofile.open(outfilename);
+
     }
-    else if (i == 2){
-    outfilename = "valn1.txt";
-    }
-    else if (i == 3){
-    outfilename = "valn2.txt";
+    else{
+
+      char poop[10];
+      sprintf(poop, "valn%d.txt", i );
+      outfilename = poop;
+      ofile.open(outfilename);
+
     }
 
-    ofile.open(outfilename);
+
 
     int n = (int) pow(10,i);
     double h = 1./(n);

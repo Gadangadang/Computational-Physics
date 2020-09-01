@@ -1,15 +1,15 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-data = open('valn0.txt', 'r')
+data = open('valn1.txt', 'r')
 y_value = []
 x_value = []
 
-data1 = open('valn1.txt', 'r')
+data1 = open('valn2.txt', 'r')
 y1_value = []
 x1_value = []
 
-data2 = open('valn2.txt', 'r')
+data2 = open('valn3.txt', 'r')
 y2_value = []
 x2_value = []
 ex_vals = []
