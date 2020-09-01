@@ -9,6 +9,7 @@
 #include <string>
 #include "armadillo"
 #include "time.h"
+#include <algorithm>
 
 using namespace std;
 using namespace arma;
@@ -21,9 +22,9 @@ inline double relativeerror(double sol, double exac){return fabs((sol-exac)/exac
 
 int main(int argc, char const *argv[]) {
   /* code */
-
+  string error_file;
+  error_file = "error_values.txt";
   // Define matrix size
-
   int ex = atof(argv[1]);
   for (int i = 1; i <=ex; i++)
   {
@@ -97,7 +98,7 @@ int main(int argc, char const *argv[]) {
     }
     finish = clock();
     double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
-    cout << setprecision(10) << "N="<< n+1<< ":  Time used  for computing=" << timeused  << endl;
+    cout << setprecision(10) << "N="<< n<< ":  Time used  for computing=" << timeused  << endl;
 
     for (int i = 0; i<n; i++){
       ofile << setprecision(15) << v(i)<< " ";
@@ -113,8 +114,13 @@ int main(int argc, char const *argv[]) {
 
 
     }
+    //vec R_error(n+1);
+    //int b;
 
-    ofile.close();
+    //ofile.close();
+    //ofile.open(error_file)
+    //for(b=0; b<n; b++){R_error(b)= relativeerror(v(b),sol(b))}
+    //ofile << setprecision(15) << std::mak_element(v)<<endl;
     }
 
   return 0;

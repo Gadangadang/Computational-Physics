@@ -29,7 +29,11 @@ for line in data2:
 
 plt.plot(x2_value, ex_vals, "k-",label="Exact solution")
 plt.plot(x_value,y_value,"r--", label="n=10")
+<<<<<<< HEAD
 plt.plot(x1_value, y1_value,"r--", label="n=100" )
+=======
+plt.plot(x1_value, y1_value,"b--", label="n=100" )
+>>>>>>> 9665b9fb0c677a9c2f4427208a9684e0a496c2a5
 plt.plot(x2_value, y2_value,"y--",label="n=1000" )
 plt.xlabel('x=(0,1)')
 plt.ylabel('u(x)')
