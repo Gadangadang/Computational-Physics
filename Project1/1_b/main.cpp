@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <string>
 #include "armadillo"
+#include "time.h"
 
 using namespace std;
 using namespace arma;
@@ -26,9 +27,7 @@ int main(int argc, char const *argv[]) {
   int ex = atof(argv[1]);
 
   for (int i=1; i<= ex; i++){
-
     string outfilename ;
-
     if (i == 1){
 
     outfilename = "valn0.txt";
@@ -54,7 +53,8 @@ int main(int argc, char const *argv[]) {
     vec v(n);
     vec x(n);
     vec exac(n);
-
+    clock_t start, finish;
+    start = clock();
     A(0,0) = -2; A(0,1) = 1; x(0) = h; b(0) = -h*h*f(x(0));
     x(n-1) = x(0) + (n-1)*h; b(n-1) = -h*h*f(x(n-1));
 
@@ -70,7 +70,9 @@ int main(int argc, char const *argv[]) {
 
     //Solve Av = b
     v = solve(A,b);
-
+    finish = clock();
+    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
+    cout << setprecision(10) << "N="<< n+1<< ":  Time used  for computing=" << timeused  << endl;
     for (int i = 0; i<n; i++){
       exac(i) = exactfunc(i*h);
       ofile << setprecision(15) << v(i) << " " << x(i) << " " << exac(i) << endl;
