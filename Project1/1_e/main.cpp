@@ -8,105 +8,109 @@
 #include <iomanip>
 #include <string>
 #include "armadillo"
+#include "time.h"
+#include <stdio.h>
 
 using namespace std;
 using namespace arma;
+
+
 
 ofstream ofile;
 
 inline double f(double x){return 100*exp(-10*x);}
 inline double exactfunc(double x){return 1-(1-exp(-10))*x-exp(-10*x);}
-inline double relativeerror(double sol, double exac){return fabs((sol-exac)/exac);}
 
 int main(int argc, char const *argv[]) {
   /* code */
-  string outfilename;
-  outfilename = "values.txt";
-  ofile.open(outfilename);
+
   // Define matrix size
 
   int ex = atof(argv[1]);
 
+  for (int i=1; i<= ex; i++){
+    string outfilename ;
 
-  //Loop over all n to find max error for each n
+    //Formats name of lists from amount of loops needed
+    if (ex < 10){
 
-  vec errlist(ex);
-  vec nvals(ex);
+      char poop[9];
+      sprintf(poop, "valn%d.txt", i );
+      outfilename = poop;
+      ofile.open(outfilename);
 
-  for (int p = 1; p <= ex; p++){
+    }
+    else{
 
-    int n = (int) pow(10,p);
+      char poop[10];
+      sprintf(poop, "valn%d.txt", i );
+      outfilename = poop;
+      ofile.open(outfilename);
 
+    }
+
+
+
+    int n = (int) pow(10,i);
     double h = 1./(n);
     cout << "Time step :" << h << endl;
     cout << "Dimension of vectors:" << n << endl;
 
-
-
     // Define vectors to solve equation Av = b
-    vec v(n+1);
-    vec x(n+1);
-    vec g(n+1);
-    vec gtilde(n+1);
-    vec d(n+1);
-    vec dtilde(n+1);
-    vec e(n+1);
-    vec sol(n+1);
-    vec relerr(n+1);
+    n = n-1; //Reset n to only use end points
+    mat A = zeros<mat>(n,n);
+    vec b(n);
+    vec v(n);
+    vec x(n);
+    vec exac(n);
+    vec Y(n);
+    vec X(n);
+    clock_t start, finish;
+    start = clock();
+    A(0,0) = -2; A(0,1) = 1; x(0) = h; b(0) = -h*h*f(x(0));
+    x(n-1) = x(0) + (n-1)*h; b(n-1) = -h*h*f(x(n-1));
 
-
-    for (int i = 0; i<n; i++) e(i) =1;
-    for (int i =0; i<n; i++) d(i) = -2;
-
-    for (int i =0; i<n; i++){
-      g(i) = -h*h*f(i*h);
-      x(i) = i*h;
-    }
-
-
-    dtilde(0) = d(0);
-    gtilde(0) = g(0);
-    v(0)= 0 ;
-    v(n) = 1;
-
-    //Forward Part
-    for (int i = 1; i<n; i++)
-    {
-      dtilde(i) = d(i)-1./dtilde(i-1);
-      gtilde(i) = g(i) - gtilde(i-1)/(dtilde(i-1));
-    }
-    //Backward Part
-
-    v(n-1) = gtilde(n-1)/dtilde(n-1);
-
-    //exact solution
-
-    for (int i= 0; i <n; i++){
-      sol(i) = exactfunc(i*h);
-    }
-
-    for (int i = n-2; i>0; i--)
-    {
-      v(i) = (gtilde(i) - v(i+1))/dtilde(i);
+    for (int i =1; i<n-1; i++){
+      x(i) = x(0) + i*h;
+      b(i) = -h*h*f(x(i));
+      A(i,i-1) = 1;
+      A(i,i) = -2;
+      A(i,i+1) = 1;
 
     }
+    A(n-1,n-1) = -2; A(n-1,n-2) = 1; A(n-2,n-1) = 1;
 
-    for (int i = 0; i<n; i++){
-      relerr(i) = relativeerror(v(i),sol(i));
+    mat L, U;
+    lu(L,U,A);
+    //Forward
+    for(int i = 1; i< n-1; i++)
+      {
+      int sum1 = 0;
+      for(int k = 1; k<i;k++){
+        sum1 += L(i,k)*Y(k);
       }
-
-
-    //Print and write out log10 of relative error for a given n
-    cout << log10(max(relerr)) << endl;
-    ofile << setprecision(15) << n << " " << log10(max(relerr)) << endl;
-
+      Y(i) = 1./(L(i,i))*(b(i)- sum1);
+    }
+    //Backwards
+    X(n) = Y(n)/U(n,n);
+    for(int i = n-1; i>0; i--)
+      {
+      int sum1 = 0;
+      for(int k = i+1; k<n;k++){
+        sum1 += U(i,k)*X(k);
+      }
+      X(i) = 1./(U(i,i))*(Y(i)- sum1);
+    }
+    //Solve Av = b
+    finish = clock();
+    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
+    cout << setprecision(10) << "N="<< n+1<< ":  Time used  for computing=" << timeused  << endl;
+    for (int i = 0; i<n; i++){
+      exac(i) = exactfunc(i*h);
+      ofile << setprecision(15) << X(i) << " " << x(i) << " " << exac(i) << endl;
+    }
+    ofile.close();
   }
-
-
-
-
-
-  ofile.close();
 
 
 
