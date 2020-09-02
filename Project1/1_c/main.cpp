@@ -22,22 +22,29 @@ inline double relativeerror(double sol, double exac){return fabs((sol-exac)/exac
 
 int main(int argc, char const *argv[]) {
   /* code */
-  string error_file;
-  error_file = "error_values.txt";
-  // Define matrix size
+
+
   int ex = atof(argv[1]);
   for (int i = 1; i <=ex; i++)
   {
     string outfilename ;
-    if (i == 1){
 
-    outfilename = "valn0.txt";
+    //Formats name of lists from amount of loops needed
+    if (ex < 10){
+
+      char poop[9];
+      sprintf(poop, "valn%d.txt", i );
+      outfilename = poop;
+      ofile.open(outfilename);
+
     }
-    else if (i == 2){
-    outfilename = "valn1.txt";
-    }
-    else if (i == 3){
-    outfilename = "valn2.txt";
+    else{
+
+      char poop[10];
+      sprintf(poop, "valn%d.txt", i );
+      outfilename = poop;
+      ofile.open(outfilename);
+
     }
 
     ofile.open(outfilename);
@@ -76,8 +83,6 @@ int main(int argc, char const *argv[]) {
     for (int i = 1; i<n; i++)
     {
       //i+2 to make sure we get x in [0,1]
-
-
       dtilde(i) = d(i)-1./dtilde(i-1);
       gtilde(i) = g(i) - gtilde(i-1)/(dtilde(i-1));
     }
@@ -117,7 +122,7 @@ int main(int argc, char const *argv[]) {
     //vec R_error(n+1);
     //int b;
 
-    //ofile.close();
+    ofile.close();
     //ofile.open(error_file)
     //for(b=0; b<n; b++){R_error(b)= relativeerror(v(b),sol(b))}
     //ofile << setprecision(15) << std::mak_element(v)<<endl;

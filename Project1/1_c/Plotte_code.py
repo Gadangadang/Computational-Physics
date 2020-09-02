@@ -1,15 +1,15 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-data = open('valn0.txt', 'r')
+data = open('valn1.txt', 'r')
 y_value = []
 x_value = []
 
-data1 = open('valn1.txt', 'r')
+data1 = open('valn2.txt', 'r')
 y1_value = []
 x1_value = []
 
-data2 = open('valn2.txt', 'r')
+data2 = open('valn3.txt', 'r')
 y2_value = []
 x2_value = []
 ex_vals = []
@@ -34,7 +34,7 @@ plt.plot(x2_value, y2_value,"y--",label="n=1000" )
 plt.xlabel('x=(0,1)')
 plt.ylabel('u(x)')
 plt.legend()
-plt.savefig("1_b.jpeg")
+plt.savefig("1_c.jpeg")
 plt.show()
 
 data.close()
