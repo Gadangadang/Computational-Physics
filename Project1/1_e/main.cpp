@@ -83,20 +83,20 @@ int main(int argc, char const *argv[]) {
     mat L, U;
     lu(L,U,A);
     //Forward
-    for(int i = 1; i< n-1; i++)
+    for(int i = 1; i<n; i++)
       {
       int sum1 = 0;
-      for(int k = 1; k<i;k++){
+      for(int k = 0; k<i;k++){
         sum1 += L(i,k)*Y(k);
       }
       Y(i) = 1./(L(i,i))*(b(i)- sum1);
     }
     //Backwards
-    X(n) = Y(n)/U(n,n);
-    for(int i = n-1; i>0; i--)
+    X(n-1) = Y(n-1)/U(n-1,n-1);
+    for(int i = n-1; i>=0; i--)
       {
       int sum1 = 0;
-      for(int k = i+1; k<n;k++){
+      for(int k = i; k<n;k++){
         sum1 += U(i,k)*X(k);
       }
       X(i) = 1./(U(i,i))*(Y(i)- sum1);
