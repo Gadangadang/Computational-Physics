@@ -47,7 +47,6 @@ int main(int argc, char const *argv[]) {
 
     }
 
-    ofile.open(outfilename);
     int n = (int) pow(10,i);
     double h = 1./(n);
     cout << "Time step :" << h << endl;
@@ -62,6 +61,7 @@ int main(int argc, char const *argv[]) {
     vec dtilde(n+1);
     vec e(n+1);
     vec sol(n+1);
+    vec exac(n);
     clock_t start, finish;
     start = clock();
 
@@ -106,19 +106,12 @@ int main(int argc, char const *argv[]) {
     cout << setprecision(10) << "N="<< n<< ":  Time used  for computing=" << timeused  << endl;
 
     for (int i = 0; i<n; i++){
-      ofile << setprecision(15) << v(i)<< " ";
-      ofile << setprecision(15) << x(i) << " ";
-      ofile << setprecision(15) << sol(i) << " ";
-
-      if (i == 0){ //correct for nan value in first error calc
-        ofile << setprecision(15) << 0 << endl;
-      }
-      else{
-        ofile << setprecision(15) << relativeerror(v(i),sol(i)) << endl;
+      exac(i) = exactfunc(i*h);
+      ofile << setprecision(15) << v(i) << " " << x(i) << " " << exac(i) << endl;
       }
 
 
-    }
+
     //vec R_error(n+1);
     //int b;
 
