@@ -2,30 +2,45 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 data = open('valn1.txt', 'r')
-y_value = []
-x_value = []
+y_value = [0]
+x_value = [0]
 
 data1 = open('valn2.txt', 'r')
-y1_value = []
-x1_value = []
+y1_value = [0]
+x1_value = [0]
 
 data2 = open('valn3.txt', 'r')
-y2_value = []
-x2_value = []
-ex_vals = []
+y2_value = [0]
+x2_value = [0]
+ex_vals = [0]
+
+
+
 
 for line in data:
-    y_value.append(float(line.split(' ')[0]))
-    x_value.append(float(line.split(' ')[1]))
+    l1, l2, l3 = line.split(' ')
+    y_value.append(float(l1))
+    x_value.append(float(l2))
 
 for line in data1:
-    y1_value.append(float(line.split(' ')[0]))
-    x1_value.append(float(line.split(' ')[1]))
+    l1, l2, l3 = line.split(' ')
+    y1_value.append(float(l1))
+    x1_value.append(float(l2))
 
 for line in data2:
-    y2_value.append(float(line.split(' ')[0]))
-    x2_value.append(float(line.split(' ')[1]))
-    ex_vals.append(float(line.split(" ")[2]))
+    l1, l2, l3 = line.split(' ')
+    y2_value.append(float(l1))
+    x2_value.append(float(l2))
+    ex_vals.append(float(l3))
+
+# Hardkoder inn 0 og 1 for x
+x_value.append(1)
+y_value.append(0)
+y1_value.append(0)
+x1_value.append(1)
+y2_value.append(0)
+x2_value.append(1)
+ex_vals.append(0)
 
 plt.plot(x2_value, ex_vals, "k-",label="Exact solution")
 plt.plot(x_value,y_value,"r--", label="n=10")

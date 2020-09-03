@@ -32,42 +32,41 @@ int main(int argc, char const *argv[]) {
     //Formats name of lists from amount of loops needed
     if (ex < 10){
 
-      char poop[9];
-      sprintf(poop, "valn%d.txt", i );
-      outfilename = poop;
+      char filestuff[9];
+      sprintf(filestuff, "valn%d.txt", i );
+      outfilename = filestuff;
       ofile.open(outfilename);
 
     }
     else{
 
-      char poop[10];
-      sprintf(poop, "valn%d.txt", i );
-      outfilename = poop;
+      char filestuff[10];
+      sprintf(filestuff, "valn%d.txt", i );
+      outfilename = filestuff;
       ofile.open(outfilename);
 
     }
 
     int n = (int) pow(10,i);
     n = n; //Reset n to only use end points
-    double h = 1./(n+1);
+    double h = 1./(n+2);
     cout << "Time step :" << h << endl;
     cout << "Dimension of vectors:" << n << endl;
 
     // Define vectors to solve equation Av = b
     mat A = zeros<mat>(n,n);
     vec b(n);
+    vec v(n);
     vec x(n);
     vec exac(n);
     vec Y(n);
     vec X(n);
     clock_t start, finish;
     start = clock();
-
-    A(0,0) = -2; A(0,1) = 1; x(0) = 0; b(0) = -h*h*f(x(0));
-    x(n-1) = 1; b(n-1) = -h*h*f(x(n-1));
-
+    x = linspace(h,1-h,n);
+    A(0,0) = -2; A(0,1) = 1; b(0) = -h*h*f(x(0));
+    b(n-1) = -h*h*f(x(n-1));
     for (int i =1; i<n-1; i++){
-      x(i) = (i)*h;
       b(i) = -h*h*f(x(i));
       A(i,i-1) = 1;
       A(i,i) = -2;
@@ -76,36 +75,14 @@ int main(int argc, char const *argv[]) {
     }
     A(n-1,n-1) = -2; A(n-1,n-2) = 1; A(n-2,n-1) = 1;
 
-    mat P, L, U;
-    lu(L,U,P,A);
-    Y(0)=b(0);
-    //Forward
-    for(int i = 1; i<n; i++)
-      {
-      int sum1 = 0;
-      for(int k = 0; k<i;k++){
-        sum1 += L(i,k)*Y(k);
-      }
+    mat L, U;
+    lu(L,U,A);
 
-      Y(i) = 1./(1)*(b(i) - sum1);
-    }
-    //Backwards
-    X(n-1) = Y(n-1)/U(n-1,n-1);
-    cout << Y(n-1) << endl;
-    cout << U(n-1,n-1) << endl;
-    cout <<  X(n-1)<< endl;
-    for(int i = n-2; i>0; i--)
-      {
-      int sum1 = 0;
-      for(int k = i+1; k<n;k++){
-        sum1 += U(i,k)*X(k);
-      }
-      X(i) = 1./(U(i,i))*(Y(i)- sum1);
-    }
-    //Solve Av = b
+    Y = solve(L,b);
+    X = solve(U,Y);
     finish = clock();
     double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
-    cout << setprecision(10) << "N="<< n+1<< ":  Time used  for computing=" << timeused  << endl;
+    cout << setprecision(10) << "N="<< n<< ":  Time used  for computing=" << setprecision(3) << timeused  << endl;
     for (int i = 0; i<n; i++){
       exac(i) = exactfunc((i+1)*h);
       ofile << setprecision(15) << X(i) << " " << x(i) << " " << exac(i) << endl;

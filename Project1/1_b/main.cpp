@@ -52,12 +52,12 @@ int main(int argc, char const *argv[]) {
 
 
     int n = (int) pow(10,i);
-    double h = 1./(n);
+    double h = 1./(n+2);
     cout << "Time step :" << h << endl;
     cout << "Dimension of vectors:" << n << endl;
 
     // Define vectors to solve equation Av = b
-    n = n-1; //Reset n to only use end points
+    n = n; //Reset n to only use end points
     mat A = zeros<mat>(n,n);
     vec b(n);
     vec v(n);
@@ -65,11 +65,11 @@ int main(int argc, char const *argv[]) {
     vec exac(n);
     clock_t start, finish;
     start = clock();
-    A(0,0) = -2; A(0,1) = 1; x(0) = h; b(0) = -h*h*f(x(0));
-    x(n-1) = x(0) + (n-1)*h; b(n-1) = -h*h*f(x(n-1));
+    x = linspace(h,1-h,n);
+    A(0,0) = -2; A(0,1) = 1; b(0) = -h*h*f(x(0));
+    b(n-1) = -h*h*f(x(n-1));
 
     for (int i =1; i<n-1; i++){
-      x(i) = x(0) + i*h;
       b(i) = -h*h*f(x(i));
       A(i,i-1) = 1;
       A(i,i) = -2;
