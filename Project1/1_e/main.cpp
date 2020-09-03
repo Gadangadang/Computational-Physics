@@ -63,7 +63,7 @@ int main(int argc, char const *argv[]) {
     vec X(n);
     clock_t start, finish;
     start = clock();
-    A(0,0) = -2; A(0,1) = 1; x(0) = 0; b(0) = -h*h*f(x(0));
+    A(0,0) = -2; A(0,1) = 1; A(1,0) = 1; x(0) = 0; b(0) = -h*h*f(x(0));
     x(n-1) = x(0) + (n)*h; b(n-1) = -h*h*f(x(n-1));
     for (int i =1; i<n-1; i++){
       x(i) = x(0) + (i)*h;
