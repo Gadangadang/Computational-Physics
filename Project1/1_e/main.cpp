@@ -49,7 +49,7 @@ int main(int argc, char const *argv[]) {
 
     int n = (int) pow(10,i);
     n = n; //Reset n to only use end points
-    double h = 1./(n+1);
+    double h = 1./(n+2);
     cout << "Time step :" << h << endl;
     cout << "Dimension of vectors:" << n << endl;
 
@@ -63,10 +63,10 @@ int main(int argc, char const *argv[]) {
     vec X(n);
     clock_t start, finish;
     start = clock();
-    A(0,0) = -2; A(0,1) = 1; x(0) = 0; b(0) = -h*h*f(x(0));
-    x(n-1) = 1; b(n-1) = -h*h*f(x(n-1));
+    x = linspace(h,1-h,n);
+    A(0,0) = -2; A(0,1) = 1; b(0) = -h*h*f(x(0));
+    b(n-1) = -h*h*f(x(n-1));
     for (int i =1; i<n-1; i++){
-      x(i) = (i)*h;
       b(i) = -h*h*f(x(i));
       A(i,i-1) = 1;
       A(i,i) = -2;
@@ -75,10 +75,12 @@ int main(int argc, char const *argv[]) {
     }
     A(n-1,n-1) = -2; A(n-1,n-2) = 1; A(n-2,n-1) = 1;
 
-    mat P, L, U;
-    lu(L,U,P,A);
+    mat L, U;
+    lu(L,U,A);
     //Solve Av = b
-    X = solve(trimatu(U), solve(trimatl(L), P*b) );
+    //X = solve(trimatu(U), solve(trimatl(L), P*b) );
+    Y = solve(L,b);
+    X = solve(U,Y);
     finish = clock();
     double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
     cout << setprecision(10) << "N="<< n<< ":  Time used  for computing=" << setprecision(3) << timeused  << endl;
