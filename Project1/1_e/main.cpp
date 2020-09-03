@@ -24,8 +24,6 @@ inline double exactfunc(double x){return 1-(1-exp(-10))*x-exp(-10*x);}
 int main(int argc, char const *argv[]) {
   /* code */
 
-  // Define matrix size
-
   int ex = atof(argv[1]);
 
   for (int i=1; i<= ex; i++){
@@ -48,8 +46,6 @@ int main(int argc, char const *argv[]) {
       ofile.open(outfilename);
 
     }
-
-
 
     int n = (int) pow(10,i);
     double h = 1./(n);
@@ -110,9 +106,6 @@ int main(int argc, char const *argv[]) {
     }
     ofile.close();
   }
-
-
-
 
   return 0;
 }
