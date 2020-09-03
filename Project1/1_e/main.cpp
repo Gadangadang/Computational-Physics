@@ -56,7 +56,6 @@ int main(int argc, char const *argv[]) {
     n = n; //Reset n to only use end points
     mat A = zeros<mat>(n,n);
     vec b(n);
-    vec v(n);
     vec x(n);
     vec exac(n);
     vec Y(n);
@@ -84,7 +83,7 @@ int main(int argc, char const *argv[]) {
       for(int k = 0; k<i;k++){
         sum1 += L(i,k)*Y(k);
       }
-      Y(i) = 1./(1)*(b(i)- sum1);
+      Y(i) = (b(i)- sum1);
     }
     //Backwards
     X(n-1) = Y(n-1)/U(n-1,n-1);
