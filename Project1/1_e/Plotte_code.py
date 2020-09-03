@@ -34,7 +34,7 @@ plt.plot(x2_value, y2_value,"y--",label="n=1000" )
 plt.xlabel('x=(0,1)')
 plt.ylabel('u(x)')
 plt.legend()
-plt.savefig("1_c.jpeg")
+plt.savefig("1_e.jpeg")
 plt.show()
 
 data.close()
