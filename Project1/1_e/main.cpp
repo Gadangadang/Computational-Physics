@@ -54,6 +54,7 @@ int main(int argc, char const *argv[]) {
 
     // Define vectors to solve equation Av = b
     n = n; //Reset n to only use end points
+    //n = n; //Reset n to only use end points
     mat A = zeros<mat>(n,n);
     vec b(n);
     vec x(n);
