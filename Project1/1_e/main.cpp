@@ -32,17 +32,17 @@ int main(int argc, char const *argv[]) {
     //Formats name of lists from amount of loops needed
     if (ex < 10){
 
-      char poop[9];
-      sprintf(poop, "valn%d.txt", i );
-      outfilename = poop;
+      char filestuff[9];
+      sprintf(filestuff, "valn%d.txt", i );
+      outfilename = filestuff;
       ofile.open(outfilename);
 
     }
     else{
 
-      char poop[10];
-      sprintf(poop, "valn%d.txt", i );
-      outfilename = poop;
+      char filestuff[10];
+      sprintf(filestuff, "valn%d.txt", i );
+      outfilename = filestuff;
       ofile.open(outfilename);
 
     }
