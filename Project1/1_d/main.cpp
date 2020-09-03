@@ -37,7 +37,7 @@ int main(int argc, char const *argv[]) {
 
     int n = (int) pow(10,p);
 
-    double h = 1./(n);
+    double h = 1./(n+2);
     cout << "Time step :" << h << endl;
     cout << "Dimension of vectors:" << n << endl;
 
