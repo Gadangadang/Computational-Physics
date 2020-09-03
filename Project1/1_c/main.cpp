@@ -47,7 +47,7 @@ int main(int argc, char const *argv[]) {
     }
 
     int n = (int) pow(10,i);
-    double h = 1./(n);
+    double h = 1./(n+2);
     cout << "Time step :" << h << endl;
     cout << "Dimension of vectors:" << n << endl;
 
@@ -60,23 +60,22 @@ int main(int argc, char const *argv[]) {
     vec dtilde(n+1);
     vec e(n+1);
     vec sol(n+1);
-    vec exac(n);
+    vec exac(n+1);
     clock_t start, finish;
     start = clock();
-
+    x = linspace(0,1,n+1);
     for (int i = 0; i<n; i++) e(i) =1;
     for (int i =0; i<n; i++) d(i) = -2;
 
     for (int i =0; i<n; i++){
-      g(i) = -h*h*f(i*h);
-      x(i) = i*h;
+      g(i) = -h*h*f(x(i));
     }
 
 
     dtilde(0) = d(0);
     gtilde(0) = g(0);
     v(0)= 0 ;
-    v(n) = 1;
+    v(n) = 0;
 
     //Forward Part
     for (int i = 1; i<n; i++)
@@ -104,8 +103,8 @@ int main(int argc, char const *argv[]) {
     double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
     cout << setprecision(10) << "N="<< n<< ":  Time used  for computing=" << timeused  << "s"<< endl;
 
-    for (int i = 0; i<n; i++){
-      exac(i) = exactfunc(i*h);
+    for (int i = 0; i<n+1; i++){
+      exac(i) = exactfunc(x(i));
       ofile << setprecision(15) << v(i) << " " << x(i) << " " << exac(i) << endl;
       }
     ofile.close();
