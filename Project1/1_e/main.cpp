@@ -56,15 +56,16 @@ int main(int argc, char const *argv[]) {
     // Define vectors to solve equation Av = b
     mat A = zeros<mat>(n,n);
     vec b(n);
-    vec v(n);
     vec x(n);
     vec exac(n);
     vec Y(n);
     vec X(n);
     clock_t start, finish;
     start = clock();
+
     A(0,0) = -2; A(0,1) = 1; x(0) = 0; b(0) = -h*h*f(x(0));
     x(n-1) = 1; b(n-1) = -h*h*f(x(n-1));
+
     for (int i =1; i<n-1; i++){
       x(i) = (i)*h;
       b(i) = -h*h*f(x(i));
@@ -85,6 +86,7 @@ int main(int argc, char const *argv[]) {
       for(int k = 0; k<i;k++){
         sum1 += L(i,k)*Y(k);
       }
+
       Y(i) = 1./(1)*(b(i) - sum1);
     }
     //Backwards
