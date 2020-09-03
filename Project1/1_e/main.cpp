@@ -77,8 +77,7 @@ int main(int argc, char const *argv[]) {
 
     mat L, U;
     lu(L,U,A);
-    //Solve Av = b
-    //X = solve(trimatu(U), solve(trimatl(L), P*b) );
+
     Y = solve(L,b);
     X = solve(U,Y);
     finish = clock();
