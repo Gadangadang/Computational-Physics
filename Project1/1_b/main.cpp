@@ -77,7 +77,6 @@ int main(int argc, char const *argv[]) {
 
     }
     A(n-1,n-1) = -2; A(n-1,n-2) = 1; A(n-2,n-1) = 1;
-
     //Solve Av = b
     v = solve(A,b);
     finish = clock();

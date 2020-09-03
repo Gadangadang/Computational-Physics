@@ -108,16 +108,8 @@ int main(int argc, char const *argv[]) {
       exac(i) = exactfunc(i*h);
       ofile << setprecision(15) << v(i) << " " << x(i) << " " << exac(i) << endl;
       }
-
-
-
-    //vec R_error(n+1);
-    //int b;
-
     ofile.close();
-    //ofile.open(error_file)
-    //for(b=0; b<n; b++){R_error(b)= relativeerror(v(b),sol(b))}
-    //ofile << setprecision(15) << std::mak_element(v)<<endl;
+
     }
 
   return 0;
