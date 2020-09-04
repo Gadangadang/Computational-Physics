@@ -44,40 +44,40 @@ int main(int argc, char const *argv[]) {
 
 
     // Define vectors to solve equation Av = b
-    vec v(n+1);
-    vec x(n+1);
-    vec g(n+1);
-    vec gtilde(n+1);
-    vec d(n+1);
-    vec dtilde(n+1);
-    vec e(n+1);
-    vec sol(n+1);
-    vec relerr(n+1);
+    vec v(n);
+    vec x(n);
+    vec g(n);
+    vec gtilde(n);
+    vec d(n);
+    vec dtilde(n);
+    vec e(n);
+    vec sol(n);
+    vec relerr(n);
 
-
+    x = linspace(h,1-h,n);
     for (int i = 0; i<n; i++) e(i) =1;
     for (int i =0; i<n; i++) d(i) = -2;
 
     for (int i =0; i<n; i++){
-      g(i) = -h*h*f(i*h);
-      x(i) = i*h;
+      gtilde(i) = h*h*f(x(i));
     }
 
 
-    dtilde(0) = d(0);
-    gtilde(0) = g(0);
-    v(0)= 0 ;
-    v(n) = 1;
+    //dtilde(0) = d(0);
+    //gtilde(0) = g(0);
+    //v(0)= 0 ;
+    //v(n) = 1;
 
     //Forward Part
     for (int i = 1; i<n; i++)
     {
-      dtilde(i) = d(i)-1./dtilde(i-1);
-      gtilde(i) = g(i) - gtilde(i-1)/(dtilde(i-1));
+      //i+2 to make sure we get x in [0,1]
+      //d(i) = d(i)-1./d(i-1);
+      gtilde(i) = gtilde(i) + ((i-1.)/i*gtilde(i-1));
     }
     //Backward Part
 
-    v(n-1) = gtilde(n-1)/dtilde(n-1);
+    v(n-1) = gtilde(n-1)*(n-1)/n;
 
     //exact solution
 
@@ -85,10 +85,9 @@ int main(int argc, char const *argv[]) {
       sol(i) = exactfunc(i*h);
     }
 
-    for (int i = n-2; i>0; i--)
+    for (int i = n-2; i>=0; i--)
     {
-      v(i) = (gtilde(i) - v(i+1))/dtilde(i);
-
+      v(i) = i/(i+1.)*(gtilde(i)+v(i+1));
     }
 
     for (int i = 0; i<n; i++){
@@ -101,8 +100,6 @@ int main(int argc, char const *argv[]) {
     ofile << setprecision(15) << n << " " << log10(max(relerr)) << endl;
 
   }
-
-
 
 
 
