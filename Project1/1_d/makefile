@@ -5,4 +5,4 @@ compile:
 
 execute:
 	./main.x 7
-	python Plotte_code.py
+	python3 Plotte_code.py

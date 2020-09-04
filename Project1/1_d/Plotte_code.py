@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-data = open('Values.txt', 'r')
+data = open('values.txt', 'r')
 relerr_value = []
 n_value = []
 

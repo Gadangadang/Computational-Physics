@@ -16,7 +16,7 @@ ofstream ofile;
 
 inline double f(double x){return 100*exp(-10*x);}
 inline double exactfunc(double x){return 1-(1-exp(-10))*x-exp(-10*x);}
-inline double relativeerror(double sol, double exac){return fabs((sol-exac)/exac);}
+inline double relativeerror(double sol, double exac){return fabs((exac-sol)/exac);}
 
 int main(int argc, char const *argv[]) {
   /* code */
@@ -55,8 +55,8 @@ int main(int argc, char const *argv[]) {
     vec relerr(n);
 
     x = linspace(h,1-h,n);
-    for (int i = 0; i<n; i++) e(i) =1;
-    for (int i =0; i<n; i++) d(i) = -2;
+    for (int i = 0; i<n; i++){ e(i) =1;}
+    for (int i =0; i<n; i++){ d(i) = -2;}
 
     for (int i =0; i<n; i++){
       gtilde(i) = h*h*f(x(i));
@@ -77,7 +77,7 @@ int main(int argc, char const *argv[]) {
     }
     //Backward Part
 
-    v(n-1) = gtilde(n-1)*(n-1)/n;
+    v(n-1) = gtilde(n-1)*(n-1.)/n;
 
     //exact solution
 
@@ -96,8 +96,8 @@ int main(int argc, char const *argv[]) {
 
 
     //Print and write out log10 of relative error for a given n
-    cout << log10(max(relerr)) << endl;
-    ofile << setprecision(15) << n << " " << log10(max(relerr)) << endl;
+    cout << log10(arma::max(relerr)) << endl;
+    ofile << setprecision(15) << n << " " << log10(arma::max(relerr)) << endl;
 
   }
 
