@@ -18,7 +18,7 @@ ofstream ofile;
 
 inline double f(double x){return 100*exp(-10*x);}
 inline double exactfunc(double x){return 1-(1-exp(-10))*x-exp(-10*x);}
-inline double relativeerror(double sol, double exac){return fabs((sol-exac)/exac);}
+inline double relativeerror(double sol, double exac){return abs((sol-exac)/exac);}
 
 int main(int argc, char const *argv[]) {
   /* code */
