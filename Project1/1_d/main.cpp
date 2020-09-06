@@ -77,7 +77,7 @@ int main(int argc, char const *argv[]) {
     }
     //Backward Part
 
-    v(n-1) = gtilde(n-1)*(n-1.)/n;
+    v(n-1) = gtilde(n-1)*(n-1)/n;
 
     //exact solution
 
