@@ -83,7 +83,8 @@ int main(int argc, char const *argv[]) {
     finish = clock();
     double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
     cout << setprecision(10) << "N="<< n+1<< ":  Time used  for computing=" << timeused  << endl;
-    if (p < 3){
+
+    if (p <= 3){
       for (int i = 0; i<n; i++){
         exac(i) = exactfunc(i*h);
         ofile << setprecision(15) << v(i) << " " << x(i) << " " << exac(i) << endl;

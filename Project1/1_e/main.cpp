@@ -48,7 +48,7 @@ int main(int argc, char const *argv[]) {
     }
 
     int n = (int) pow(10,i);
-    n = n; //Reset n to only use end points
+
     double h = 1./(n+2);
     cout << "Time step :" << h << endl;
     cout << "Dimension of vectors:" << n << endl;
