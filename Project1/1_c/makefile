@@ -1,7 +1,7 @@
 all: compile execute
 
 compile:
-	c++ -O3 -o main.x main.cpp  -larmadillo -llapack -lblas
+	g++ -std=c++11 -O3 -o main.x main.cpp  -larmadillo -llapack -lblas
 
 execute:
 	./main.x 6
