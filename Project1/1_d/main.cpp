@@ -40,27 +40,24 @@ int main(int argc, char const *argv[]) {
     cout << "Dimension of vectors:" << n << endl;
 
     // Define vectors to solve equation Av = b
-    vec v(n);
+    vec v(n+1);
     vec x(n);
     vec g(n);
     vec gtilde(n);
     vec d(n);
     vec dtilde(n);
     vec e(n);
-    vec sol(n);
+    vec sol(n+1);
     vec relerr(n);
 
-    x = linspace(h,1-h,n);
+    x = linspace(0,1-h,n);
     for (int i = 0; i<n; i++){ e(i) =1;}
     for (int i =0; i<n; i++){ d(i) = -2;}
 
     for (int i =0; i<n; i++){
       gtilde(i) = h*h*f(x(i));
     }
-    //dtilde(0) = d(0);
-    //gtilde(0) = g(0);
-    //v(0)= 0 ;
-    //v(n-1) = 0;
+
     //Forward Part
     for (int i = 1; i < n; i++)
     {
@@ -73,10 +70,12 @@ int main(int argc, char const *argv[]) {
     for (int i = 0; i < n; i++){
       sol(i) = exactfunc(i*h);
     }
-
-    for (int i = n-2; i >= 0; i--)
+    v(n) = 0;
+    sol(n) = 0;
+    cout << v.size()<< endl;
+    for (int i = n-1; i >= 0; i--)
     {
-      v(i) = i/(i+1.)*(gtilde(i)+v(i+1));
+      v(i) = (i/(i+1.))*(gtilde(i)+v(i+1));
     }
 
     for (int i = 0; i < n; i++)
