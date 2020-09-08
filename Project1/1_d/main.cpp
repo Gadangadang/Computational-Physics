@@ -16,7 +16,7 @@ ofstream ofile;
 
 inline double f(double x){return 100*exp(-10*x);}
 inline double exactfunc(double x){return 1-(1-exp(-10))*x-exp(-10*x);}
-inline double relativeerror(double sol, double exac){return abs((exac-sol)/exac);}
+inline double relativeerror(double sol, double exac){return abs((sol-exac)/exac);}
 
 int main(int argc, char const *argv[]) {
   /* code */
@@ -60,9 +60,9 @@ int main(int argc, char const *argv[]) {
     //dtilde(0) = d(0);
     //gtilde(0) = g(0);
     //v(0)= 0 ;
-    //v(n) = 1;
+    //v(n-1) = 0;
     //Forward Part
-    for (int i = 1; i<n; i++)
+    for (int i = 1; i < n; i++)
     {
       gtilde(i) = gtilde(i) + ((i-1.)/i*gtilde(i-1));
     }
@@ -70,22 +70,23 @@ int main(int argc, char const *argv[]) {
     v(n-1) = gtilde(n-1)*(n-1)/n;
 
     //exact solution
-    for (int i= 0; i <n; i++){
+    for (int i = 0; i < n; i++){
       sol(i) = exactfunc(i*h);
     }
 
-    for (int i = n-2; i>=0; i--)
+    for (int i = n-2; i >= 0; i--)
     {
       v(i) = i/(i+1.)*(gtilde(i)+v(i+1));
     }
 
-    for (int i = 0; i<n; i++){
+    for (int i = 0; i < n; i++)
+    {
       relerr(i) = relativeerror(v(i),sol(i));
-      }
+    }
 
     //Print and write out log10 of relative error for a given n
     cout << log10(arma::max(relerr)) << endl;
-    ofile << setprecision(15) << n << " " << log10(arma::max(relerr)) << endl;
+    ofile << setprecision(15) << n <<" "<< log10(arma::max(relerr)) << endl;
   }
 
   ofile.close();

@@ -7,12 +7,12 @@
 #include <fstream>
 #include <iomanip>
 #include <string>
-#include "armadillo"
+
 #include "time.h"
 #include <stdio.h>
 
 using namespace std;
-using namespace arma;
+
 
 
 
@@ -58,24 +58,25 @@ int main(int argc, char const *argv[]) {
 
     // Define vectors to solve equation Av = b
     n = n; //Reset n to only use end points
-    mat A = zeros<mat>(n,n);
-    vec b(n);
-    vec v(n);
-    vec x(n);
-    vec exac(n);
-    
+
+    //Define new matrix
+
     clock_t start, finish;
     start = clock();
-    x = linspace(h,1-h,n);
+    //x = linspace(h,1-h,n);
+
+    /* Set initialized values
     A(0,0) = -2; A(0,1) = 1; b(0) = -h*h*f(x(0));
     b(n-1) = -h*h*f(x(n-1));
+    */
 
+    /* Fill matrix with
     for (int i =1; i<n-1; i++){
       b(i) = -h*h*f(x(i));
       A(i,i-1) = 1;
       A(i,i) = -2;
       A(i,i+1) = 1;
-
+    */
     }
     A(n-1,n-1) = -2; A(n-1,n-2) = 1; A(n-2,n-1) = 1;
     //Solve Av = b
