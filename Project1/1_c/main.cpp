@@ -63,7 +63,7 @@ int main(int argc, char const *argv[]) {
     vec exac(n);
     clock_t start, finish;
     start = clock();
-    x = linspace(h,1-h,n);
+    x = linspace(0,1-h,n);
     for (int i = 0; i<n; i++) e(i) =1;
     for (int i =0; i<n; i++) d(i) = -2;
 

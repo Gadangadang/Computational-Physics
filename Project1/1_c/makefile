@@ -4,5 +4,5 @@ compile:
 	c++ -O3 -o main.x main.cpp  -larmadillo -llapack -lblas
 
 execute:
-	./main.x 6
+	./main.x 3
 	python3 Plotte_code.py
