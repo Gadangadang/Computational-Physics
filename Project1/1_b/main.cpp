@@ -28,14 +28,14 @@ int main(int argc, char const *argv[]) {
 
   int ex = atof(argv[1]);
 
-  for (int i=1; i<= ex; i++){
+  for (int p=1; p<= ex; p++){
     string outfilename ;
 
     //Formats name of lists from amount of loops needed
     if (ex < 10){
 
       char poop[9];
-      sprintf(poop, "valn%d.txt", i );
+      sprintf(poop, "valn%d.txt", p );
       outfilename = poop;
       ofile.open(outfilename);
 
@@ -43,7 +43,7 @@ int main(int argc, char const *argv[]) {
     else{
 
       char poop[10];
-      sprintf(poop, "valn%d.txt", i );
+      sprintf(poop, "valn%d.txt", p );
       outfilename = poop;
       ofile.open(outfilename);
 
@@ -51,7 +51,7 @@ int main(int argc, char const *argv[]) {
 
 
 
-    int n = (int) pow(10,i);
+    int n = (int) pow(10,p);
     double h = 1./(n+2);
     cout << "Time step :" << h << endl;
     cout << "Dimension of vectors:" << n << endl;
@@ -63,7 +63,7 @@ int main(int argc, char const *argv[]) {
     vec v(n);
     vec x(n);
     vec exac(n);
-    
+
     clock_t start, finish;
     start = clock();
     x = linspace(h,1-h,n);
@@ -83,11 +83,14 @@ int main(int argc, char const *argv[]) {
     finish = clock();
     double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
     cout << setprecision(10) << "N="<< n+1<< ":  Time used  for computing=" << timeused  << endl;
-    for (int i = 0; i<n; i++){
-      exac(i) = exactfunc(i*h);
-      ofile << setprecision(15) << v(i) << " " << x(i) << " " << exac(i) << endl;
+    if (p < 3){
+      for (int i = 0; i<n; i++){
+        exac(i) = exactfunc(i*h);
+        ofile << setprecision(15) << v(i) << " " << x(i) << " " << exac(i) << endl;
+      }
+      ofile.close();
     }
-    ofile.close();
+
   }
 
 
