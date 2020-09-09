@@ -47,7 +47,7 @@ int main(int argc, char const *argv[]) {
     }
 
     int n = (int) pow(10,i);
-    double h = 1./(n+2);
+    double h = 1./(n+1);
     cout << "Time step :" << h << endl;
     cout << "Dimension of vectors:" << n << endl;
 
@@ -73,7 +73,7 @@ int main(int argc, char const *argv[]) {
     }
 
 
- 
+
     //Forward Part
     for (int i = 1; i < n; i++)
     {
@@ -93,7 +93,7 @@ int main(int argc, char const *argv[]) {
     {
       v(i) = ((double) (i+1)/(i+2))*(gtilde(i)+v(i+1));
     }
-    
+
     finish = clock();
     double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
     cout << setprecision(10) << "N="<< n<< ":  Time used  for computing=" << timeused  << "s"<< endl;

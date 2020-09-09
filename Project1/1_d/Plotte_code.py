@@ -24,7 +24,5 @@ plt.plot(hvals,relerr_value, label="$log10(\epsilon)$")
 plt.xlabel('log10(h)')
 plt.ylabel('$log10(\epsilon)$')
 plt.legend()
+plt.savefig('1_d.jpg')
 plt.show()
-
-
-plt.plot()
