@@ -35,7 +35,7 @@ int main(int argc, char const *argv[]) {
 
     int n = (int) pow(10,p);
 
-    double h = 1./(n+1);
+    double h = 1./(n+1); //Steglengden måtte deles på n+1, ikke n+2.
     cout << "Time step :" << h << endl;
     cout << "Dimension of vectors:" << n << endl;
 
@@ -44,38 +44,49 @@ int main(int argc, char const *argv[]) {
     vec x(n);
     vec g(n);
     vec gtilde(n);
-    vec d(n);
+    vec d = vec(n).fill(-2.);
     vec dtilde(n);
-    vec e(n);
+    vec e = vec(n).fill(1.);
     vec sol(n);
     vec relerr(n);
+    double hh = h*h;
 
-    x = linspace(h,1-h,n);
-    for (int i = 0; i<n; i++){ e(i) =1.;}
+    x = linspace(h,1-h,n); //Arrayet må start på x=h, ikke x = 0.
+
+    /*
+    for (int i = 0; i<n; i++){ e(i) = 1.;}
     for (int i =0; i<n; i++){ d(i) = -2.;}
 
+    Unødvendig å bruke en for loop her, bruk heller:
+    vec d = vec(n).fill(-2.);
+    vec e = vec(n).fill(1.);
+    */
+
     for (int i =0; i<n; i++){
-      gtilde(i) = h*h*f(x(i));
+      gtilde(i) = hh*f(x(i)); //Beregn hh = h*h på forhånd for å redusere antall flops.
     }
 
     //Forward Part
     for (int i = 1; i < n; i++)
     {
-      gtilde(i) = gtilde(i) + ((double) i/(i+1)*gtilde(i-1));
+      gtilde(i) = gtilde(i) + ((double) i/(i+1))*gtilde(i-1); //Indeksene måtte flyttes en plass i matten slik at i - > i+1 overalt (bortsett fra indeksene i vektorene).
     }
     //Backward Part
-    v(n-1) = (double) gtilde(n-1)*(n)/(n+1);
+    v(n-1) = ((double) n/(n+1))*gtilde(n-1); //Flyttes indeksen n - > n+1 i matten (men ikke i vektorene).
 
     //exact solution
     for (int i = 0; i < n; i++){
       sol(i) = exactfunc(x(i));
     }
-    //v(n) = 0;
-    //sol(n) = 0;
+    /*
+    Vi tar ikke med endepunktene i koden med vektorene definert over, så disse må bort
+    v(n) = 0;
+    sol(n) = 0;
+    */
     cout << v.size()<< endl;
     for (int i = n-2; i >= 0; i--)
     {
-      v(i) = ((double) (i+1)/(i+2))*(gtilde(i)+v(i+1));
+      v(i) = ((double) (i+1)/(i+2))*(gtilde(i)+v(i+1)); //Indeksene i matten er flyttet i - > i+1 her også (Men igjen, ikke indekseringen av vektorene. Bare koeffisientene som er avhengig av i.)
     }
 
     for (int i = 0; i < n; i++)
@@ -84,8 +95,8 @@ int main(int argc, char const *argv[]) {
     }
 
     //Print and write out log10 of relative error for a given n
-    cout << log10(arma::max(relerr)) << endl;
-    ofile << setprecision(15) << n <<" "<< log10(arma::max(relerr)) << endl;
+    cout << log10(max(relerr)) << endl;
+    ofile << setprecision(15) << n <<" "<< log10(max(relerr)) << endl;
   }
 
   ofile.close();
