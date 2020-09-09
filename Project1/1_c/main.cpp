@@ -63,41 +63,37 @@ int main(int argc, char const *argv[]) {
     vec exac(n);
     clock_t start, finish;
     start = clock();
-    x = linspace(0,1-h,n);
-    for (int i = 0; i<n; i++) e(i) =1;
-    for (int i =0; i<n; i++) d(i) = -2;
+    x = linspace(h,1-h,n);
 
-    for (int i =0; i<n; i++){
+    for (int i = 0; i<n; i++) e(i) =1.;
+    for (int i = 0; i<n; i++) d(i) = -2.;
+
+    for (int i = 0; i<n; i++){
       gtilde(i) = h*h*f(x(i));
     }
 
 
-    //dtilde(0) = d(0);
-    //gtilde(0) = g(0);
-    //v(0)= 0 ;
-    //v(n) = 0;
-
+ 
     //Forward Part
-    for (int i = 1; i<n; i++)
+    for (int i = 1; i < n; i++)
     {
-      //i+2 to make sure we get x in [0,1]
-      //d(i) = d(i)-1./d(i-1);
-      gtilde(i) = gtilde(i) + ((i-1.)/i*gtilde(i-1));
+      gtilde(i) = gtilde(i) + ((double) i/(i+1)*gtilde(i-1));
     }
     //Backward Part
-
-    v(n-1) = gtilde(n-1)*(n-1)/n;
+    v(n-1) = (double) gtilde(n-1)*(n)/(n+1);
 
     //exact solution
-
-    for (int i= 0; i <n; i++){
-      sol(i) = exactfunc(i*h);
+    for (int i = 0; i < n; i++){
+      sol(i) = exactfunc(x(i));
     }
-
-    for (int i = n-2; i>=0; i--)
+    //v(n) = 0;
+    //sol(n) = 0;
+    cout << v.size()<< endl;
+    for (int i = n-2; i >= 0; i--)
     {
-      v(i) = i/(i+1.)*(gtilde(i)+v(i+1));
+      v(i) = ((double) (i+1)/(i+2))*(gtilde(i)+v(i+1));
     }
+    
     finish = clock();
     double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
     cout << setprecision(10) << "N="<< n<< ":  Time used  for computing=" << timeused  << "s"<< endl;
