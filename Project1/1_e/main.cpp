@@ -65,9 +65,10 @@ int main(int argc, char const *argv[]) {
     start = clock();
     x = linspace(h,1-h,n);
     A(0,0) = -2; A(0,1) = 1; b(0) = -h*h*f(x(0));
-    b(n-1) = -h*h*f(x(n-1));
+    double hh = h*h;
+    b(n-1) = -hh*f(x(n-1));
     for (int i =1; i<n-1; i++){
-      b(i) = -h*h*f(x(i));
+      b(i) = -hh*f(x(i));
       A(i,i-1) = 1;
       A(i,i) = -2;
       A(i,i+1) = 1;

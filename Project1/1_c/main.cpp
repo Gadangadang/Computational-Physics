@@ -23,7 +23,6 @@ inline double relativeerror(double sol, double exac){return abs((sol-exac)/exac)
 int main(int argc, char const *argv[]) {
   /* code */
 
-
   int ex = atof(argv[1]);
   for (int i = 1; i <=ex; i++)
   {
@@ -67,9 +66,9 @@ int main(int argc, char const *argv[]) {
 
     for (int i = 0; i<n; i++) e(i) =1.;
     for (int i = 0; i<n; i++) d(i) = -2.;
-
+    double hh =h*h;
     for (int i = 0; i<n; i++){
-      gtilde(i) = h*h*f(x(i));
+      gtilde(i) = hh*f(x(i));
     }
 
 
@@ -86,8 +85,7 @@ int main(int argc, char const *argv[]) {
     for (int i = 0; i < n; i++){
       sol(i) = exactfunc(x(i));
     }
-    //v(n) = 0;
-    //sol(n) = 0;
+
     cout << v.size()<< endl;
     for (int i = n-2; i >= 0; i--)
     {
