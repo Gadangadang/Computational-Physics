@@ -57,7 +57,6 @@ int main(int argc, char const *argv[]) {
     cout << "Dimension of vectors:" << n << endl;
 
     // Define vectors to solve equation Av = b
-    n = n; //Reset n to only use end points
     mat A = zeros<mat>(n,n);
     vec b(n);
     vec v(n);
@@ -76,7 +75,7 @@ int main(int argc, char const *argv[]) {
       A(i,i) = -2;
       A(i,i+1) = 1;
 
-    }
+    } //Define boundary conditions.
     A(n-1,n-1) = -2; A(n-1,n-2) = 1; A(n-2,n-1) = 1;
     //Solve Av = b
     v = solve(A,b);

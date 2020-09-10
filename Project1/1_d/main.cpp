@@ -37,7 +37,7 @@ int main(int argc, char const *argv[]) {
 
     double h = 1./(n+1);
     cout << "Time step :" << h << endl;
-    cout << "Dimension of vectors:" << n << endl;
+
 
     // Define vectors to solve equation Av = b
     vec v(n);
@@ -70,9 +70,9 @@ int main(int argc, char const *argv[]) {
     for (int i = 0; i < n; i++){
       sol(i) = exactfunc(x(i));
     }
-    //v(n) = 0;
-    //sol(n) = 0;
-    cout << v.size()<< endl;
+
+
+    cout << "Dimension of vectors:" << v.size() << endl;
     for (int i = n-2; i >= 0; i--)
     {
       v(i) = ((double) (i+1)/(i+2))*(gtilde(i)+v(i+1));
