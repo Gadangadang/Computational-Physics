@@ -13,3 +13,12 @@
 
 using namespace std;
 using namespace arma;
+
+void classtuff::Initialize(double a, mat ex){
+  c_size = a;
+  A = ex;
+  
+  mat S = zeros<mat>(c_size,c_size);
+
+
+}

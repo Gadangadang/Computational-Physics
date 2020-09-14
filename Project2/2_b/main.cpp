@@ -17,7 +17,16 @@ using namespace arma;
 int main(int argc, char const *argv[]) {
 
   //Define class object
-  //quad mysolver;
+  classtuff mysolver;
+  int size = atof(argv[1]);
+
+  //Define matrix to solve Ax = lambda x
+  mat A = zeros<mat>(size,size);
+  mat eigvec = zeros<mat>(size,size);
+
+  //Initialize matrices
+  mysolver.Initialize(size, A);
+
 
 
 
