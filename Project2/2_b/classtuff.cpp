@@ -20,5 +20,15 @@ void classtuff::Initialize(double a, mat ex){
   
   mat S = zeros<mat>(c_size,c_size);
 
+  public:
 
+  double tau(double a, double b double c){
+    return (double) (a-b)/(2*c);
+  }
+
+  double tau(double theta){
+    return (double) math::cos(theta)/math::sin(theta);
+  }
+
+  
 }
