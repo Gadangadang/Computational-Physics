@@ -17,7 +17,7 @@ using namespace arma;
 void classtuff::Initialize(double a, mat ex){
   c_size = a;
   A = ex;
-  
+
   mat S = zeros<mat>(c_size,c_size);
 
   public:
@@ -31,4 +31,27 @@ void classtuff::Initialize(double a, mat ex){
   }
 
   
+}
+
+void classtuff::Rotate(){
+
+}
+void classtuff::Jacobi(){
+  //First fill matrix S with
+  for (int i = 0; i < c_size; i++){
+    for (int j = 0; j < c_size; i++){
+      if (i == j){
+        S[i][j] == 1;
+      }
+      else{
+        S[i][j] = ;
+      }
+    }
+  }
+
+  int its = 0;
+
+
+
+
 }
