@@ -20,6 +20,7 @@ public:
   void Rotate();
   void Jacobi();
   vec Jacobi_arm(mat T);
+  void offdiag(mat A, int *p, int *q, int n);
   double tau(double theta);
   double tau(double a, double b, double c);
 };
