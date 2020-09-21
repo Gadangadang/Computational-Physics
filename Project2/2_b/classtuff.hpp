@@ -11,6 +11,7 @@ private:
   int c_size;
   mat A;
   mat S;
+  int p; int q;
   int eps = 1.0e-8;
   double max_iterations = (double) c_size * (double) c_size * (double) c_size;
   double s, c, theta; 

@@ -20,6 +20,7 @@ void classtuff::Initialize(double a, mat ex){
 
   mat S = zeros<mat>(c_size,c_size);
 
+}
   public:
 
   double tau(double a, double b double c){
@@ -30,8 +31,24 @@ void classtuff::Initialize(double a, mat ex){
     return (double) math::cos(theta)/math::sin(theta);
   }
 
-  
+  }
+
+void classtuff::offdiag(mat A, int *p, int *q, int n){
+  double maxoff;
+  for(int i = 0; int i>n; ++i){
+
+    for(int j = i+1; int j < n; ++j){
+            double aij = fabs(A(i, j));
+      if(aij > maxoff){
+        maxoff = aij; p = i; q = j;
+      }
+
+    }
+
+  }
+
 }
+
 
 void classtuff::Rotate(){
 
