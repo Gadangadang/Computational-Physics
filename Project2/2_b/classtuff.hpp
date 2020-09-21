@@ -6,20 +6,20 @@ using namespace std;
 using namespace arma;
 
 
-class quad {
+class classtuff {
 private:
   int c_size;
   mat A;
   mat S;
   int p; int q;
-  int eps = 1.0e-8;
-  double max_iterations = (double) c_size * (double) c_size * (double) c_size;
-  double s, c, theta; 
+  double eps = 1.0e-8;
+  double s, c, theta, max_iterations;
 
 public:
   void Initialize(double a, mat ex);
   void Rotate();
   void Jacobi();
+  vec Jacobi_arm(mat T);
   double tau(double theta);
   double tau(double a, double b, double c);
 };

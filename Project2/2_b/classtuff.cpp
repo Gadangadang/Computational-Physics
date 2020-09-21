@@ -17,21 +17,22 @@ using namespace arma;
 void classtuff::Initialize(double a, mat ex){
   c_size = a;
   A = ex;
-
+  max_iterations = (double) c_size * (double) c_size * (double) c_size;
   mat S = zeros<mat>(c_size,c_size);
 
+  for (int i = 0; i < c_size; i++){
+    A(i,i-1) = 1;
+    A(i,i) = -2;
+    A(i,i+1) = 1;
+  }
 }
-  public:
 
-  double tau(double a, double b double c){
-    return (double) (a-b)/(2*c);
-  }
 
-  double tau(double theta){
-    return (double) math::cos(theta)/math::sin(theta);
-  }
+vec Jacobi_arm(mat T){
 
-  }
+  vec test_eigvals = eig_sym(T);
+  return test_eigvals;
+}
 
 void classtuff::offdiag(mat A, int *p, int *q, int n){
   double maxoff;
@@ -55,15 +56,8 @@ void classtuff::Rotate(){
 }
 void classtuff::Jacobi(){
   //First fill matrix S with
-  for (int i = 0; i < c_size; i++){
-    for (int j = 0; j < c_size; i++){
-      if (i == j){
-        S[i][j] == 1;
-      }
-      else{
-        S[i][j] = ;
-      }
-    }
+  S.eye();
+
   }
 
   int its = 0;
