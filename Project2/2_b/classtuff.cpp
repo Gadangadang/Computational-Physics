@@ -20,17 +20,30 @@ void classtuff::Initialize(double a, mat ex){
 
   mat S = zeros<mat>(c_size,c_size);
 
-  public:
-
-  double tau(double a, double b double c){
-    return (double) (a-b)/(2*c);
+  for (int i = 0; i < c_size; i++){
+    A(i,i-1) = 1;
+    A(i,i) = -2;
+    A(i,i+1) = 1;
   }
+}
 
-  double tau(double theta){
-    return (double) math::cos(theta)/math::sin(theta);
-  }
 
-  
+public:
+
+double tau(double a, double b double c){
+  return (double) (a-b)/(2*c);
+}
+
+double tau(double theta){
+  return (double) math::cos(theta)/math::sin(theta);
+}
+
+
+
+
+mat Jacobi_arm(mat T){
+  vec eigvals = eig_sym(T);
+  return eigvals;
 }
 
 void classtuff::Rotate(){
@@ -38,15 +51,8 @@ void classtuff::Rotate(){
 }
 void classtuff::Jacobi(){
   //First fill matrix S with
-  for (int i = 0; i < c_size; i++){
-    for (int j = 0; j < c_size; i++){
-      if (i == j){
-        S[i][j] == 1;
-      }
-      else{
-        S[i][j] = ;
-      }
-    }
+  S.eye();
+
   }
 
   int its = 0;

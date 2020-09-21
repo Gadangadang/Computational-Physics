@@ -1,4 +1,4 @@
-#include "quad.hpp"
+#include "classtuff.hpp"
 #include <iostream>
 #include <new>
 #include <cstdio>
@@ -18,7 +18,7 @@ int main(int argc, char const *argv[]) {
 
   //Define class object
   classtuff mysolver;
-  int size = atof(argv[1]);
+  int size = pow(10,atof(argv[1]));
 
   //Define matrix to solve Ax = lambda x
   mat A = zeros<mat>(size,size);
@@ -26,7 +26,8 @@ int main(int argc, char const *argv[]) {
 
   //Initialize matrices
   mysolver.Initialize(size, A);
-
+  vec test_eigvals = mysolver.Jacobi_arm(A);
+  cout << test_eigvals << endl;
 
 
 
