@@ -20,39 +20,50 @@ void classtuff::Initialize(double a, mat ex){
 
   mat S = zeros<mat>(c_size,c_size);
 
-  for (int i = 0; i < c_size; i++){
-    A(i,i-1) = 1;
-    A(i,i) = -2;
-    A(i,i+1) = 1;
+}
+  public:
+
+  double tau(double a, double b double c){
+    return (double) (a-b)/(2*c);
   }
+
+  double tau(double theta){
+    return (double) math::cos(theta)/math::sin(theta);
+  }
+
+  }
+
+void classtuff::offdiag(mat A, int *p, int *q, int n){
+  double maxoff;
+  for(int i = 0; int i>n; ++i){
+
+    for(int j = i+1; int j < n; ++j){
+            double aij = fabs(A(i, j));
+      if(aij > maxoff){
+        maxoff = aij; p = i; q = j;
+      }
+
+    }
+
+  }
+
 }
 
-
-public:
-
-double tau(double a, double b double c){
-  return (double) (a-b)/(2*c);
-}
-
-double tau(double theta){
-  return (double) math::cos(theta)/math::sin(theta);
-}
-
-
-
-
-mat Jacobi_arm(mat T){
-  vec eigvals = eig_sym(T);
-  return eigvals;
-}
 
 void classtuff::Rotate(){
 
 }
 void classtuff::Jacobi(){
   //First fill matrix S with
-  S.eye();
-
+  for (int i = 0; i < c_size; i++){
+    for (int j = 0; j < c_size; i++){
+      if (i == j){
+        S[i][j] == 1;
+      }
+      else{
+        S[i][j] = ;
+      }
+    }
   }
 
   int its = 0;
