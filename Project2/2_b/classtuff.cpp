@@ -49,21 +49,16 @@ void classtuff::offdiag(mat A, int *p, int *q, int n){
   }
 
 }
-double zero_test(mat it_A,double epsilon){
-double sum = accu(A)- accu(diag(A))
-if sum <= epsilon{
-  return True
-  else {
-    return False
+
   }
 }
 }
 
 void classtuff::Rotate(mat A, mat S, int p, int q, int n){
   /*
-  Where A is input, S is the solution matrix, p,q is row column from 
-  offdiag() function. Rotates the A matrix around the biggest off-diagonal element and 
-  deposits eigenvalues into the S matrix.  
+  Where A is input, S is the solution matrix, p,q is row column from
+  offdiag() function. Rotates the A matrix around the biggest off-diagonal element and
+  deposits eigenvalues into the S matrix.
   */
 
   double s, c;
@@ -83,7 +78,7 @@ void classtuff::Rotate(mat A, mat S, int p, int q, int n){
     c = 1.0;
     s = 0.0;
   }
-  // Det under er kopiert fra foiler 
+  // Det under er kopiert fra foiler
   double a_kk, a_ll, a_ik, a_il, r_ik, r_il;
   a_kk = A(p,p);
   a_ll = A(q,q);
@@ -109,11 +104,19 @@ void classtuff::Rotate(mat A, mat S, int p, int q, int n){
   }
   return;
 }
-  
+
 
 }
-void classtuff::Jacobi(){
-  //First fill matrix S with
-  S.eye();
-
+void classtuff::Jacobi(mat A, int maxiter, double eps){
+  double nde_m;
+  int iter, p, q, n;
+  mat S;
+  n = size(A);
+  iter = 0;
+  while( nde_m > eps && iter <= maxiter){
+    offdiag(A,&p, &q, n);
+    Jacobi_rotate(A, R, p, q, n);
+    nde_m = A(p,q);
+    iter ++;
+  }
   }
