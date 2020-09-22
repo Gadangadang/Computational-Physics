@@ -98,6 +98,7 @@ void classtuff::Rotate(mat A, mat S, int p, int q, int n){
     r_il = S(i,q);
     S(i,p) = c*r_ik - s*r_il;
     S(i,q) = c*r_il + s*r_ik;
+    cout << A << endl;
   }
   return;
 }
