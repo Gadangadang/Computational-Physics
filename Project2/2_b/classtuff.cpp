@@ -14,17 +14,23 @@
 using namespace std;
 using namespace arma;
 
-void classtuff::Initialize(double a, mat ex){
+mat classtuff::Initialize(double a, mat ex){
   c_size = a;
   A = ex;
   max_iterations = (double) c_size * (double) c_size * (double) c_size;
   mat S = zeros<mat>(c_size,c_size);
 
+  A(0,0) = -2; A(0,1) = 1;
   for (int i = 0; i < c_size; i++){
     A(i,i-1) = 1;
     A(i,i) = -2;
     A(i,i+1) = 1;
   }
+  A(c_size-1,c_size-1) = -2;
+  A(c_size-1,c_size-2) = 1;
+  A(c_size-2,c_size-1) = 1;
+
+  return A;
 }
 
 
