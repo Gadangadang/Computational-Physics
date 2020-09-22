@@ -9,12 +9,11 @@ using namespace arma;
 class classtuff {
 private:
   int c_size;
-  mat A;
-  double s, c, theta, maxiter =2;
+  double s, c, theta, maxiter;
 
 public:
   int p; int q;
-  mat S;
+  mat S,A;
   double eps = 1.0e-8;
   mat Initialize(double a, mat ex);
   void Rotate(mat A, mat S, int p, int q, int n);

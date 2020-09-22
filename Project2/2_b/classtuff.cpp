@@ -18,7 +18,7 @@ mat classtuff::Initialize(double a, mat ex){
   c_size = a;
   A = ex;
   maxiter = (double) c_size * (double) c_size * (double) c_size;
-  mat S = zeros<mat>(c_size,c_size);
+  S = zeros<mat>(c_size,c_size);
 
   A(0,0) = -2; A(0,1) = 1;
   for (int i = 1; i < c_size-1; i++){
@@ -45,7 +45,6 @@ void classtuff::offdiag(mat A, int *p, int *q, int n){
   for(int i = 0; i<n; ++i){
     for(int j = i+1;  j < n; ++j){
             double aij = fabs(A(i, j));
-            cout << A(i,j)<< endl;
             if(aij > maxoff){
               maxoff = aij; p = &i; q = &j;
       }
@@ -54,13 +53,12 @@ void classtuff::offdiag(mat A, int *p, int *q, int n){
 }
 
 
-void classtuff::Rotate(mat A, mat S, int *p, int *q, int n){
+void classtuff::Rotate(mat A, mat S, int p, int q, int n){
   /*
   Where A is input, S is the solution matrix, p,q is row column from
   offdiag() function. Rotates the A matrix around the biggest off-diagonal element and
   deposits eigenvalues into the S matrix.
   */
-
   double s, c;
   if( A(p,q) != 0.0 ){
     double t, tau;
@@ -86,8 +84,8 @@ void classtuff::Rotate(mat A, mat S, int *p, int *q, int n){
   A(q,q) = s*s*a_kk + 2.0*c*s*A(p,q) + c*c*a_ll;
   A(p,q) = 0.0;  // hard-coding non-diagonal elements by hand
   A(q,p) = 0.0;  // same here
-  for ( int i = 0; i < n-1; i++ ) {
-    if ( i != *p && i != *q ) {
+  for ( int i = 0; i < n; i++ ) {
+    if ( i != p && i != q ) {
       a_ik = A(i,p);
       a_il = A(i,q);
       A(i,p) = c*a_ik - s*a_il;
@@ -98,7 +96,6 @@ void classtuff::Rotate(mat A, mat S, int *p, int *q, int n){
 //  And finally the new eigenvectors
     r_ik = S(i,p);
     r_il = S(i,q);
-
     S(i,p) = c*r_ik - s*r_il;
     S(i,q) = c*r_il + s*r_ik;
   }
@@ -112,8 +109,8 @@ void classtuff::Jacobi(mat A, double eps){
   iter = 0;
   nde_m = 1;
   n = c_size;
-  while( nde_m > eps && iter <= maxiter){
-    offdiag(A,p, q, n);
+  while( fabs(nde_m) > eps && iter <= maxiter){
+    offdiag(A,&p, &q, n);
     Rotate(A, S, p, q, n);
     nde_m = A(p,q);
     iter ++;

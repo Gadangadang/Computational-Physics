@@ -29,7 +29,7 @@ int main(int argc, char const *argv[]) {
   A = mysolver.Initialize(size, A);
   vec test_eigvals = mysolver.Jacobi_arm(A);
   mysolver.Jacobi(A,0.000008);
-  cout << mysolver.S << endl;
+  cout << mysolver.A << endl;
   cout << test_eigvals << endl;
 
 
