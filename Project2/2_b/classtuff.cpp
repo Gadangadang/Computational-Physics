@@ -49,7 +49,15 @@ void classtuff::offdiag(mat A, int *p, int *q, int n){
   }
 
 }
-
+double zero_test(mat it_A,double epsilon){
+double sum = accu(A)- accu(diag(A))
+if sum <= epsilon{
+  return True
+  else {
+    return False
+  }
+}
+}
 
 void classtuff::Rotate(mat A, mat S, int p, int q, int n){
   /*

@@ -23,6 +23,7 @@ public:
   void offdiag(mat A, int *p, int *q, int n);
   double tau(double theta);
   double tau(double a, double b, double c);
+  double zero_test(mat it_A);
 };
 
 #endif
