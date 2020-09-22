@@ -16,7 +16,7 @@ private:
   double s, c, theta, max_iterations;
 
 public:
-  void Initialize(double a, mat ex);
+  mat Initialize(double a, mat ex);
   void Rotate(mat A, mat S, int p, int q, int n);
   void Jacobi(mat A, int maxiter, double eps);
   vec Jacobi_arm(mat T);
