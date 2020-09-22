@@ -113,6 +113,7 @@ void classtuff::Jacobi(mat A, int maxiter, double eps){
   double nde_m;
   int iter, p, q, n;
   iter = 0;
+  nde_m = 1;
   n = c_size;
   while( nde_m > eps && iter <= maxiter){
     offdiag(A,&p, &q, n);
