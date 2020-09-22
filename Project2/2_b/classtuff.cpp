@@ -43,21 +43,18 @@ vec classtuff::Jacobi_arm(mat T){
 void classtuff::offdiag(mat A, int *p, int *q, int n){
   double maxoff;
   for(int i = 0; i<n; ++i){
-
     for(int j = i+1;  j < n; ++j){
             double aij = fabs(A(i, j));
-      if(aij > maxoff){
-        maxoff = aij; p = &i; q = &j;
+            cout << A(i,j)<< endl;
+            if(aij > maxoff){
+              maxoff = aij; p = &i; q = &j;
       }
-
     }
-
   }
-
 }
 
 
-void classtuff::Rotate(mat A, mat S, int p, int q, int n){
+void classtuff::Rotate(mat A, mat S, int *p, int *q, int n){
   /*
   Where A is input, S is the solution matrix, p,q is row column from
   offdiag() function. Rotates the A matrix around the biggest off-diagonal element and
@@ -89,8 +86,8 @@ void classtuff::Rotate(mat A, mat S, int p, int q, int n){
   A(q,q) = s*s*a_kk + 2.0*c*s*A(p,q) + c*c*a_ll;
   A(p,q) = 0.0;  // hard-coding non-diagonal elements by hand
   A(q,p) = 0.0;  // same here
-  for ( int i = 0; i < n; i++ ) {
-    if ( i != p && i != q ) {
+  for ( int i = 0; i < n-1; i++ ) {
+    if ( i != *p && i != *q ) {
       a_ik = A(i,p);
       a_il = A(i,q);
       A(i,p) = c*a_ik - s*a_il;
@@ -109,14 +106,14 @@ void classtuff::Rotate(mat A, mat S, int p, int q, int n){
 }
 
 
-void classtuff::Jacobi(mat A, int maxiter, double eps){
+void classtuff::Jacobi(mat A, double eps){
   double nde_m;
-  int iter, p, q, n;
+  int iter, n;
   iter = 0;
   nde_m = 1;
   n = c_size;
   while( nde_m > eps && iter <= maxiter){
-    offdiag(A,&p, &q, n);
+    offdiag(A,p, q, n);
     Rotate(A, S, p, q, n);
     nde_m = A(p,q);
     iter ++;
