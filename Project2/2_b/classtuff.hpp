@@ -13,7 +13,7 @@ private:
   mat S;
   int p; int q;
   double eps = 1.0e-8;
-  double s, c, theta, max_iterations;
+  double s, c, theta, maxiter;
 
 public:
   mat Initialize(double a, mat ex);

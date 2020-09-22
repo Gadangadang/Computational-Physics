@@ -17,7 +17,7 @@ using namespace arma;
 mat classtuff::Initialize(double a, mat ex){
   c_size = a;
   A = ex;
-  max_iterations = (double) c_size * (double) c_size * (double) c_size;
+  maxiter = (double) c_size * (double) c_size * (double) c_size;
   mat S = zeros<mat>(c_size,c_size);
 
   A(0,0) = -2; A(0,1) = 1;
