@@ -13,7 +13,7 @@ private:
 
 public:
   int p; int q;
-  mat S,A,R;
+  mat S,A;
   double eps = 1.0e-8;
   mat Initialize(double a, mat ex);
   void Rotate(mat A, mat S, int p, int q, int n);
