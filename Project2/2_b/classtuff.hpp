@@ -17,11 +17,13 @@ private:
 
 public:
   void Initialize(double a, mat ex);
+
   void Rotate();
   void Jacobi();
   vec Jacobi_arm(mat T);
   double tau(double theta);
   double tau(double a, double b, double c);
+  double zero_test(mat it_A);
 };
 
 #endif
