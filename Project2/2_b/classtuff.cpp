@@ -21,7 +21,7 @@ mat classtuff::Initialize(double a, mat ex){
   mat S = zeros<mat>(c_size,c_size);
 
   A(0,0) = -2; A(0,1) = 1;
-  for (int i = 0; i < c_size; i++){
+  for (int i = 1; i < c_size-1; i++){
     A(i,i-1) = 1;
     A(i,i) = -2;
     A(i,i+1) = 1;
