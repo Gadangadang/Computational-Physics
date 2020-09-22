@@ -50,7 +50,7 @@ void classtuff::offdiag(mat A, int p, int q, int n){
             double aij = fabs(A(i, j));
             if(aij > maxoff && i !=j){
               maxoff = aij; k = i; l = j;
-              cout << p<<q<<endl;
+              cout << p<< " " << q<<endl;
       }
     }
   }
