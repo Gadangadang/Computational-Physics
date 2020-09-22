@@ -56,9 +56,6 @@ void classtuff::offdiag(mat A, int *p, int *q, int n){
 
 }
 
-  }
-}
-}
 
 void classtuff::Rotate(mat A, mat S, int p, int q, int n){
   /*
@@ -112,7 +109,6 @@ void classtuff::Rotate(mat A, mat S, int p, int q, int n){
 }
 
 
-}
 void classtuff::Jacobi(mat A, int maxiter, double eps){
   double nde_m;
   int iter, p, q, n;
@@ -121,7 +117,7 @@ void classtuff::Jacobi(mat A, int maxiter, double eps){
   iter = 0;
   while( nde_m > eps && iter <= maxiter){
     offdiag(A,&p, &q, n);
-    Jacobi_rotate(A, R, p, q, n);
+    Jacobi_rotate(A, S, p, q, n);
     nde_m = A(p,q);
     iter ++;
   }
