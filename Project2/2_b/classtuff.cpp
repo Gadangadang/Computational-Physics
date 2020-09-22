@@ -64,18 +64,43 @@ void classtuff::Rotate(mat A, mat S, int p, int q, int n){
     tau = (double) (A( p, p ) - A( q, q )) / A( p, q );
 
     if( tau >= 0){
-      t = (double) 1/(tau + arma::sqrt(1 + tau*tau));
+      t = (double) 1/(tau + sqrt(1 + tau*tau));
     }
     else{
-      t = (double) -1/(-tau + arma::sqrt(1 + tau*tau));
+      t = (double) -1/(-tau + sqrt(1 + tau*tau));
     }
-    c = (double) 1/(arma::sqrt(1 + t*t));
+    c = (double) 1/(sqrt(1 + t*t));
     s = (double) c*t;
   }else{
     c = 1.0;
     s = 0.0;
   }
+  // Det under er kopiert fra foiler 
+  double a_kk, a_ll, a_ik, a_il, r_ik, r_il;
+  a_kk = A(p,p);
+  a_ll = A(q,q);
+  A(p,p) = c*c*a_kk - 2.0*c*s*A(p,q) + s*s*a_ll;
+  A(q,q) = s*s*a_kk + 2.0*c*s*A(p,q) + c*c*a_ll;
+  A(p,q) = 0.0;  // hard-coding non-diagonal elements by hand
+  A(q,p) = 0.0;  // same here
+  for ( int i = 0; i < n; i++ ) {
+    if ( i != p && i != q ) {
+      a_ik = A(i,p);
+      a_il = A(i,q);
+      A(i,p) = c*a_ik - s*a_il;
+      A(p,i) = A(i,p);
+      A(i,q) = c*a_il + s*a_ik;
+      A(q,i) = A(i,q);
+    }
+//  And finally the new eigenvectors
+    r_ik = S(i,p);
+    r_il = S(i,q);
 
+    S(i,p) = c*r_ik - s*r_il;
+    S(i,q) = c*r_il + s*r_ik;
+  }
+  return;
+}
   
 
 }

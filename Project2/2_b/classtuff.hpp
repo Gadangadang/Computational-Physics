@@ -17,7 +17,7 @@ private:
 
 public:
   void Initialize(double a, mat ex);
-  void Rotate();
+  void Rotate(mat A, mat S, int p, int q, int n);
   void Jacobi();
   vec Jacobi_arm(mat T);
   void offdiag(mat A, int *p, int *q, int n);
