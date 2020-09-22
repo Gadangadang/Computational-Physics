@@ -14,10 +14,12 @@
 using namespace std;
 using namespace arma;
 
+
 mat classtuff::Initialize(double a, mat ex){
   c_size = a;
   A = ex;
-  maxiter = (double) c_size * (double) c_size * (double) c_size;
+  //maxiter = (double) c_size * (double) c_size * (double) c_size;
+  maxiter = 10000;
   S = zeros<mat>(c_size,c_size);
 
   A(0,0) = -2; A(0,1) = 1;
@@ -40,24 +42,21 @@ vec classtuff::Jacobi_arm(mat T){
   return test_eigvals;
 }
 
-void classtuff::offdiag(mat A, int p, int q, int n){
+void classtuff::offdiag(mat A, int &p, int &q, int n){
   double maxoff;
   maxoff=0;
-  int& k =p;
-  int& l =q;
   for(int i = 0; i<n; ++i){
     for(int j = 0;  j < n; ++j){
             double aij = fabs(A(i, j));
             if(aij > maxoff && i !=j){
-              maxoff = aij; k = i; l = j;
-              cout << p<<q<<endl;
+              maxoff = aij; p = i; q = j;
       }
     }
   }
 }
 
 
-mat classtuff::Rotate(mat A, mat S, int p, int q, int n){
+void classtuff::Rotate(mat &A, mat S, int &p, int &q, int n){
   /*
   Where A is input, S is the solution matrix, p,q is row column from
   offdiag() function. Rotates the A matrix around the biggest off-diagonal element and
@@ -66,7 +65,7 @@ mat classtuff::Rotate(mat A, mat S, int p, int q, int n){
   double s, c;
   if( A(p,q) != 0.0 ){
     double t, tau;
-    tau = (double) (A( p, p ) - A( q, q )) / A( p, q );
+    tau = (double) (A( q, q ) - A( p, p )) / A( p, q );
 
     if( tau >= 0){
       t = (double) 1/(tau + sqrt(1 + tau*tau));
@@ -87,7 +86,12 @@ mat classtuff::Rotate(mat A, mat S, int p, int q, int n){
   A(p,p) = c*c*a_kk - 2.0*c*s*A(p,q) + s*s*a_ll;
   A(q,q) = s*s*a_kk + 2.0*c*s*A(p,q) + c*c*a_ll;
   A(p,q) = 0.0;  // hard-coding non-diagonal elements by hand
-  A(q,p) = 0.0;  // same here
+  A(q,p) = 0.0;
+  S(p,p) = c;
+  S(q,q) = c;
+  S(p,q) = s;  // hard-coding non-diagonal elements by hand
+  S(q,p) = -s;
+   // same here
   for ( int i = 0; i < n; i++ ) {
     if ( i != p && i != q ) {
       a_ik = A(i,p);
@@ -103,7 +107,6 @@ mat classtuff::Rotate(mat A, mat S, int p, int q, int n){
     S(i,p) = c*r_ik - s*r_il;
     S(i,q) = c*r_il + s*r_ik;
   }
-  return  A;
 }
 
 
@@ -113,14 +116,14 @@ mat classtuff::Jacobi(mat A, double eps){
   iter = 0;
   nde_m = 1;
   n = c_size;
-  int& k =p;
-  int& l =q;
+  int p;
+  int q;
   while( fabs(nde_m) > eps || iter <= maxiter){
-    offdiag(A,k, l, n);
-    A = Rotate(A, S, k, l, n);
-    nde_m = A(k,l);
+    offdiag(A,p, q, n);
+    Rotate(A, S, p, q, n);
+    nde_m = A(p,q);
     iter ++;
-    cout << p << "pikk" << q << endl;
+    cout << A<< endl;
   }
   cout << iter<<"  "<<nde_m << endl;
   return A;
