@@ -51,7 +51,32 @@ void classtuff::offdiag(mat A, int *p, int *q, int n){
 }
 
 
-void classtuff::Rotate(){
+void classtuff::Rotate(mat A, mat S, int p, int q, int n){
+  /*
+  Where A is input, S is the solution matrix, p,q is row column from 
+  offdiag() function. Rotates the A matrix around the biggest off-diagonal element and 
+  deposits eigenvalues into the S matrix.  
+  */
+
+  double s, c;
+  if( A(p,q) != 0.0 ){
+    double t, tau;
+    tau = (double) (A( p, p ) - A( q, q )) / A( p, q );
+
+    if( tau >= 0){
+      t = (double) 1/(tau + arma::sqrt(1 + tau*tau));
+    }
+    else{
+      t = (double) -1/(-tau + arma::sqrt(1 + tau*tau));
+    }
+    c = (double) 1/(arma::sqrt(1 + t*t));
+    s = (double) c*t;
+  }else{
+    c = 1.0;
+    s = 0.0;
+  }
+
+  
 
 }
 void classtuff::Jacobi(){
