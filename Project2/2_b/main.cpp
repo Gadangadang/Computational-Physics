@@ -28,7 +28,7 @@ int main(int argc, char const *argv[]) {
   A = mysolver.Initialize(size, A);
   vec test_eigvals = mysolver.Jacobi_arm(A);
   cout << test_eigvals << endl;
-
+  solved _eigvals = mysolver.Jacobi() 
 
 
   return 0;
