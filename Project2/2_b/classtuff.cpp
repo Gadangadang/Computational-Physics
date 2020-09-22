@@ -14,7 +14,7 @@
 using namespace std;
 using namespace arma;
 
-mat classtuff::Initialize(double a, mat ex){
+mat classtuff::Initialize(double a, mat ex, mat R){
   c_size = a;
   A = ex;
   maxiter = (double) c_size * (double) c_size * (double) c_size;
