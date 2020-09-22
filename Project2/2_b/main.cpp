@@ -25,7 +25,7 @@ int main(int argc, char const *argv[]) {
   mat eigvec = zeros<mat>(size,size);
 
   //Initialize matrices
-  mysolver.Initialize(size, A);
+  A = mysolver.Initialize(size, A);
   vec test_eigvals = mysolver.Jacobi_arm(A);
   cout << test_eigvals << endl;
 
