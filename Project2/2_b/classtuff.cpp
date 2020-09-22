@@ -14,7 +14,7 @@
 using namespace std;
 using namespace arma;
 
-mat classtuff::Initialize(double a, mat ex){
+mat classtuff::Initialize(double a, mat ex, mat R){
   c_size = a;
   A = ex;
   maxiter = (double) c_size * (double) c_size * (double) c_size;
@@ -84,6 +84,10 @@ void classtuff::Rotate(mat A, mat S, int p, int q, int n){
   A(q,q) = s*s*a_kk + 2.0*c*s*A(p,q) + c*c*a_ll;
   A(p,q) = 0.0;  // hard-coding non-diagonal elements by hand
   A(q,p) = 0.0;  // same here
+  S(p,p) = c;
+  S(q,q) = c;
+  S(p,q) = s;
+  S(q,p) = -s;
   for ( int i = 0; i < n; i++ ) {
     if ( i != p && i != q ) {
       a_ik = A(i,p);
@@ -98,7 +102,7 @@ void classtuff::Rotate(mat A, mat S, int p, int q, int n){
     r_il = S(i,q);
     S(i,p) = c*r_ik - s*r_il;
     S(i,q) = c*r_il + s*r_ik;
-    cout << A << endl;
+    cout << S << endl;
   }
   return;
 }
