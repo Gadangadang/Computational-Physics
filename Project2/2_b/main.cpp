@@ -18,15 +18,19 @@ int main(int argc, char const *argv[]) {
 
   //Define class object
   classtuff mysolver;
-  int size = pow(10,atof(argv[1]));
 
+  //int size = pow(10,atof(argv[1]));
+  int size = 3;
   //Define matrix to solve Ax = lambda x
   mat A = zeros<mat>(size,size);
+  mat R = zeros<mat>(size,size);
   mat eigvec = zeros<mat>(size,size);
 
   //Initialize matrices
-  A = mysolver.Initialize(size, A);
+  A= mysolver.Initialize(size, A);
   vec test_eigvals = mysolver.Jacobi_arm(A);
+  mat qen = mysolver.Jacobi(A,0.000008);
+  cout << qen << endl;
   cout << test_eigvals << endl;
 
 

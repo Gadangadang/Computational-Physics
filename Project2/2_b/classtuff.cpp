@@ -14,11 +14,11 @@
 using namespace std;
 using namespace arma;
 
-mat classtuff::Initialize(double a, mat ex){
+mat classtuff::Initialize(double a, mat ex, mat R){
   c_size = a;
   A = ex;
   maxiter = (double) c_size * (double) c_size * (double) c_size;
-  mat S = zeros<mat>(c_size,c_size);
+  S = zeros<mat>(c_size,c_size);
 
   A(0,0) = -2; A(0,1) = 1;
   for (int i = 1; i < c_size-1; i++){
@@ -40,30 +40,29 @@ vec classtuff::Jacobi_arm(mat T){
   return test_eigvals;
 }
 
-void classtuff::offdiag(mat A, int *p, int *q, int n){
+void classtuff::offdiag(mat A, int p, int q, int n){
   double maxoff;
+  maxoff=0;
+  int& k =p;
+  int& l =q;
   for(int i = 0; i<n; ++i){
-
-    for(int j = i+1;  j < n; ++j){
+    for(int j = 0;  j < n; ++j){
             double aij = fabs(A(i, j));
-      if(aij > maxoff){
-        maxoff = aij; p = &i; q = &j;
+            if(aij > maxoff && i !=j){
+              maxoff = aij; k = i; l = j;
+              cout << p<< " " << q<<endl;
       }
-
     }
-
   }
-
 }
 
 
-void classtuff::Rotate(mat A, mat S, int p, int q, int n){
+mat classtuff::Rotate(mat A, mat S, int p, int q, int n){
   /*
   Where A is input, S is the solution matrix, p,q is row column from
   offdiag() function. Rotates the A matrix around the biggest off-diagonal element and
   deposits eigenvalues into the S matrix.
   */
-
   double s, c;
   if( A(p,q) != 0.0 ){
     double t, tau;
@@ -101,24 +100,28 @@ void classtuff::Rotate(mat A, mat S, int p, int q, int n){
 //  And finally the new eigenvectors
     r_ik = S(i,p);
     r_il = S(i,q);
-
     S(i,p) = c*r_ik - s*r_il;
     S(i,q) = c*r_il + s*r_ik;
   }
-  return;
+  return  A;
 }
 
 
-void classtuff::Jacobi(mat A, int maxiter, double eps){
+mat classtuff::Jacobi(mat A, double eps){
   double nde_m;
-  int iter, p, q, n;
+  int iter, n;
   iter = 0;
   nde_m = 1;
   n = c_size;
-  while( nde_m > eps && iter <= maxiter){
-    offdiag(A,&p, &q, n);
-    Rotate(A, S, p, q, n);
-    nde_m = A(p,q);
+  int& k =p;
+  int& l =q;
+  while( fabs(nde_m) > eps || iter <= maxiter){
+    offdiag(A,k, l, n);
+    A = Rotate(A, S, k, l, n);
+    nde_m = A(k,l);
     iter ++;
+    cout << p << "pikk" << q << endl;
   }
+  cout << iter<<"  "<<nde_m << endl;
+  return A;
   }
