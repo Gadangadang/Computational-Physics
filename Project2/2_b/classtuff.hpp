@@ -11,15 +11,11 @@ private:
   int c_size;
   double s, c, theta, maxiter;
   int p; int q;
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 public:
   double maxoff;
   mat S,A;
   double eps;
-  double maxoff;
   mat Initialize(double a, mat ex);
   void Rotate(mat &A, mat S, int &p, int &q, int n);
   mat Jacobi(mat A, double eps);
