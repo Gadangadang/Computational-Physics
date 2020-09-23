@@ -14,9 +14,11 @@ private:
 
 public:
   double maxoff;
-  mat S,A;
+  mat S,A,I;
   double eps;
+  double rho_max ; 
   mat Initialize(double a, mat ex);
+  mat Initialize_C(double a, mat ex);
   void Rotate(mat &A, mat &S, int &p, int &q, int n);
   mat Jacobi(mat A, double eps);
   vec Jacobi_arm(mat T);
