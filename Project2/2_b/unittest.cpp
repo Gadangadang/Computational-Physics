@@ -28,5 +28,4 @@ TEST_CASE( "Check for errors in code" ) {
   SECTION("CHECK ORTHOGONALITY OF EIGENVECTORS"){
     REQUIRE(fabs(accu(test_obj.S*test_obj.S.t()-A.eye()))<1e-6);
   }
-
 }
