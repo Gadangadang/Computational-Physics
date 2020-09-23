@@ -29,7 +29,6 @@ int main(int argc, char const *argv[]) {
   A= mysolver.Initialize(size, A);
   vec test_eigvals = mysolver.Jacobi_arm(A);
   mat qen = mysolver.Jacobi(A,1e-16);
-
   cout << sort(qen.diag()) << endl;
   cout << sort(test_eigvals) << endl;
 

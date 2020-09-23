@@ -51,7 +51,7 @@ void classtuff::offdiag(mat A, int &p, int &q, int n, double &maxoff){
   }
 }
 
-void classtuff::Rotate(mat &A, mat S, int &p, int &q, int n){
+void classtuff::Rotate(mat &A, mat &S, int &p, int &q, int n){
   /*
   Where A is input, S is the solution matrix, p,q is row column from
   offdiag() function. Rotates the A matrix around the biggest off-diagonal element and

@@ -25,5 +25,8 @@ TEST_CASE( "Check for errors in code" ) {
   SECTION("Finding eigenvalues for matrix"){
     REQUIRE( fabs(accu(sort(test_eigvals) - sort(qen.diag()))) < 1e-3 );
   }
+  SECTION("CHECK ORTHOGONALITY OF EIGENVECTORS"){
+    REQUIRE(fabs(accu(test_obj.S*test_obj.S.t()-A.eye()))<1e-6);
+  }
 
 }

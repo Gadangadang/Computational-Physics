@@ -17,7 +17,7 @@ public:
   mat S,A;
   double eps;
   mat Initialize(double a, mat ex);
-  void Rotate(mat &A, mat S, int &p, int &q, int n);
+  void Rotate(mat &A, mat &S, int &p, int &q, int n);
   mat Jacobi(mat A, double eps);
   vec Jacobi_arm(mat T);
   void offdiag(mat A, int &p, int &q, int n, double &maxoff);
