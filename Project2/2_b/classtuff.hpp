@@ -13,7 +13,6 @@ private:
   int p; int q;
 
 public:
-  double maxoff;
   mat S,A;
   double eps;
   mat Initialize(double a, mat ex);
