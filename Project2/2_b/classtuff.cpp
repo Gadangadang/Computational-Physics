@@ -18,8 +18,7 @@ using namespace arma;
 mat classtuff::Initialize(double a, mat ex){
   c_size = a;
   A = ex;
-  //maxiter = (double) c_size * (double) c_size * (double) c_size;
-  maxiter = 10000;
+  maxiter = (double) c_size * (double) c_size * (double) c_size;
   S = zeros<mat>(c_size,c_size);
 
   A(0,0) = -2; A(0,1) = 1;
@@ -42,8 +41,7 @@ vec classtuff::Jacobi_arm(mat T){
   return test_eigvals;
 }
 
-void classtuff::offdiag(mat A, int &p, int &q, int n){
-  double maxoff;
+void classtuff::offdiag(mat A, int &p, int &q, int n, double &maxoff){
   maxoff=0;
   for(int i = 0; i<n; ++i){
     for(int j = 0;  j < n; ++j){
@@ -53,6 +51,7 @@ void classtuff::offdiag(mat A, int &p, int &q, int n){
       }
     }
   }
+cout <<"før"<< A(p,q)<< endl;
 }
 
 
@@ -118,12 +117,12 @@ mat classtuff::Jacobi(mat A, double eps){
   n = c_size;
   int p;
   int q;
-  while( fabs(nde_m) > eps || iter <= maxiter){
-    offdiag(A,p, q, n);
+  while( fabs(nde_m) > eps && iter <= maxiter){
+    offdiag(A,p, q, n, maxoff);
     Rotate(A, S, p, q, n);
-    nde_m = A(p,q);
+    nde_m = maxoff;
+    cout <<"etter"<< nde_m<< endl;
     iter ++;
-    cout << A<< endl;
   }
   cout << iter<<"  "<<nde_m << endl;
   return A;
