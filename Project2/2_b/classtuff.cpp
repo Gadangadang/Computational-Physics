@@ -14,7 +14,6 @@
 using namespace std;
 using namespace arma;
 
-
 mat classtuff::Initialize(double a, mat ex){
   c_size = a;
   A = ex;
@@ -34,7 +33,6 @@ mat classtuff::Initialize(double a, mat ex){
   return A;
 }
 
-
 vec classtuff::Jacobi_arm(mat T){
 
   vec test_eigvals = eig_sym(T);
@@ -52,7 +50,6 @@ void classtuff::offdiag(mat A, int &p, int &q, int n, double &maxoff){
     }
   }
 }
-
 
 void classtuff::Rotate(mat &A, mat S, int &p, int &q, int n){
   /*
@@ -114,8 +111,6 @@ mat classtuff::Jacobi(mat A, double eps){
   iter = 0;
   nde_m = 1;
   n = c_size;
-  int p;
-  int q;
   while( fabs(nde_m) > eps && iter <= maxiter){
     offdiag(A,p, q, n, maxoff);
     Rotate(A, S, p, q, n);
