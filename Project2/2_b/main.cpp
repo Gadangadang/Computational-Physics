@@ -28,8 +28,8 @@ int main(int argc, char const *argv[]) {
   //Initialize matrices
   A= mysolver.Initialize(size, A);
   vec test_eigvals = mysolver.Jacobi_arm(A);
-  mat qen = mysolver.Jacobi(A,0.000008);
-  cout << qen << endl;
+  mat qen = mysolver.Jacobi(A,1e-16);
+  cout << qen.diag() << endl;
   cout << test_eigvals << endl;
 
 

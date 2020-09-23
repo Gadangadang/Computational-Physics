@@ -51,7 +51,6 @@ void classtuff::offdiag(mat A, int &p, int &q, int n, double &maxoff){
       }
     }
   }
-cout <<"før"<< A(p,q)<< endl;
 }
 
 
@@ -64,7 +63,7 @@ void classtuff::Rotate(mat &A, mat S, int &p, int &q, int n){
   double s, c;
   if( A(p,q) != 0.0 ){
     double t, tau;
-    tau = (double) (A( q, q ) - A( p, p )) / A( p, q );
+    tau = (double) (A( q, q ) - A( p, p )) /(2*A( p, q ));
 
     if( tau >= 0){
       t = (double) 1/(tau + sqrt(1 + tau*tau));
@@ -121,9 +120,7 @@ mat classtuff::Jacobi(mat A, double eps){
     offdiag(A,p, q, n, maxoff);
     Rotate(A, S, p, q, n);
     nde_m = maxoff;
-    cout <<"etter"<< nde_m<< endl;
     iter ++;
   }
-  cout << iter<<"  "<<nde_m << endl;
   return A;
-  }
+}
