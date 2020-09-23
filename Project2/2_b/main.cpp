@@ -23,14 +23,14 @@ int main(int argc, char const *argv[]) {
   int size = 3;
   //Define matrix to solve Ax = lambda x
   mat A = zeros<mat>(size,size);
-  mat eigvec = zeros<mat>(size,size);
+  
 
   //Initialize matrices
   A= mysolver.Initialize(size, A);
   vec test_eigvals = mysolver.Jacobi_arm(A);
   mat qen = mysolver.Jacobi(A,1e-16);
-  cout << qen.diag() << endl;
-  cout << test_eigvals << endl;
+  cout << sort(qen.diag()) << endl;
+  cout << sort(test_eigvals) << endl;
 
 
 
