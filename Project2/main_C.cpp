@@ -20,7 +20,7 @@ int main(int argc, char const *argv[]) {
   classtuff mysolver;
 
   //int size = pow(10,atof(argv[1]));
-  int size = 350;
+  int size = 300;
   double rho_max = 5;
   //Define matrix to solve Ax = lambda x
   mat A = zeros<mat>(size,size);
@@ -32,6 +32,7 @@ int main(int argc, char const *argv[]) {
   mat qen = mysolver.Jacobi(A,1e-16);
   //cout << qen << endl;
   //cout << sort(test_eigvals) << endl;
+<<<<<<< HEAD
   vec eigs = sort(qen.diag(),"descend");
   int b = eigs.n_elem;
   //cout << eigs << endl;
