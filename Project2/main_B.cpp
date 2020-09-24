@@ -13,26 +13,23 @@
 
 using namespace std;
 using namespace arma;
-
+double V(double x){return 0;}
 int main(int argc, char const *argv[]) {
 
   //Define class object
   classtuff mysolver;
 
   //int size = pow(10,atof(argv[1]));
-  int size = 3;
+  int c_size = 3;
   //Define matrix to solve Ax = lambda x
-  mat A = zeros<mat>(size,size);
-
-
+  double a = 0;
+  double b = 1;
   //Initialize matrices
-  A= mysolver.Initialize(size, A);
+  mat A = mysolver.Initialize(a,  b,  V,  c_size);
   vec test_eigvals = mysolver.Jacobi_arm(A);
-  mat qen = mysolver.Jacobi(A,1e-16);
+  mat qen = mysolver.Jacobi(A,1e-16, c_size);
   cout << sort(qen.diag()) << endl;
   cout << sort(test_eigvals) << endl;
-
-
 
 
   return 0;

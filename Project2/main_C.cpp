@@ -13,6 +13,9 @@
 
 using namespace std;
 using namespace arma;
+double V(double rho){
+  return rho*rho;
+}
 
 int main(int argc, char const *argv[]) {
 
@@ -20,22 +23,21 @@ int main(int argc, char const *argv[]) {
   classtuff mysolver;
 
   //int size = pow(10,atof(argv[1]));
-  int size = 300;
-  double rho_max = 5;
+  int c_size = 300;
+  double a = 0;
+  double b = 5;
   //Define matrix to solve Ax = lambda x
-  mat A = zeros<mat>(size,size);
-
   //Initialize matrices
-  A= mysolver.Initialize_C(size, A, rho_max);
-
+  mat A = mysolver.Initialize(a,  b,  V,  c_size);
   vec test_eigvals = mysolver.Jacobi_arm(A);
-  mat qen = mysolver.Jacobi(A,1e-16);
+  mat qen = mysolver.Jacobi(A,1e-16, c_size);
   vec eigs = sort(qen.diag(),"descend");
-  int b = eigs.n_elem;
-  cout << b << endl;
-  cout << "eig 4: " << eigs[b-4] << endl;
-  cout << "eig 3: " << eigs[b-3] << endl;
-  cout << "eig 2: " << eigs[b-2] << endl;
-  cout << "eig 1: " << eigs[b-1] << endl;
+  int F = eigs.n_elem;
+  cout << F << endl;
+  cout << "eig 4: " << eigs[F-4] << endl;
+  cout << "eig 3: " << eigs[F-3] << endl;
+  cout << "eig 2: " << eigs[F-2] << endl;
+  cout << "eig 1: " << eigs[F-1] << endl;
+  cout << eigs << endl;
   return 0;
 }
