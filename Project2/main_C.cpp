@@ -31,8 +31,13 @@ int main(int argc, char const *argv[]) {
   vec test_eigvals = mysolver.Jacobi_arm(A);
   mat qen = mysolver.Jacobi(A,1e-16);
   //cout << qen << endl;
-  cout << sort(test_eigvals) << endl;
-  cout << sort(qen.diag(),"descend") << endl;
-
+  //cout << sort(test_eigvals) << endl;
+  vec eigs = sort(qen.diag(),"descend");
+  int b = eigs.n_elem;
+  //cout << eigs << endl;
+  cout << b << endl;
+  cout << "eig 1: " << eigs[b-3] << endl;
+  cout << "eig 2: " << eigs[b-2] << endl;
+  cout << "eig 3: " << eigs[b-1] << endl;
   return 0;
 }
