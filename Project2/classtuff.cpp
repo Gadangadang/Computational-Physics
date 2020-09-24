@@ -43,19 +43,17 @@ mat classtuff::Initialize_C(double a, mat ex, double rho_max){
 
 
   int rho_min = 0;
-  double h = (double) (rho_max - rho_min)/(c_size);
+  double h = (double) (rho_max - rho_min)/(c_size+2);
   cout << "h: " << h << endl;
 
-  I(0) = rho_min;
-  I(c_size-1,c_size-1) = ((c_size-1)*h)*((c_size-1)*h);
   A(0,0) = 2/(h*h); A(0,1) = -1/(h*h);
   for (int i = 1; i < c_size-1; i++){
     A(i,i-1) = -1/(h*h);
-    A(i,i) = 2/(h*h) + (i*h)*(i*h);
+    A(i,i) = 2/(h*h) + (i+1)*h*(i+1)*h;
     A(i,i+1) = -1/(h*h);
   }
 
-  A(c_size-1,c_size-1) = 2/(h*h) + (c_size*h)*(c_size*h);
+  A(c_size-1,c_size-1) = 2/(h*h) + (c_size)*h*(c_size)*h;
   A(c_size-1,c_size-2) = -1/(h*h);
   A(c_size-2,c_size-1) = -1/(h*h);
 
