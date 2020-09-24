@@ -14,7 +14,9 @@
 using namespace std;
 using namespace arma;
 double V(double rho){
-  return rho*rho;
+    double omega = 4;
+    // Using b since its defined as rho_max.
+  return (omega*omega)*(rho*rho) + 1/rho;
 }
 
 int main(int argc, char const *argv[]) {
@@ -26,6 +28,7 @@ int main(int argc, char const *argv[]) {
   int c_size = 300;
   double a = 0;
   double b = 5;
+  //double omega = 1/4;
   //Define matrix to solve Ax = lambda x
   //Initialize matrices
   mat A = mysolver.Initialize(a,  b,  V,  c_size);
@@ -38,6 +41,5 @@ int main(int argc, char const *argv[]) {
   cout << "eig 3: " << eigs[F-3] << endl;
   cout << "eig 2: " << eigs[F-2] << endl;
   cout << "eig 1: " << eigs[F-1] << endl;
-  //cout << eigs << endl;
   return 0;
 }

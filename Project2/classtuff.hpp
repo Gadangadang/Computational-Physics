@@ -27,6 +27,7 @@ public:
   double tau(double theta);
   double tau(double a, double b, double c);
   double zero_test(mat it_A);
+  mat returnS();
 };
 
 #endif

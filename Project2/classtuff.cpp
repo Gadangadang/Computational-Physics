@@ -121,3 +121,4 @@ mat classtuff::Jacobi(mat A, double eps, int n){
   cout << "Iter: " << iter <<endl;
   return A;
 }
+
