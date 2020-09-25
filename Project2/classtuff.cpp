@@ -14,57 +14,25 @@
 using namespace std;
 using namespace arma;
 
-mat classtuff::Initialize(double a, mat ex){
-  c_size = a;
-  A = ex;
+mat classtuff::Initialize(double a, double b, double V(double x), double c_size){
   maxiter = (double) c_size * (double) c_size * (double) c_size;
+  A = zeros<mat>(c_size,c_size);
   S = zeros<mat>(c_size,c_size);
-
-  A(0,0) = -2; A(0,1) = 1;
-  for (int i = 1; i < c_size-1; i++){
-    A(i,i-1) = 1;
-    A(i,i) = -2;
-    A(i,i+1) = 1;
+  double h = (b-a)/(c_size+1);
+  double hh = -1./(h*h);
+  for (int i = 0; i < c_size-1; i++){
+    A(i+1,i) = 1*hh;
+    A(i,i) = -2*hh + V(rho_func(h,i,a));
+    A(i,i+1) = 1*hh;
   }
-  A(c_size-1,c_size-1) = -2;
-  A(c_size-1,c_size-2) = 1;
-  A(c_size-2,c_size-1) = 1;
+  A(c_size-1,c_size-1) = V(rho_func(h,c_size,a))-2*hh;
+  A(c_size-1,c_size-2) = 1*hh;
+  A(c_size-2,c_size-1) = 1*hh;
 
   return A;
 }
-
-mat classtuff::Initialize_C(double a, mat ex){
-  c_size = a;
-  A = ex;
-  maxiter = (double) c_size * (double) c_size * (double) c_size;
-  S = zeros<mat>(c_size,c_size);
-  I = zeros<mat>(c_size,c_size);
-  I.eye();
-
-
-  int rho_min = 0;
-  rho_max = c_size;
-  double h = (double) (rho_max - rho_min)/(c_size);
-  cout << "h: " << h << endl;
-
-  I(0) = rho_min;
-  I(c_size-1,c_size-1) = ((c_size-1)*h)*((c_size-1)*h);
-  A(0,0) = -2; A(0,1) = 1;
-  for (int i = 1; i < c_size-1; i++){
-    A(i,i-1) = 1;
-    A(i,i) = -2;
-    A(i,i+1) = 1;
-    I(i,i) = (i*h)*(i*h);
-  }
-
-  A(c_size-1,c_size-1) = -2;
-  A(c_size-1,c_size-2) = 1;
-  A(c_size-2,c_size-1) = 1;
-
-  A = -1/(h*h)*A + I;
-
-
-  return A;
+double classtuff::rho_func(double h, int i, double a){
+  return a + (i+1)*h;
 }
 
 vec classtuff::Jacobi_arm(mat T){
@@ -139,12 +107,11 @@ void classtuff::Rotate(mat &A, mat &S, int &p, int &q, int n){
 }
 
 
-mat classtuff::Jacobi(mat A, double eps){
+mat classtuff::Jacobi(mat A, double eps, int n){
   double nde_m;
-  int iter, n;
+  int iter;
   iter = 0;
   nde_m = 1;
-  n = c_size;
   while( fabs(nde_m) > eps && iter <= maxiter){
     offdiag(A,p, q, n, maxoff);
     Rotate(A, S, p, q, n);
@@ -154,3 +121,4 @@ mat classtuff::Jacobi(mat A, double eps){
   cout << "Iter: " << iter <<endl;
   return A;
 }
+

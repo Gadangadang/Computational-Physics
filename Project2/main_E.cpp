@@ -13,24 +13,33 @@
 
 using namespace std;
 using namespace arma;
-double V(double x){return 0;}
+double V(double rho){
+    double omega = 4;
+    // Using b since its defined as rho_max.
+  return (omega*omega)*(rho*rho) + 1/rho;
+}
+
 int main(int argc, char const *argv[]) {
 
   //Define class object
   classtuff mysolver;
 
   //int size = pow(10,atof(argv[1]));
-  int c_size = 3;
-  //Define matrix to solve Ax = lambda x
+  int c_size = 300;
   double a = 0;
-  double b = 1;
+  double b = 5;
+  //double omega = 1/4;
+  //Define matrix to solve Ax = lambda x
   //Initialize matrices
   mat A = mysolver.Initialize(a,  b,  V,  c_size);
   vec test_eigvals = mysolver.Jacobi_arm(A);
   mat qen = mysolver.Jacobi(A,1e-16, c_size);
-  cout << sort(qen.diag()) << endl;
-  cout << sort(test_eigvals) << endl;
-
-
+  vec eigs = sort(qen.diag(),"descend");
+  int F = eigs.n_elem;
+  //cout << F << endl;
+  cout << "eig 4: " << eigs[F-4] << endl;
+  cout << "eig 3: " << eigs[F-3] << endl;
+  cout << "eig 2: " << eigs[F-2] << endl;
+  cout << "eig 1: " << eigs[F-1] << endl;
   return 0;
 }
