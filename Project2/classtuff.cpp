@@ -22,7 +22,7 @@ mat classtuff::Initialize(double a, double b, double V(double x), double c_size)
   double hh = -1./(h*h);
   for (int i = 0; i < c_size-1; i++){
     A(i+1,i) = 1*hh;
-    A(i,i) = -2*hh + V(rho_func(h,i,a));
+    A(i,i) = -2*hh + V(a + (i+1)*h);
     A(i,i+1) = 1*hh;
   }
   A(c_size-1,c_size-1) = V(rho_func(h,c_size,a))-2*hh;
@@ -30,10 +30,6 @@ mat classtuff::Initialize(double a, double b, double V(double x), double c_size)
   A(c_size-2,c_size-1) = 1*hh;
 
   return A;
-}
-double classtuff::rho_func(double h, int i, double a){
-  return a + (i+1)*h;
-}
 
 vec classtuff::Jacobi_arm(mat T){
 
@@ -121,4 +117,3 @@ mat classtuff::Jacobi(mat A, double eps, int n){
   cout << "Iter: " << iter <<endl;
   return A;
 }
-
