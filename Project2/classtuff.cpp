@@ -25,7 +25,7 @@ mat classtuff::Initialize(double a, double b, double V(double x), double c_size)
     A(i,i) = -2*hh + V(a + (i+1)*h);
     A(i,i+1) = 1*hh;
   }
-  A(c_size-1,c_size-1) = V(rho_func(h,c_size,a))-2*hh;
+  A(c_size-1,c_size-1) = V(a + (i+1)*h)-2*hh;
   A(c_size-1,c_size-2) = 1*hh;
   A(c_size-2,c_size-1) = 1*hh;
 
