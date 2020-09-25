@@ -13,9 +13,12 @@
 
 using namespace std;
 using namespace arma;
+ofstream ofile;
 double V(double x){return 0;}
 int main(int argc, char const *argv[]) {
-
+  string outfilename;
+  outfilename = "values.txt";
+  ofile.open(outfilename);
   //Define class object
   classtuff mysolver;
 
@@ -26,11 +29,15 @@ int main(int argc, char const *argv[]) {
   double b = 1;
   //Initialize matrices
   mat A = mysolver.Initialize(a,  b,  V,  c_size);
+  cout << A << endl;
   vec test_eigvals = mysolver.Jacobi_arm(A);
   mat qen = mysolver.Jacobi(A,1e-16, c_size);
   cout << sort(qen.diag()) << endl;
   cout << sort(test_eigvals) << endl;
-
+  for(int k = 0;k< c_size;k++){
+    double rho = k*1./(c_size+1);
+    ofile << setprecision(15) << rho << " " << mysolver.S[0,k]<< endl;
+  }
 
   return 0;
 }
