@@ -14,9 +14,9 @@
 using namespace std;
 using namespace arma;
 double V(double rho){
-    double omega = 4;
+    double omega = 1/4;
     // Using b since its defined as rho_max.
-  return (omega*omega)*(rho*rho) + 1/rho;
+  return (omega*omega)*(rho*rho) + 1./rho;
 }
 
 int main(int argc, char const *argv[]) {
