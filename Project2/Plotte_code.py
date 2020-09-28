@@ -12,14 +12,13 @@ for line in data:
 
 rho = np.asarray(x_value)
 i  = np.linspace(1,len(rho), len(rho))
-
 def anal(i):
     return np.sin(np.pi * i /len(rho))
-    
-plt.plot(x_value,np.asarray(y_value),"r--", label="n=10")
-plt.plot(x_value,np.max(np.asarray(y_value))*anal(i))
-plt.xlabel('x=(0,1)')
-plt.ylabel('u(x)')
+plt.plot(x_value,np.asarray(y_value),"r--", label="Numerical eigenvector")
+plt.plot(x_value,np.max(np.asarray(y_value))*anal(i), label = "Analytical solution")
+plt.xlabel('$\\rho$')
+plt.ylabel('u($\\rho$)')
+plt.title("Vertical displacment as a function of $\\rho$")
 plt.legend()
 plt.savefig("1_b.jpeg")
 plt.show()
