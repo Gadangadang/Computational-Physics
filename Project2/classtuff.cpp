@@ -17,7 +17,7 @@ using namespace arma;
 mat classtuff::Initialize(double a, double b, double V(double x), double c_size){
   maxiter = (double) c_size * (double) c_size * (double) c_size;
   A = zeros<mat>(c_size,c_size);
-  S = zeros<mat>(c_size,c_size);
+  //S = zeros<mat>(c_size,c_size);
   double h = (b-a)/(c_size+1);
   double hh = -1./(h*h);
   for (int i = 0; i < c_size-1; i++){
@@ -40,7 +40,7 @@ vec classtuff::Jacobi_arm(mat T){
 void classtuff::offdiag(mat A, int &p, int &q, int n, double &maxoff){
   maxoff=0;
   for(int i = 0; i<n; ++i){
-    for(int j = 0;  j < n; ++j){
+    for(int j = i+1;  j < n; ++j){
             double aij = fabs(A(i, j));
             if(aij > maxoff && i !=j){
               maxoff = aij; p = i; q = j;
@@ -80,10 +80,6 @@ void classtuff::Rotate(mat &A, mat &S, int &p, int &q, int n){
   A(q,q) = s*s*a_kk + 2.0*c*s*A(p,q) + c*c*a_ll;
   A(p,q) = 0.0;  // hard-coding non-diagonal elements by hand
   A(q,p) = 0.0;
-  S(p,p) = c;
-  S(q,q) = c;
-  S(p,q) = s;  // hard-coding non-diagonal elements by hand
-  S(q,p) = -s;
    // same here
   for ( int i = 0; i < n; i++ ) {
     if ( i != p && i != q ) {
@@ -108,6 +104,8 @@ mat classtuff::Jacobi(mat A, double eps, int n){
   int iter;
   iter = 0;
   nde_m = 1;
+  S = zeros<mat>(n,n);
+  S = S.eye();
   while( fabs(nde_m) > eps && iter <= maxiter){
     offdiag(A,p, q, n, maxoff);
     Rotate(A, S, p, q, n);
