@@ -12,8 +12,10 @@ for line in data:
 
 rho = np.asarray(x_value)
 i  = np.linspace(1,len(rho), len(rho))
+
 def anal(i):
     return np.sin(np.pi * i /len(rho))
+    
 plt.plot(x_value,np.asarray(y_value),"r--", label="n=10")
 plt.plot(x_value,np.max(np.asarray(y_value))*anal(i))
 plt.xlabel('x=(0,1)')
