@@ -24,11 +24,12 @@ int main(int argc, char const *argv[]) {
   //Define class object
   classtuff mysolver;
 
-  int c_size = 400;
+  int c_size = 450;
   //int c_size = 300;
   //int b=5;
+  // eig 1: 0.352646 for N = 450 b =14.
   double a = 0;
-  double b = 12;
+  double b = 14;
   //Define matrix to solve Ax = lambda x
   //Initialize matrices
   mat A = mysolver.Initialize(a,  b,  V,  c_size);
