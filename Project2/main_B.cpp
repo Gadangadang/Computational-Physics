@@ -23,7 +23,7 @@ int main(int argc, char const *argv[]) {
   classtuff mysolver;
 
   //int size = pow(10,atof(argv[1]));
-  int c_size = 200;
+  int c_size = 100;
   //Define matrix to solve Ax = lambda x
   double a = 0;
   double b = 1;
