@@ -17,7 +17,6 @@ using namespace arma;
 mat classtuff::Initialize(double a, double b, double V(double x), double c_size){
   maxiter = (double) c_size * (double) c_size * (double) c_size;
   A = zeros<mat>(c_size,c_size);
-  //S = zeros<mat>(c_size,c_size);
   double h = (b-a)/(c_size+1);
   double hh = -1./(h*h);
   for (int i = 0; i < c_size-1; i++){
