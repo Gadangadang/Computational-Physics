@@ -9,6 +9,9 @@ using namespace arma;
 
 class classtuff {
 private:
+  vec start_pos;
+  vec start_vel;
+  double planet_mass;
   double GMstar = 4*M_PI*M_PI; // AU^3/yr^2
 
 public:

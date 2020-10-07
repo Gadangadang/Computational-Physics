@@ -17,7 +17,9 @@ using namespace std;
 using namespace arma;
 
 void classtuff::initialization(double mass, vec start_velocity, vec start_position){
-
+    start_pos = start_position;
+    start_vel = start_velocity;
+    double planet_mass = mass;
 }
 
 vec classtuff::find_acc(double x, double y){
@@ -26,7 +28,7 @@ vec classtuff::find_acc(double x, double y){
   acc(1) = GMstar/y;
   return acc;
 }
-tuple<vec, vec> classtuff::integrator(int N, vec start_pos, vec start_vel){
+tuple<vec, vec> classtuff::integrator(int N){
   vec Pos_X(N);
   vec Pos_Y(N);
 
