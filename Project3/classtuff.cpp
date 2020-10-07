@@ -10,17 +10,23 @@
 #include "armadillo"
 #include "time.h"
 #include <stdio.h>
+#include <tuple>
+#include <math.h>
 
 using namespace std;
 using namespace arma;
 
-vec find_acc(double x, double y);
-  vec acc(2);
-  vec(0) = GMstar./x;
-  vec(1) = GMstar./y;
-  return acc;
+void classtuff::initialization(double mass, vec start_velocity, vec start_position){
 
-vec integrator(int N, vec start_pos, vec start_vel);
+}
+
+vec classtuff::find_acc(double x, double y){
+  vec acc(2);
+  acc(0) = GMstar/x;
+  acc(1) = GMstar/y;
+  return acc;
+}
+tuple<vec, vec> classtuff::integrator(int N, vec start_pos, vec start_vel){
   vec Pos_X(N);
   vec Pos_Y(N);
 
@@ -38,4 +44,5 @@ vec integrator(int N, vec start_pos, vec start_vel);
     i = i + 1;
   }
 
-  return Pos_X, Pos_Y;
+  return {Pos_X, Pos_Y};
+}
