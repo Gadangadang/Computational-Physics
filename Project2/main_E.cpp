@@ -24,7 +24,7 @@ int main(int argc, char const *argv[]) {
   //Define class object
   classtuff mysolver;
 
-  int c_size = 450;
+  int c_size = 100;
   //int c_size = 300;
   //int b=5;
   // eig 1: 0.352646 for N = 450 b =14.
