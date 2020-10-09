@@ -13,7 +13,6 @@ figure, ax = plt.subplots()
 s_r = 0.0046
 patch = plt.Circle((0,0),radius = s_r, color = 'yellow')
 ax.add_artist(patch)
-ax.legend([patch], ['Sun'])
 ax.axis('equal')
 ax.plot(x_value,np.asarray(y_value),"r--", label="Earth orbit")
 plt.legend()
