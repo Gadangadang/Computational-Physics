@@ -10,6 +10,6 @@ for line in data:
     x_value.append(float(l1))
 
 
-plt.plot(x_value,np.asarray(y_value),"r--", label="Numerical eigenvector")
+plt.plot(x_value,np.asarray(y_value),"r--", label="Earth Orbit")
 plt.show()
 data.close()

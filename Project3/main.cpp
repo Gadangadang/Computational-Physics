@@ -30,7 +30,7 @@ int main(int argc, char const *argv[]) {
   vec pos(2); pos(0) = 1; pos(1) = 0;
   vec vel(2); vel(0) = 0; vel(1) = 1;
 
-  int N = 100000;
+  int N = 1.0e6;
 
   mysolver.initialization(N, earth_mass, vel, pos);
   auto[posx, posy] = mysolver.integrator();
