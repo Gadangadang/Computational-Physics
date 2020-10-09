@@ -33,12 +33,13 @@ int main(int argc, char const *argv[]) {
   int N = 100000;
 
   mysolver.initialization(N, earth_mass, vel, pos);
-
-  cout << "Hei" << endl;
-  //vec posx(N); vec posy(N);
   auto[posx, posy] = mysolver.integrator();
+  for(int k = 0; k<N; k++){
+    ofile << setprecision(15) << posx(k) << " " <<posy(k)<< endl;
+  }
+  //vec posx(N); vec posy(N);
+  ofile.close();
 
-  
 
   return 0;
 }
