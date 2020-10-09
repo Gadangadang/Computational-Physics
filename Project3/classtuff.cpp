@@ -16,7 +16,7 @@
 using namespace std;
 using namespace arma;
 
-void classtuff::initialization(int N, double mass, vec start_velocity, vec start_position){
+void classtuff::initialization(int &N, double &mass, vec &start_velocity, vec &start_position){
     N_size = N;
     start_pos = start_position;
     start_vel = start_velocity;
