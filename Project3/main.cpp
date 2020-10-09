@@ -32,7 +32,7 @@ int main(int argc, char const *argv[]) {
 
   int N = 1.0e6;
 
-  mysolver.initialization(N, earth_mass, vel, pos);
+  mysolver.initialization(N, vel, pos);
   auto[posx, posy] = mysolver.integrator();
   for(int k = 0; k<N; k++){
     ofile << setprecision(15) << posx(k) << " " <<posy(k)<< endl;
