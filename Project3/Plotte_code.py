@@ -11,9 +11,10 @@ for line in data:
 
 figure, ax = plt.subplots()
 s_r = 0.0046
-patch = plt.Circle((0,0),radius = s_r)
+patch = plt.Circle((0,0),radius = s_r, color = 'yellow')
 ax.add_artist(patch)
-ax.plot(x_value,np.asarray(y_value),"r--", label="Numerical eigenvector")
+ax.axis('equal')
+ax.plot(x_value,np.asarray(y_value),"r--", label="Earth orbit")
 #plt.scatter(0,0,s=0.0046,c='yellow')
 plt.show()
 data.close()
