@@ -34,10 +34,11 @@ int main(int argc, char const *argv[]) {
 
   mysolver.initialization(N, earth_mass, vel, pos);
 
+  cout << "Hei" << endl;
   //vec posx(N); vec posy(N);
   auto[posx, posy] = mysolver.integrator();
 
-  cout << posx << " " << posy << endl;
+  
 
   return 0;
 }
