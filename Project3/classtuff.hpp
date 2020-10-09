@@ -11,7 +11,7 @@ class classtuff {
 private:
   vec start_pos;
   vec start_vel;
-  double planet_mass;
+  //double planet_mass;
 
   int N_size;
 
@@ -20,6 +20,7 @@ public:
   void initialization(int &N, double &mass, vec &start_velocity, vec &start_position);
   vec find_acc(double x, double y);
   tuple<vec, vec> integrator();
+  vec stable_orbiter(vec pos);
 
 };
 

@@ -16,10 +16,22 @@
 using namespace std;
 using namespace arma;
 
-void classtuff::initialization(int &N, vec &start_velocity, vec &start_position){
+void classtuff::initialization(int &N, double &mass ,vec &start_velocity, vec &start_position){
     N_size = N;
     start_pos = start_position;
     start_vel = start_velocity;
+}
+
+vec classtuff::stable_orbiter(vec pos){
+  vec hyp = -pos;
+  vec tanvec(2);
+  tanvec[0] = -hyp[1]/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1]);
+  tanvec[1] = hyp[0]/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1]);
+  double v_stable = sqrt(GMstar/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1]));
+  vec stable_orbit(2);
+  stable_orbit[0] = v_stable*tanvec[0]; stable_orbit[1] = v_stable*tanvec[1];
+  return stable_orbit;
+
 }
 
 vec classtuff::find_acc(double x, double y){

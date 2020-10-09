@@ -29,17 +29,15 @@ int main(int argc, char const *argv[]) {
   double earth_mass = 3.003e-6;
 
   vec pos(2); pos(0) = 1; pos(1) = 0;
+  pos = pos/2;
 
-  vec tanvec(2); tanvec[0] = 0; tanvec[1] = -1;
-  vec stable_orbit(2);
-  stable_orbit[0] = sqrt(mysolver.GMstar)*tanvec[0];
-  stable_orbit[1] = sqrt(mysolver.GMstar)*tanvec[1];
+  vec stable_orbit = mysolver.stable_orbiter(pos);
 
   vec vel(2); vel(0) = stable_orbit[0]; vel(1) = stable_orbit[1];
 
   int N = 1.0e6;
 
-  mysolver.initialization(N, vel, pos);
+  mysolver.initialization(N, earth_mass, vel, pos);
   auto[posx, posy] = mysolver.integrator();
   for(int k = 0; k<N; k++){
     ofile << setprecision(15) << posx(k) << " " <<posy(k)<< endl;
