@@ -16,7 +16,7 @@
 using namespace std;
 using namespace arma;
 
-void classtuff::initialization(double mass, vec start_velocity, vec start_position){
+void classtuff::initialization(double &mass, vec &start_velocity, vec &start_position){
     start_pos = start_position;
     start_vel = start_velocity;
     double planet_mass = mass;
@@ -45,6 +45,5 @@ tuple<vec, vec> classtuff::integrator(int N){
     Pos_Y(i+1) = 2*Pos_Y(i) - Pos_Y(i-1) + h*h*find_acc(Pos_X(i), Pos_Y(i))(0);
     i = i + 1;
   }
-
   return {Pos_X, Pos_Y};
 }

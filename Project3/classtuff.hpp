@@ -15,7 +15,7 @@ private:
   double GMstar = 4*M_PI*M_PI; // AU^3/yr^2
 
 public:
-  void initialization(double mass, vec start_velocity, vec start_position);
+  void initialization(double &mass, vec &start_velocity, vec &start_position);
   vec find_acc(double x, double y);
   tuple<vec, vec> integrator(int N, vec start_pos, vec start_vel);
 
