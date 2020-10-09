@@ -27,7 +27,7 @@ vec classtuff::find_acc(double x, double y){
   vec acc(2);
   double r = sqrt(x*x + y*y);
   acc[0] = -GMstar*x/(r*r*r);
-  acc[1] = GMstar*y/(r*r*r);
+  acc[1] = -GMstar*y/(r*r*r);
   return acc;
 }
 tuple<vec, vec> classtuff::integrator(){
