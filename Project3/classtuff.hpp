@@ -16,7 +16,7 @@ private:
   int N_size;
 
 public:
-  void initialization(int &N, double &mass, vec &start_velocity, vec &start_position);
+  void initialization(int &N, vec &start_velocity, vec &start_position);
   vec find_acc(double x, double y);
   tuple<vec, vec> integrator();
 
