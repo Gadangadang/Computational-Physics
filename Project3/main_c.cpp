@@ -41,6 +41,7 @@ int main(int argc, char const *argv[]) {
 
   solving binary_verlet(5.0);
   binary_verlet.add(planet1); binary_verlet.add(planet2);
+  binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0.);
 
   for (int r = 0; r < Dimension; r++){
     x[r] = binary_verlet.all_planets[0].position[r];
