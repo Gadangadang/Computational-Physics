@@ -54,6 +54,7 @@ void print_to_file(mat planets){
   ofstream ofile;
   outfilename = "Planets_pos.txt";
   ofile.open(outfilename);
+  ofile << setprecision(5) << total_planets <<" "<<integration_points<<endl;
   for(int i=0; i<total_planets; i++){
     for(int j=0; j<integration_points;j++){
       if(i==total_planets-1){
