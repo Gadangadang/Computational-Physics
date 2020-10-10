@@ -99,7 +99,6 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   double t = 0;
   double Fx, Fy, Fz, Fxnew, Fynew, Fznew;
   double h = final_time/((double) integration_points);
-  t+= h;
 
   while (t < final_time){
 
@@ -142,6 +141,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
         current.velocity[y] += h/2*(acceleration[nr][y] + acceleration_next[nr][y]);
       }
     }
+    t+= h;
   }
   // Clear memory
   delete_matrix(acceleration);
