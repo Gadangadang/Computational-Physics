@@ -15,7 +15,7 @@ class solving{
     vec all_planets;
     double totalKinetic;
     double totalPotential;
-
+    mat planets;
     // initializers
     solving();
     solving(double radi);
