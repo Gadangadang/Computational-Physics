@@ -15,6 +15,7 @@ class object
     double potential;
     double kinetic;
     double Gconst;
+    double epsilon;
 
 
     //Initializer
@@ -23,10 +24,10 @@ class object
 
     //Functions
     double distance(object otherObject);
-    double GravitationalForce(object otherObject, double Gconst);
-    double Acceleration(object otherObject, double Gconst);
+    double GravitationalForce(object otherObject, double &Gconst);
+    double Acceleration(object otherObject, double &Gconst);
     double KineticEnergy();
-    double PotentialEnergy(object &otherObject, double Gconst, double epsilon);
+    double PotentialEnergy(object &otherObject, double &Gconst, double &epsilon);
 
 
 
