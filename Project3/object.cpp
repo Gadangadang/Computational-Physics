@@ -1,6 +1,6 @@
 #include "object.hpp"
 #include <cmath>
-#include <vector>
+#include "armadillo"
 
 object::object(double M,double x,double y,double z,double vx, double vy,double vz){
     mass = M;
@@ -17,6 +17,9 @@ object::object(double M,double x,double y,double z,double vx, double vy,double v
 }
 
 double object::distance(object otherObject){
+
+    double x1,y1,z1,x2,y2,z2,xx,yy,zz;
+    
     x1 = this->position[0];
     y1 = this->position[1];
     z1 = this->position[2];

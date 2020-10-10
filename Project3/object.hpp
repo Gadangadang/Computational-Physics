@@ -2,8 +2,7 @@
 #define OBJECT.H
 #define _USE_MATH_DEFINES
 #include <cmath>
-#include <vector>
-using std::vector;
+#include "armadillo"
 
 class object
 {
@@ -31,4 +30,6 @@ class object
 
 
 
-}
+};
+
+#endif // PLANET_H

@@ -49,6 +49,42 @@ mat setup_Matrix(int height, int width){
 
 void VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon){
 
+  // Create files for data storage
+  char *filename = new char[1000];
+      sprintf(filename, "PlanetsVV_%d_%.3f.txt",total_planets,time_step);
+
+  std::ofstream output_file(filename);
+
+  mat acceleration = setup_Matrix(total_planets, 3);
+  mat acceleration_next = setup_Matrix(total_planets, 3);
+  double t = 0;
+  double Fx, Fy, Fz, Fxnew, Fynew, Fznew;
+
+  while (t < final_time){
+
+
+
+    //Loop over all planets
+    for (int nr = 0; nr < total_planets; nr++){
+
+      object &current = all_planets[nr];
+
+      Fx = Fy = Fz = Fxnew = Fynew = Fznew = 0;
+
+      //Find forces on other planets
+      for (int nr2 = nr1 + 1; nr2 < total_planets; nr2++){
+        object &other = all_planets[nr2];
+        GravitationalForce(current, other, Fx, Fy, Fz, epsilon);
+      }
+
+    }
+  }
+
+
+
+
+
+
 }
 void print_to_file(mat planets){
   ofstream ofile;
