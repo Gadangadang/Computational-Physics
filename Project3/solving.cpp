@@ -43,7 +43,7 @@ void add(object newplanet){
 
 mat setup_Matrix(int height, int width){
   mat matric(height,width,fill::zeros);
-  return matric
+  return matric;
 }
 
 void VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon){
@@ -58,6 +58,8 @@ void VelocityVerlet(int dimension, int integration_points, double final_time, in
   mat acceleration_next = setup_Matrix(total_planets, 3);
   double t = 0;
   double Fx, Fy, Fz, Fxnew, Fynew, Fznew;
+  double h = final_time/((double) integration_points);
+  t+= h;
 
   while (t < final_time){
 
@@ -76,6 +78,29 @@ void VelocityVerlet(int dimension, int integration_points, double final_time, in
         GravitationalForce(current, other, Fx, Fy, Fz, epsilon);
       }
 
+      acceleration[nr][0] = Fx/current.mass;
+      acceleration[nr][1] = Fy/current.mass;
+      acceleration[nr][2] = Fz/current.mass;
+
+      //Calculate position for each planet
+      for (int k = 0; k<dimension; k++){
+        current.position[k] += current.velocity[k] + h*h/2*acceleration[nr1][k];
+      }
+
+      //Loop again over all other planets
+      for (int nr2 = nr1 + 1; nr2 < total_planets; nr2++){
+        object &other = all_planets[nr2]
+        GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon);
+      }
+
+      acceleration_next[nr][0] = Fxnew/current.mass;
+      acceleration_next[nr][1] = Fynew/current.mass;
+      acceleration_next[nr][2] = Fznew/current.mass;
+
+      //calculate velocity for planets
+      for (int y = 0; y < dimension; y++){
+        current.velocity[y] += h/2*(acceleration[nr][y] + acceleration_next[nr][y]);
+      }
     }
   }
 
