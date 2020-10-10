@@ -28,7 +28,7 @@ class solving{
     void print_position(std::ofstream &output, int dimension, double time, int number);
     void print_energy(std::ofstream &output, double time, double epsilon);
     void VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon);
-
+    void delete_matrix3d(double ***matrix,int Integration_points);
     double **setup_matrix(int height,int width);
     void delete_matrix(double **matrix);
     void print_to_file(double ***planets,int Integration_points);

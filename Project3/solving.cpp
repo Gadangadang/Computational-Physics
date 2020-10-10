@@ -66,6 +66,13 @@ void solving::delete_matrix(double **matrix)
         delete [] matrix[i];
     delete [] matrix;
 }
+void solving::delete_matrix3d(double ***matrix,int Integration_points)
+{   // Function to deallocate memory of a 2D array
+
+    for (int i=0; i<total_planets; i++)
+      for (int k = 0; k<Integration_points;k++)
+        delete [] matrix[i][k];
+}
 
 void solving::GravitationalForce(object &current,object &other,double &Fx,double &Fy,double &Fz,double epsilon)
 {   // Function that calculates the gravitational force between two objects, component by component.
@@ -155,5 +162,5 @@ void solving::print_to_file(double ***planets,int Integration_points){
     }
   }
 }
-//delete_matrix(planets);
+delete_matrix3d(planets,Integration_points);
 }
