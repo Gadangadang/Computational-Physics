@@ -140,7 +140,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   delete_matrix(acceleration);
   delete_matrix(acceleration_next);
 }
-void solving::print_to_file(double **planets,int Integration_points){
+void solving::print_to_file(double ***planets,int Integration_points){
   std::ofstream ofile;
   std::string outfilename = "Planets_pos.txt";
   ofile.open(outfilename);
@@ -155,5 +155,5 @@ void solving::print_to_file(double **planets,int Integration_points){
     }
   }
 }
-delete_matrix(planets);
+//delete_matrix(planets);
 }
