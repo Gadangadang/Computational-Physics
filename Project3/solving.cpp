@@ -140,7 +140,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   delete_matrix(acceleration);
   delete_matrix(acceleration_next);
 }
-void solving::print_to_file(arma::mat planets,int Integration_points){
+void solving::print_to_file(double **planets,int Integration_points){
   std::ofstream ofile;
   std::string outfilename = "Planets_pos.txt";
   ofile.open(outfilename);
@@ -148,11 +148,12 @@ void solving::print_to_file(arma::mat planets,int Integration_points){
   for(int i=0; i<total_planets; i++){
     for(int j=0; j<Integration_points;j++){
       if(i==total_planets-1){
-      ofile << std::setprecision(5) << planets[i][j][0] << " " << planets[i][j][1] << planet[i][j][2] <<;
+      ofile << std::setprecision(5) << planets[i][j][0] << " " << planets[i][j][1] << planets[i][j][2];
     }
     else{
       ofile << std::setprecision(5) << planets[i][j][0] << " " << planets[i][j][1] << planets[i][j][2] <<endl;
     }
   }
 }
+delete_matrix(planets);
 }

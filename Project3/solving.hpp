@@ -31,7 +31,7 @@ class solving{
 
     double **setup_matrix(int height,int width);
     void delete_matrix(double **matrix);
-    void print_to_file(arma::mat planets,int Integration_points);
+    void print_to_file(double **planets,int Integration_points);
     void GravitationalForce(object &current, object &other, double &Fx, double &Fy, double &Fz, double epsilon);
     void GravitationalForce_RK(double x_rel, double y_rel, double z_rel, double &Fx, double &Fy, double &Fz, double mass1, double mass2);
     void KineticEnergySystem();
