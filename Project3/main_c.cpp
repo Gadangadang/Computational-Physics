@@ -27,7 +27,7 @@ int main(int argc, char const *argv[]) {
   int IntegrationPoints = 10000;
   double FinalTime = 50.;
 
-  double TimeStep = FinalTime/((double) IntegrationPoints);
+  //double TimeStep = FinalTime/((double) IntegrationPoints);
   vec x(3),v(3);  // positions and velocities
 
   double earth_mass = 3.003e-6;
