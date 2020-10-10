@@ -58,16 +58,24 @@ void VelocityVerlet(int dimension, int integration_points, double final_time, in
   mat acceleration_next = setup_Matrix(total_planets, 3);
   double t = 0;
   double Fx, Fy, Fz, Fxnew, Fynew, Fznew;
-  
+
   while (t < final_time){
 
 
 
     //Loop over all planets
     for (int nr = 0; nr < total_planets; nr++){
+
       object &current = all_planets[nr];
 
       Fx = Fy = Fz = Fxnew = Fynew = Fznew = 0;
+
+      //Find forces on other planets
+      for (int nr2 = nr1 + 1; nr2 < total_planets; nr2++){
+        object &other = all_planets[nr2];
+        GravitationalForce(current, other, Fx, Fy, Fz, epsilon);
+      }
+
     }
   }
 
