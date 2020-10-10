@@ -1,6 +1,6 @@
 #include "object.hpp"
 #include <cmath>
-#include <vector>
+#include "armadillo"
 
 object::object(double M,double x,double y,double z,double vx, double vy,double vz){
     mass = M;
