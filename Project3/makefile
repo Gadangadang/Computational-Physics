@@ -1,8 +1,8 @@
 all: compile execute
 
 compile:
-	g++ -std=c++17 -O2 -flto -Wall -o main.x main.cpp classtuff.cpp  -larmadillo -llapack -lblas
-	g++ -std=c++17 -O2 -flto -Wall -o main_c.x mainc.cpp object.cpp solving.cpp  -larmadillo -llapack -lblas
+	#g++ -std=c++17 -O2 -flto -Wall -o main.x main.cpp classtuff.cpp  -larmadillo -llapack -lblas
+	g++ -std=c++17 -O2 -flto -Wall -o main_c.x main_c.cpp object.cpp solving.cpp  -larmadillo -llapack -lblas
 
 execute:
 	#./main.x

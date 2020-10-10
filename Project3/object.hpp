@@ -1,5 +1,5 @@
-#ifndef OBJECT.H
-#define OBJECT.H
+#ifndef OBJECT_HPP
+#define OBJECT_HPP
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include "armadillo"
