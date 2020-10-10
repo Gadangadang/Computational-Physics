@@ -21,6 +21,7 @@ class solving{
 
     // functions
     void add(object newplanet);
+    vec stable_orbiter(vec pos);
     void addM(object newplanet);
     void GravitationalConstant();
     void print_position(std::ofstream &output, int dimension, double time, int number);
