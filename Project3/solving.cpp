@@ -122,9 +122,9 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
 }
 void solving::print_to_file(mat planets){
   std::ofstream ofile;
-  outfilename = "Planets_pos.txt";
+  std::string outfilename = "Planets_pos.txt";
   ofile.open(outfilename);
-  ofile << setprecision(5) << total_planets <<" "<<integration_points<<endl;
+  ofile << std::setprecision(5) << total_planets <<" "<<integration_points<<endl;
   for(int i=0; i<total_planets; i++){
     for(int j=0; j<integration_points;j++){
       if(i==total_planets-1){
