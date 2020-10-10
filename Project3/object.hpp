@@ -31,4 +31,6 @@ class object
 
 
 
-}
+};
+
+#endif // PLANET_H
