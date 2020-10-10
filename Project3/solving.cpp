@@ -33,18 +33,34 @@ solving::solving(double radi){
 }
 
 
-void add(object newplanet){
+void solving::add(object newplanet){
   total_planets += 1;
   total_mass += newplanet.mass;
   all_planets.push_back(newplanet);
 }
 
-mat setup_Matrix(int height, int width){
+mat solving::setup_Matrix(int height, int width){
   mat matric(height,width,fill::zeros);
   return matric;
 }
 
-void VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon){
+void solving::GravitationalForce(object &current,object &other,double &Fx,double &Fy,double &Fz,double epsilon)
+{   // Function that calculates the gravitational force between two objects, component by component.
+
+    // Calculate relative distance between current planet and all other planets
+    double relative_distance[3];
+
+    for(int j = 0; j < 3; j++) relative_distance[j] = current.position[j]-other.position[j];
+    double r = current.distance(other);
+    double smoothing = epsilon*epsilon*epsilon;
+
+    // Calculate the forces in each direction
+    Fx -= this->G*current.mass*other.mass*relative_distance[0]/((r*r*r) + smoothing);
+    Fy -= this->G*current.mass*other.mass*relative_distance[1]/((r*r*r) + smoothing);
+    Fz -= this->G*current.mass*other.mass*relative_distance[2]/((r*r*r) + smoothing);
+}
+
+void solving::VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon){
 
   // Create files for data storage
   char *filename = new char[1000];
@@ -109,17 +125,17 @@ void VelocityVerlet(int dimension, int integration_points, double final_time, in
 
 }
 void print_to_file(mat planets){
-  ofstream ofile;
+  std::ofstream ofile;
   outfilename = "Planets_pos.txt";
   ofile.open(outfilename);
   ofile << setprecision(5) << total_planets <<" "<<integration_points<<endl;
   for(int i=0; i<total_planets; i++){
     for(int j=0; j<integration_points;j++){
       if(i==total_planets-1){
-      ofile << setprecision(5) << planets(i,j,0) << " " << planets(i,j,1) << planets(i,j,2) <<;
+      ofile << std::setprecision(5) << planets(i,j,0) << " " << planets(i,j,1) << planets(i,j,2) <<;
     }
     else{
-      ofile << setprecision(5) << planets(i,j,0) << " " << planets(i,j,1) << planets(i,j,2) <<endl;
+      ofile << std::setprecision(5) << planets(i,j,0) << " " << planets(i,j,1) << planets(i,j,2) <<endl;
     }
   }
 }

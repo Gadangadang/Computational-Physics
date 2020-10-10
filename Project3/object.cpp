@@ -63,3 +63,4 @@ double object::PotentialEnergy(object &otherObject, double &Gconst, double &epsi
 {
     if(epsilon==0.0) return -Gconst*this->mass*otherObject.mass/this->distance(otherObject);
     else return (Gconst*this->mass*otherObject.mass/epsilon)*(atan(this->distance(otherObject)/epsilon) - (0.5*M_PI));
+}
