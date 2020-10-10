@@ -36,7 +36,7 @@ solving::solving(double radi){
 void solving::add(object newplanet){
   total_planets += 1;
   total_mass += newplanet.mass;
-  all_planets.push_back(newplanet);
+  all_planets.insert_rows(newplanet);
 }
 
 mat solving::setup_Matrix(int height, int width){
@@ -62,11 +62,7 @@ void solving::GravitationalForce(object &current,object &other,double &Fx,double
 
 void solving::VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon){
 
-  // Create files for data storage
-  char *filename = new char[1000];
-      sprintf(filename, "PlanetsVV_%d_%.3f.txt",total_planets,time_step);
 
-  std::ofstream output_file(filename);
 
   mat acceleration = setup_Matrix(total_planets, 3);
   mat acceleration_next = setup_Matrix(total_planets, 3);
@@ -124,7 +120,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
 
 
 }
-void print_to_file(mat planets){
+void solving::print_to_file(mat planets){
   std::ofstream ofile;
   outfilename = "Planets_pos.txt";
   ofile.open(outfilename);
