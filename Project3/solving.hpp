@@ -3,7 +3,9 @@
 #include "object.hpp"
 #include <fstream>
 #include "armadillo"
+#include <vector>
 using namespace arma;
+using namespace std;
 
 class solving{
   public:
@@ -12,7 +14,7 @@ class solving{
     // properties
     double radius,total_mass,G;
     int total_planets;
-    vec all_planets;
+    vector<object> all_planets;
     double totalKinetic;
     double totalPotential;
     // initializers
@@ -27,7 +29,8 @@ class solving{
     void print_energy(std::ofstream &output, double time, double epsilon);
     void VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon);
 
-    mat setup_Matrix(int height, int width);
+    double **setup_matrix(int height,int width);
+    void delete_matrix(double **matrix);
     void print_to_file(arma::mat planets,int Integration_points);
     void GravitationalForce(object &current, object &other, double &Fx, double &Fy, double &Fz, double epsilon);
     void GravitationalForce_RK(double x_rel, double y_rel, double z_rel, double &Fx, double &Fy, double &Fz, double mass1, double mass2);

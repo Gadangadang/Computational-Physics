@@ -36,12 +36,35 @@ solving::solving(double radi){
 void solving::add(object newplanet){
   total_planets += 1;
   total_mass += newplanet.mass;
-  all_planets.insert_rows(newplanet);
+  all_planets.push_back(newplanet);
 }
 
-mat solving::setup_Matrix(int height, int width){
-  mat matric(height,width,fill::zeros);
-  return matric;
+double ** solving::setup_matrix(int height,int width)
+{   // Function to set up a 2D array
+
+    // Set up matrix
+    double **matrix;
+    matrix = new double*[height];
+
+    // Allocate memory
+    for(int i=0;i<height;i++)
+        matrix[i] = new double[width];
+
+    // Set values to zero
+    for(int i = 0; i < height; i++){
+        for(int j = 0; j < width; j++){
+            matrix[i][j] = 0.0;
+        }
+    }
+    return matrix;
+}
+
+void solving::delete_matrix(double **matrix)
+{   // Function to deallocate memory of a 2D array
+
+    for (int i=0; i<total_planets; i++)
+        delete [] matrix[i];
+    delete [] matrix;
 }
 
 void solving::GravitationalForce(object &current,object &other,double &Fx,double &Fy,double &Fz,double epsilon)
@@ -64,8 +87,8 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
 
 
 
-  mat acceleration = setup_Matrix(total_planets, 3);
-  mat acceleration_next = setup_Matrix(total_planets, 3);
+  double **acceleration = setup_matrix(total_planets, 3);
+  double **acceleration_next = setup_matrix(total_planets, 3);
   double t = 0;
   double Fx, Fy, Fz, Fxnew, Fynew, Fznew;
   double h = final_time/((double) integration_points);
@@ -113,12 +136,9 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       }
     }
   }
-
-
-
-
-
-
+  // Clear memory
+  delete_matrix(acceleration);
+  delete_matrix(acceleration_next);
 }
 void solving::print_to_file(arma::mat planets,int Integration_points){
   std::ofstream ofile;
