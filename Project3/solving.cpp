@@ -1,10 +1,18 @@
-#include "solving.h"
-#include "object.h"
+#include "object.hpp"
+#include "solving.hpp"
 #include <iostream>
+#include <new>
+#include <cstdio>
+#include <cstdlib>
 #include <cmath>
 #include <fstream>
-#include "time.h"
+#include <iomanip>
+#include <string>
 #include "armadillo"
+#include "time.h"
+#include <stdio.h>
+#include <tuple>
+#include <math.h>
 
 solving::solving(){
     total_planets = 0;
@@ -24,17 +32,6 @@ solving::solving(double radi){
     totalPotential = 0;
 }
 
-vec solving::stable_orbiter(vec pos){
-  vec hyp = -pos;
-  vec tanvec(2);
-  tanvec[0] = -hyp[1]/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1]);
-  tanvec[1] = hyp[0]/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1]);
-  double v_stable = sqrt(GMstar/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1]));
-  vec stable_orbit(2);
-  stable_orbit[0] = v_stable*tanvec[0]; stable_orbit[1] = v_stable*tanvec[1];
-  return stable_orbit;
-
-}
 
 void add(object newplanet){
   total_planets += 1;
@@ -67,7 +64,7 @@ void VelocityVerlet(int dimension, int integration_points, double final_time, in
       Fx = Fy = Fz = Fxnew = Fynew = Fznew = 0;
 
       //Find forces on other planets
-      for (int nr2 = nr1 + 1; nr2 < total_planets; nr2++){
+      for (int nr2 = nr + 1; nr2 < total_planets; nr2++){
         object &other = all_planets[nr2];
         GravitationalForce(current, other, Fx, Fy, Fz, epsilon);
       }
@@ -78,12 +75,12 @@ void VelocityVerlet(int dimension, int integration_points, double final_time, in
 
       //Calculate position for each planet
       for (int k = 0; k<dimension; k++){
-        current.position[k] += current.velocity[k] + h*h/2*acceleration[nr1][k];
+        current.position[k] += current.velocity[k] + h*h/2*acceleration[nr][k];
       }
 
       //Loop again over all other planets
-      for (int nr2 = nr1 + 1; nr2 < total_planets; nr2++){
-        object &other = all_planets[nr2]
+      for (int nr2 = nr + 1; nr2 < total_planets; nr2++){
+        object &other = all_planets[nr2];
         GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon);
       }
 

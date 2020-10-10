@@ -1,6 +1,7 @@
 #include "object.hpp"
 #include <cmath>
 #include "armadillo"
+#include <math.h>
 
 object::object(double M,double x,double y,double z,double vx, double vy,double vz){
     mass = M;
@@ -12,7 +13,7 @@ object::object(double M,double x,double y,double z,double vx, double vy,double v
     velocity[2] = vz;
     potential = 0.;
     kinetic = 0.;
-    Gconst = 4*cmath::pi*cmath::pi;
+    Gconst = 4*M_PI*M_PI;
     epsilon = 0.;
 }
 

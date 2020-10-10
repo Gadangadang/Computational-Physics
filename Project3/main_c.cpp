@@ -21,10 +21,11 @@ vec stable_orbiter(vec pos);
 
 int main(int argc, char const *argv[]) {
 
-  Dimension = 3;
+  int Dimension = 3;
 
-  IntegrationPoints = 10000;
-  FinalTime = 50.;
+
+  int IntegrationPoints = 10000;
+  double FinalTime = 50.;
 
   double TimeStep = FinalTime/((double) IntegrationPoints);
   vec x(3),v(3);  // positions and velocities
@@ -32,8 +33,8 @@ int main(int argc, char const *argv[]) {
   double earth_mass = 3.003e-6;
   double sun_mass = 1.0;
 
-  vec pos(3) = {1,0,0};
-  vec stab_vel =stable_orbiter(pos)
+  vec pos(3); pos = {1,0,0};
+  vec stab_vel =stable_orbiter(pos);
 
   object planet1(earth_mass, 1,0,0, stab_vel[0],stab_vel[1], stab_vel[2]);
   object planet2(sun_mass, 0,0,0,0,0,0);
@@ -43,7 +44,7 @@ int main(int argc, char const *argv[]) {
 
   for (int r = 0; r < Dimension; r++){
     x[r] = binary_verlet.all_planets[0].position[r];
-    v[r] = binary_verlet.all_planets[0].verlet[r];
+    v[r] = binary_verlet.all_planets[0].velocity[r];
   }
 
 
@@ -51,6 +52,7 @@ int main(int argc, char const *argv[]) {
 }
 
 vec stable_orbiter(vec pos){
+  double GMstar = 4*M_PI*M_PI; // AU^3/yr^2
   vec hyp = -pos;
   vec tanvec(3);
   tanvec[0] = -hyp[1]/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1]);
