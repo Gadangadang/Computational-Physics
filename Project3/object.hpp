@@ -14,6 +14,7 @@ class object
     double velocity[3];
     double potential;
     double kinetic;
+    double Gconst;
 
 
     //Initializer
