@@ -29,7 +29,7 @@ class solving{
     void VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon);
 
     mat setup_Matrix(int height, int width);
-
+    void print_to_file(mat planets);
     void GravitationalForce(object &current, object &other, double &Fx, double &Fy, double &Fz, double epsilon);
     void GravitationalForce_RK(double x_rel, double y_rel, double z_rel, double &Fx, double &Fy, double &Fz, double mass1, double mass2);
     void KineticEnergySystem();
