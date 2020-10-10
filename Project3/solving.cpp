@@ -28,3 +28,8 @@ void add(object newplanet){
   total_mass += newplanet.mass;
   all_planets.push_back(newplanet);
 }
+
+mat setup_Matrix(int height, int width){
+  mat matric(height,width,fill::zeros);
+  return matric
+}

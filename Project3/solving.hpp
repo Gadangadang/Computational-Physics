@@ -27,7 +27,7 @@ class solving{
     void print_energy(std::ofstream &output, double time, double epsilon);
     void VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon);
 
-    void setup_Matrix(mat matric);
+    mat setup_Matrix(int height, int width);
 
     void GravitationalForce(planet &current, planet &other, double &Fx, double &Fy, double &Fz, double epsilon);
     void GravitationalForce_RK(double x_rel, double y_rel, double z_rel, double &Fx, double &Fy, double &Fz, double mass1, double mass2);
