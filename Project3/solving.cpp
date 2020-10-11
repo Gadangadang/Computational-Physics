@@ -127,7 +127,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
 
       //Calculate position for each planet
       for (int k = 0; k<dimension; k++){
-        current.position[k] += current.velocity[k] + h*h/2*acceleration[nr][k];
+        current.position[k] += current.velocity[k]*h + h*h/2*acceleration[nr][k];
       }
       //Loop again over all other planets
       for (int nr2 = nr + 1; nr2 < total_planets; nr2++){

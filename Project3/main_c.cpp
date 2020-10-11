@@ -35,7 +35,7 @@ int main(int argc, char const *argv[]) {
   vec pos(3); pos = {1,0,0};
   vec stab_vel =stable_orbiter(pos);
 
-  object planet1(earth_mass, 1,0,0, stab_vel[0],stab_vel[1], stab_vel[2]);
+  object planet1(earth_mass,1.,0.0,0.0,0.0,6.3,0.);
   object planet2(sun_mass, 0,0,0,0,0,0);
 
   solving binary_verlet(5.0);
