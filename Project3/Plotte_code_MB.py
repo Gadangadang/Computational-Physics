@@ -17,7 +17,6 @@ for line in data:
     i +=1
     if i == tot_p:
         i=0
-print(p[i])
 p = np.asarray(p)
 for i in range(tot_p):
     x,y,z = p[i,:,0], p[i,:,1], p[i,:,2]
