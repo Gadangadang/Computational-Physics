@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <tuple>
 #include <math.h>
-
+#include <typeinfo>
 using namespace std;
 using namespace arma;
 
@@ -28,8 +28,7 @@ int main(int argc, char const *argv[]) {
   double FinalTime = 50.;
 
   //double TimeStep = FinalTime/((double) IntegrationPoints);
-  vec x(3),v(3);  // positions and velocities
-
+  double x[3],v[3];
   double earth_mass = 3.003e-6;
   double sun_mass = 1.0;
 
@@ -47,7 +46,8 @@ int main(int argc, char const *argv[]) {
     x[r] = binary_verlet.all_planets[0].position[r];
     v[r] = binary_verlet.all_planets[0].velocity[r];
   }
-
+  //double ***planets;
+  //binary_verlet.print_to_file(x,IntegrationPoints);
 
   return 0;
 }

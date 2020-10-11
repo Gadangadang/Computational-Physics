@@ -6,6 +6,6 @@ compile:
 
 execute:
 	#./main.x
-	#python3 Plotte_code.py
-
+  #python3 Plotte_code.py
 	./main_c.x
+	python3 Plotte_code_MB.py

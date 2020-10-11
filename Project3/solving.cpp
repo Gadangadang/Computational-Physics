@@ -100,6 +100,10 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   double Fx, Fy, Fz, Fxnew, Fynew, Fznew;
   double h = final_time/((double) integration_points);
 
+  std::ofstream ofile;
+  std::string outfilename = "Planets_pos.txt";
+  ofile.open(outfilename);
+  ofile << integration_points << " " << total_planets<< " "<< endl;
   while (t < final_time){
 
 
@@ -125,7 +129,6 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       for (int k = 0; k<dimension; k++){
         current.position[k] += current.velocity[k] + h*h/2*acceleration[nr][k];
       }
-
       //Loop again over all other planets
       for (int nr2 = nr + 1; nr2 < total_planets; nr2++){
         object &other = all_planets[nr2];
@@ -140,27 +143,16 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       for (int y = 0; y < dimension; y++){
         current.velocity[y] += h/2*(acceleration[nr][y] + acceleration_next[nr][y]);
       }
+    print_to_file(all_planets[nr].position, dimension, ofile);
     }
     t+= h;
   }
   // Clear memory
+  ofile.close();
   delete_matrix(acceleration);
   delete_matrix(acceleration_next);
 }
-void solving::print_to_file(double ***planets,int Integration_points){
-  std::ofstream ofile;
-  std::string outfilename = "Planets_pos.txt";
-  ofile.open(outfilename);
-  ofile << std::setprecision(5) << total_planets <<" "<<Integration_points<<endl;
-  for(int i=0; i<total_planets; i++){
-    for(int j=0; j<Integration_points;j++){
-      if(i==total_planets-1){
-      ofile << std::setprecision(5) << planets[i][j][0] << " " << planets[i][j][1] << planets[i][j][2];
-    }
-    else{
-      ofile << std::setprecision(5) << planets[i][j][0] << " " << planets[i][j][1] << planets[i][j][2] <<endl;
-    }
-  }
-}
-delete_matrix3d(planets,Integration_points);
+void solving::print_to_file(double planets[3],int dimension, std::ofstream &ofile){
+  ofile << std::setprecision(5)<< planets[0] << " "<< planets[1] << " "<< planets[2]<< endl;
+
 }
