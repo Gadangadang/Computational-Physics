@@ -142,8 +142,9 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       for (int y = 0; y < dimension; y++){
         current.velocity[y] += h/2*(acceleration[nr][y] + acceleration_next[nr][y]);
       }
-    print_to_file(all_planets[nr].position, dimension, ofile, Pot);
+    print_to_file(all_planets[nr].position, dimension, ofile);
     }
+    print_energi(Pot, t,ofile);
     t+= h;
   }
   // Clear memory
@@ -151,10 +152,11 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   delete_matrix(acceleration);
   delete_matrix(acceleration_next);
 }
-void solving::print_to_file(double planets[3],int dimension, std::ofstream &ofile, double &Pot){
-
-  ofile << std::setprecision(5)<< planets[0] << " "<< planets[1] << " "<< planets[2] << " " << Pot << endl;
-
+void solving::print_to_file(double planets[3],int dimension, std::ofstream &ofile){
+  ofile << std::setprecision(5)<< planets[0] << " "<< planets[1] << " "<< planets[2] <<endl;
+}
+void solving::print_energi(double &Pot, double &t, std::ofstream &ofile){
+  ofile <<std::setprecision(5)<<Pot<< " "<< t<< endl;
 }
 
 void solving::PotentialEnergySystem(object &current, object &other, double &Pot){
