@@ -97,7 +97,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   double **acceleration = setup_matrix(total_planets, 3);
   double **acceleration_next = setup_matrix(total_planets, 3);
   double t = 0;
-  double Fx, Fy, Fz, Fxnew, Fynew, Fznew;
+  double Fx, Fy, Fz, Fxnew, Fynew, Fznew, Pot, Kin;
   double h = final_time/((double) integration_points);
 
   std::ofstream ofile;
@@ -108,14 +108,12 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   output_file << integration_points << " " << total_planets<< " "<< endl;
   while (t < final_time){
 
-
-
     //Loop over all planets
     for (int nr = 0; nr < total_planets; nr++){
 
       object &current = all_planets[nr];
 
-      Fx = Fy = Fz = Fxnew = Fynew = Fznew = 0;
+      Fx = Fy = Fz = Fxnew = Fynew = Fznew = Pot = Kin = 0;
 
       //Find forces on other planets
       for (int nr2 = nr + 1; nr2 < total_planets; nr2++){
@@ -135,6 +133,8 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       for (int nr2 = nr + 1; nr2 < total_planets; nr2++){
         object &other = all_planets[nr2];
         GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon);
+        PotentialEnergySystem(current, other, Pot);
+        KineticEnergySystem(current, Kin);
       }
 
       acceleration_next[nr][0] = Fxnew/current.mass;
@@ -145,7 +145,13 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       for (int y = 0; y < dimension; y++){
         current.velocity[y] += h/2*(acceleration[nr][y] + acceleration_next[nr][y]);
       }
-    print_to_file(all_planets[nr].position, dimension, output_file);
+      //Calculate kinetic energy for current object
+
+      print_to_file(all_planets[nr].position, dimension, ofile);
+
+      if (nr==0) {
+        print_energi(Pot, Kin, t,ofile);
+      }
     }
     t+= h;
   }
@@ -154,8 +160,29 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   delete_matrix(acceleration);
   delete_matrix(acceleration_next);
 }
+void solving::print_to_file(double planets[3],int dimension, std::ofstream &ofile){
+  ofile << std::setprecision(5)<< planets[0] << " "<< planets[1] << " "<< planets[2] <<endl;
+}
+void solving::print_energi(double &Pot, double &Kin, double &t, std::ofstream &ofile){
+  ofile <<std::setprecision(20)<<Pot<< " " << Kin <<" " << t<< endl;
+}
 
-void solving::print_to_file(double planets[3],int dimension, std::ofstream &output){
-  output << std::setprecision(15)<< planets[0] << " "<< planets[1] << " "<< planets[2]<< endl;
+void solving::PotentialEnergySystem(object &current, object &other, double &Pot){
 
+  double r = current.distance(other);
+  if ( r != 0){
+    Pot = -this->G*current.mass*other.mass/r;
+  }
+  else {
+    Pot = 0;
+  }
+}
+
+
+void solving::KineticEnergySystem(object &current, double &Kin){
+  double velo2 = 0;
+  for (int i = 0; i< 3; i++){
+    velo2 += (double) current.velocity[i]*current.velocity[i];
+  }
+  Kin = (double) 1/2*current.mass*velo2;
 }
