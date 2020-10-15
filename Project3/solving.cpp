@@ -180,7 +180,7 @@ void solving::PotentialEnergySystem(object &current, object &other, double &Pot)
 void solving::KineticEnergySystem(object &current, double &Kin){
   double velo2 = 0;
   for (int i = 0; i< 3; i++){
-    velo2 += current.velocity[i]*current.velocity[i];
+    velo2 += (double) current.velocity[i]*current.velocity[i];
   }
-  Kin = (double)1/2*current.mass*velo2;
+  Kin = (double) 1/2*current.mass*velo2;
 }
