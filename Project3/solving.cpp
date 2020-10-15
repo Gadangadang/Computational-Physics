@@ -182,5 +182,5 @@ void solving::KineticEnergySystem(object &current, double &Kin){
   for (int i = 0; i< 3; i++){
     velo2 += (double) current.velocity[i]*current.velocity[i];
   }
-  Kin = (double)1/2*current.mass*velo2;
+  Kin = (double) 1/2*current.mass*velo2;
 }
