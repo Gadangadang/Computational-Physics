@@ -11,21 +11,22 @@ t = []
 for i in range(tot_p):
     p.append([])
 i = 0
-
+j = 0
 for line in data:
-    if i<tot_p:
+    if i==1:
         x1 = float(line.split(' ')[0])
-        x2 = float(line.split(' ')[1])
-        x3 = float(float(line.split(' ')[2]))
-        p[i].append([x1,x2,x3])
-    else:
-        x1 = float(line.split(' ')[0])
-        print(x1)
         x2 = float(line.split(' ')[1])
         potential.append(x1)
         t.append(x2)
+    else:
+        x1 = float(line.split(' ')[0])
+        x2 = float(line.split(' ')[1])
+        x3 = float(float(line.split(' ')[2]))
+        p[j].append([x1,x2,x3])
+        j+=1
     if i >= tot_p:
         i=0
+        j=0
     else:
         i +=1
 #print(p[i])
@@ -37,7 +38,6 @@ for i in range(tot_p):
     ax.plot3D(x,y,z)
 
 plt.show()
-print(potential)
 plt.scatter(t,potential)
 plt.ylim(-0.00011870,-0.000117)
 plt.show()

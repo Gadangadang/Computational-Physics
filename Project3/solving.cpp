@@ -143,8 +143,10 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
         current.velocity[y] += h/2*(acceleration[nr][y] + acceleration_next[nr][y]);
       }
     print_to_file(all_planets[nr].position, dimension, ofile);
+    if(nr==0){
+      print_energi(Pot, t,ofile);
     }
-    print_energi(Pot, t,ofile);
+    }
     t+= h;
   }
   // Clear memory
