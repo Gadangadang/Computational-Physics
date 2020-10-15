@@ -32,10 +32,10 @@ class solving{
     double **setup_matrix(int height,int width);
     void delete_matrix(double **matrix);
     void print_to_file(double planets[3],int dimension, std::ofstream &ofile);
-    void print_energi(double &pot, double &t,std::ofstream &ofile);
+    void print_energi(double &pot, double &Kin, double &t,std::ofstream &ofile);
     void GravitationalForce(object &current, object &other, double &Fx, double &Fy, double &Fz, double epsilon);
     void GravitationalForce_RK(double x_rel, double y_rel, double z_rel, double &Fx, double &Fy, double &Fz, double mass1, double mass2);
-    void KineticEnergySystem();
+    void KineticEnergySystem(object &current, double &Kin);
     void PotentialEnergySystem(object &current, object &other, double &Pot);
     double EnergyLoss();
     bool Bound(object OnePlanet);

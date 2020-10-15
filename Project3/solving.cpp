@@ -97,7 +97,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   double **acceleration = setup_matrix(total_planets, 3);
   double **acceleration_next = setup_matrix(total_planets, 3);
   double t = 0;
-  double Fx, Fy, Fz, Fxnew, Fynew, Fznew, Pot;
+  double Fx, Fy, Fz, Fxnew, Fynew, Fznew, Pot, Kin;
   double h = final_time/((double) integration_points);
 
   std::ofstream ofile;
@@ -111,7 +111,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
 
       object &current = all_planets[nr];
 
-      Fx = Fy = Fz = Fxnew = Fynew = Fznew = Pot = 0;
+      Fx = Fy = Fz = Fxnew = Fynew = Fznew = Pot = Kin = 0;
 
       //Find forces on other planets
       for (int nr2 = nr + 1; nr2 < total_planets; nr2++){
@@ -142,10 +142,14 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       for (int y = 0; y < dimension; y++){
         current.velocity[y] += h/2*(acceleration[nr][y] + acceleration_next[nr][y]);
       }
-    print_to_file(all_planets[nr].position, dimension, ofile);
-    if(nr==0){
-      print_energi(Pot, t,ofile);
-    }
+      //Calculate kinetic energy for current object
+      KineticEnergySystem(current, Kin);
+
+      print_to_file(all_planets[nr].position, dimension, ofile);
+
+      if (nr==0) {
+        print_energi(Pot, Kin, t,ofile);
+      }
     }
     t+= h;
   }
@@ -157,8 +161,8 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
 void solving::print_to_file(double planets[3],int dimension, std::ofstream &ofile){
   ofile << std::setprecision(5)<< planets[0] << " "<< planets[1] << " "<< planets[2] <<endl;
 }
-void solving::print_energi(double &Pot, double &t, std::ofstream &ofile){
-  ofile <<std::setprecision(5)<<Pot<< " "<< t<< endl;
+void solving::print_energi(double &Pot, double &Kin, double &t, std::ofstream &ofile){
+  ofile <<std::setprecision(5)<<Pot<< " " << Kin <<" " << t<< endl;
 }
 
 void solving::PotentialEnergySystem(object &current, object &other, double &Pot){
@@ -170,6 +174,13 @@ void solving::PotentialEnergySystem(object &current, object &other, double &Pot)
   else {
     Pot = 0;
   }
+}
 
 
+void solving::KineticEnergySystem(object &current, double &Kin){
+  double velo2 = 0;
+  for (int i = 0; i< 3; i++){
+    velo2 += current.velocity[i]*current.velocity[i];
+  }
+  Kin += 1/2*current.mass*velo2;
 }
