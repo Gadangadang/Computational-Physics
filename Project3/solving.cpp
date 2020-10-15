@@ -97,7 +97,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   double **acceleration = setup_matrix(total_planets, 3);
   double **acceleration_next = setup_matrix(total_planets, 3);
   double t = 0;
-  double Fx, Fy, Fz, Fxnew, Fynew, Fznew;
+  double Fx, Fy, Fz, Fxnew, Fynew, Fznew, Pot;
   double h = final_time/((double) integration_points);
 
   std::ofstream ofile;
@@ -106,14 +106,12 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   ofile << integration_points << " " << total_planets<< " "<< endl;
   while (t < final_time){
 
-
-
     //Loop over all planets
     for (int nr = 0; nr < total_planets; nr++){
 
       object &current = all_planets[nr];
 
-      Fx = Fy = Fz = Fxnew = Fynew = Fznew = 0;
+      Fx = Fy = Fz = Fxnew = Fynew = Fznew = Pot = 0;
 
       //Find forces on other planets
       for (int nr2 = nr + 1; nr2 < total_planets; nr2++){
@@ -133,6 +131,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       for (int nr2 = nr + 1; nr2 < total_planets; nr2++){
         object &other = all_planets[nr2];
         GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon);
+        PotentialEnergySystem(current, other, Pot);
       }
 
       acceleration_next[nr][0] = Fxnew/current.mass;
@@ -143,7 +142,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       for (int y = 0; y < dimension; y++){
         current.velocity[y] += h/2*(acceleration[nr][y] + acceleration_next[nr][y]);
       }
-    print_to_file(all_planets[nr].position, dimension, ofile);
+    print_to_file(all_planets[nr].position, dimension, ofile, Pot);
     }
     t+= h;
   }
@@ -152,7 +151,21 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   delete_matrix(acceleration);
   delete_matrix(acceleration_next);
 }
-void solving::print_to_file(double planets[3],int dimension, std::ofstream &ofile){
-  ofile << std::setprecision(5)<< planets[0] << " "<< planets[1] << " "<< planets[2]<< endl;
+void solving::print_to_file(double planets[3],int dimension, std::ofstream &ofile, double &Pot){
+
+  ofile << std::setprecision(5)<< planets[0] << " "<< planets[1] << " "<< planets[2] << " " << Pot << endl;
+
+}
+
+void solving::PotentialEnergySystem(object &current, object &other, double &Pot){
+
+  double r = current.distance(other);
+  if ( r != 0){
+    Pot = -this->G*current.mass*other.mass/r;
+  }
+  else {
+    Pot = 0;
+  }
+
 
 }
