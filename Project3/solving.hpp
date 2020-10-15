@@ -30,6 +30,7 @@ class solving{
     void VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon);
     void delete_matrix3d(double ***matrix,int Integration_points);
     double **setup_matrix(int height,int width);
+    void Delta_A(object &current,double &t, double dt[4],double &dA1, double &dA2,double h);
     void delete_matrix(double **matrix);
     void print_to_file(double planets[3],int dimension, std::ofstream &ofile);
     void print_energi(double &pot, double &Kin, double &t,std::ofstream &ofile);

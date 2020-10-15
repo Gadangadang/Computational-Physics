@@ -98,12 +98,21 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   double **acceleration_next = setup_matrix(total_planets, 3);
   double t = 0;
   double Fx, Fy, Fz, Fxnew, Fynew, Fznew, Pot, Kin;
+  double dA1=0;
+  double dA2=0;
   double h = final_time/((double) integration_points);
+  double dt[4];
+  dt[0] = 0.19*final_time;
+  dt[1]=0.2*final_time;
+  dt[2]=0.69*final_time;
+  dt[3] = 0.7*final_time;
+
 
   std::ofstream ofile;
   std::string outfilename = "Planets_pos.txt";
   ofile.open(outfilename);
   ofile << integration_points << " " << total_planets<< " "<< endl;
+
   while (t < final_time){
 
     //Loop over all planets
@@ -133,6 +142,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
         GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon);
         PotentialEnergySystem(current, other, Pot);
         KineticEnergySystem(current, Kin);
+        Delta_A(current,t, dt, dA1, dA2,h);
       }
 
       acceleration_next[nr][0] = Fxnew/current.mass;
@@ -157,6 +167,8 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   ofile.close();
   delete_matrix(acceleration);
   delete_matrix(acceleration_next);
+  std::cout<<"Area of the first time interval is ="<<dA1<<endl;
+  std::cout<<"Area of the second time interval is ="<<dA2<<endl;
 }
 void solving::print_to_file(double planets[3],int dimension, std::ofstream &ofile){
   ofile << std::setprecision(5)<< planets[0] << " "<< planets[1] << " "<< planets[2] <<endl;
@@ -183,4 +195,26 @@ void solving::KineticEnergySystem(object &current, double &Kin){
     velo2 += (double) current.velocity[i]*current.velocity[i];
   }
   Kin = (double) 1/2*current.mass*velo2;
+}
+void solving::Delta_A(object &current,double &t, double dt[4],double &dA1, double &dA2,double h){
+if(t>dt[0]&&t<dt[1]){
+  double velo2=0;
+  double pos1=0;
+for (int i = 0; i< 3; i++){
+  velo2 += (double) current.velocity[i]*current.velocity[i];
+  pos1 += (double) current.position[i]*current.position[i];
+}
+  double pos2 = sqrt(pos1);
+  dA1 += (double) 1/2*velo2*pos2*h;
+}
+if(t>dt[2]&&t<dt[3]){
+  double velo2=0;
+  double pos1=0;
+for (int i = 0; i< 3; i++){
+  velo2 += (double) current.velocity[i]*current.velocity[i];
+  pos1 += (double) current.position[i]*current.position[i];
+}
+  double pos2 = sqrt(pos1);
+  dA2 += (double) 1/2*velo2*pos2*h;
+}
 }

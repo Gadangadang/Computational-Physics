@@ -35,7 +35,7 @@ int main(int argc, char const *argv[]) {
   vec pos(3); pos = {1,0,0};
   vec stab_vel =stable_orbiter(pos);
 
-  object planet1(earth_mass,1.,0.0,0.0,0.0,6.3,0.);
+  object planet1(earth_mass,1.,0.0,0.0,-2.0,6.3,0.);
   object planet2(sun_mass, 0,0,0,0,0,0);
 
   solving binary_verlet(5.0);
@@ -64,5 +64,4 @@ vec stable_orbiter(vec pos){
   stable_orbit[0] = v_stable*tanvec[0]; stable_orbit[1] = v_stable*tanvec[1];
   stable_orbit[2] = v_stable*tanvec[2];
   return stable_orbit;
-
 }
