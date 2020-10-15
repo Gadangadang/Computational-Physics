@@ -7,6 +7,7 @@ int_points, tot_p = float(int_points), int(tot_p)
 ax = plt.axes(projection='3d')
 p =[]
 potential = []
+kinetic = []
 t = []
 for i in range(tot_p):
     p.append([])
@@ -16,8 +17,10 @@ for line in data:
     if i==1:
         x1 = float(line.split(' ')[0])
         x2 = float(line.split(' ')[1])
+        x3 = float(line.split(' ')[2])
         potential.append(x1)
-        t.append(x2)
+        kinetic.append(x2)
+        t.append(x3)
     else:
         x1 = float(line.split(' ')[0])
         x2 = float(line.split(' ')[1])
@@ -38,7 +41,14 @@ for i in range(tot_p):
     ax.plot3D(x,y,z)
 
 plt.show()
+plt.subplot(1,2,1)
 plt.scatter(t,potential)
+plt.xlabel('Time[years]')
+plt.ylabel('Potential-energi')
 plt.ylim(-0.00011870,-0.000117)
 plt.xlim(0,10)
+plt.subplot(1,2,2)
+plt.xlabel('Time[years]')
+plt.ylabel('Kinetic-energi')
+plt.scatter(t,kinetic)
 plt.show()
