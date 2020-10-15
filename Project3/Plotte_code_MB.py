@@ -38,5 +38,5 @@ plt.show()
 points = range(10000)
 
 plt.scatter(points,potential[0,:])
-plt.ylim(-0.00012,-0.00011)
+plt.ylim(-0.00011870,-0.000117)
 plt.show()
