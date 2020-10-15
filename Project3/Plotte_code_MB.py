@@ -40,4 +40,5 @@ for i in range(tot_p):
 plt.show()
 plt.scatter(t,potential)
 plt.ylim(-0.00011870,-0.000117)
+plt.xlim(0,10)
 plt.show()
