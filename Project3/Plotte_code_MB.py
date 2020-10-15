@@ -39,16 +39,18 @@ potential = np.asarray(potential)
 for i in range(tot_p):
     x,y,z = p[i,:,0], p[i,:,1], p[i,:,2]
     ax.plot3D(x,y,z)
-
+year = 5
 plt.show()
 plt.subplot(1,2,1)
 plt.scatter(t,potential)
 plt.xlabel('Time[years]')
 plt.ylabel('Potential-energi')
 plt.ylim(-0.00011870,-0.000117)
-plt.xlim(0,10)
+plt.xlim(0,year)
 plt.subplot(1,2,2)
 plt.xlabel('Time[years]')
 plt.ylabel('Kinetic-energi')
+plt.ylim(0.000055,0.000065)
+plt.xlim(0,year)
 plt.scatter(t,kinetic)
 plt.show()

@@ -132,6 +132,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
         object &other = all_planets[nr2];
         GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon);
         PotentialEnergySystem(current, other, Pot);
+        KineticEnergySystem(current, Kin);
       }
 
       acceleration_next[nr][0] = Fxnew/current.mass;
@@ -143,7 +144,6 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
         current.velocity[y] += h/2*(acceleration[nr][y] + acceleration_next[nr][y]);
       }
       //Calculate kinetic energy for current object
-      KineticEnergySystem(current, Kin);
 
       print_to_file(all_planets[nr].position, dimension, ofile);
 
@@ -162,7 +162,7 @@ void solving::print_to_file(double planets[3],int dimension, std::ofstream &ofil
   ofile << std::setprecision(5)<< planets[0] << " "<< planets[1] << " "<< planets[2] <<endl;
 }
 void solving::print_energi(double &Pot, double &Kin, double &t, std::ofstream &ofile){
-  ofile <<std::setprecision(5)<<Pot<< " " << Kin <<" " << t<< endl;
+  ofile <<std::setprecision(20)<<Pot<< " " << Kin <<" " << t<< endl;
 }
 
 void solving::PotentialEnergySystem(object &current, object &other, double &Pot){
@@ -182,5 +182,5 @@ void solving::KineticEnergySystem(object &current, double &Kin){
   for (int i = 0; i< 3; i++){
     velo2 += current.velocity[i]*current.velocity[i];
   }
-  Kin += 1/2*current.mass*velo2;
+  Kin = (double)1/2*current.mass*velo2;
 }
