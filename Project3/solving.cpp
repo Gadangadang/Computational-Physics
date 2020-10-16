@@ -124,9 +124,12 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       Fx = Fy = Fz = Fxnew = Fynew = Fznew = Pot = Kin = 0;
 
       //Find forces on other planets
-      for (int nr2 = nr + 1; nr2 < total_planets; nr2++){
-        object &other = all_planets[nr2];
-        GravitationalForce(current, other, Fx, Fy, Fz, epsilon, beta);
+      for (int nr2 = 0; nr2 < total_planets; nr2++){
+        if (nr2 != nr && nr < total_planets-1){
+          object &other = all_planets[nr2];
+          GravitationalForce(current, other, Fx, Fy, Fz, epsilon, beta);
+        }
+
       }
 
       acceleration[nr][0] = Fx/current.mass;
@@ -138,12 +141,14 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
         current.position[k] += current.velocity[k]*h + h*h/2*acceleration[nr][k];
       }
       //Loop again over all other planets
-      for (int nr2 = nr + 1; nr2 < total_planets; nr2++){
-        object &other = all_planets[nr2];
-        GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon, beta);
-        PotentialEnergySystem(current, other, Pot);
-        KineticEnergySystem(current, Kin);
-        Delta_A(current,t, dt, dA1, dA2,h);
+      for (int nr2 = 0; nr2 < total_planets; nr2++){
+        if (nr2 != nr && nr < total_planets-1){
+          object &other = all_planets[nr2];
+          GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon, beta);
+          PotentialEnergySystem(current, other, Pot);
+          KineticEnergySystem(current, Kin);
+          Delta_A(current,t, dt, dA1, dA2,h);
+      }
       }
 
       acceleration_next[nr][0] = Fxnew/current.mass;
