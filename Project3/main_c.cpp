@@ -35,7 +35,7 @@ int main(int argc, char const *argv[]) {
   vec pos(3); pos = {1,0,0};
   vec stab_vel =stable_orbiter(pos);
 
-  object planet1(earth_mass,1.,0.0,0.0,-2.0,6.3,0.);
+  object planet1(earth_mass,1.,0.0,0.0,stab_vel[0], stab_vel[1], stab_vel[2]);
   object planet2(sun_mass, 0,0,0,0,0,0);
 
   solving binary_verlet(5.0);
@@ -56,12 +56,18 @@ vec stable_orbiter(vec pos){
   double GMstar = 4*M_PI*M_PI; // AU^3/yr^2
   vec hyp = -pos;
   vec tanvec(3);
-  tanvec[0] = -hyp[1]/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1]);
-  tanvec[1] = hyp[0]/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1]);
-  tanvec[3] = 0/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1]);
+  tanvec[0] = -hyp[1]/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1] + hyp[2]*hyp[2]);
+  tanvec[1] = hyp[0]/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1] + hyp[2]*hyp[2]);
+  tanvec[2] = hyp[2]/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1] + hyp[2]*hyp[2]);
   double v_stable = sqrt(GMstar/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1] + hyp[2]*hyp[2]));
   vec stable_orbit(3);
   stable_orbit[0] = v_stable*tanvec[0]; stable_orbit[1] = v_stable*tanvec[1];
   stable_orbit[2] = v_stable*tanvec[2];
+  for (int i = 0; i<3; i++){
+    if (isnan(stable_orbit[i]) == true){
+      stable_orbit[i] = 0;
+    }
+  }
+
   return stable_orbit;
 }

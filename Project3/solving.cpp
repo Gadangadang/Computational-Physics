@@ -197,24 +197,24 @@ void solving::KineticEnergySystem(object &current, double &Kin){
   Kin = (double) 1/2*current.mass*velo2;
 }
 void solving::Delta_A(object &current,double &t, double dt[4],double &dA1, double &dA2,double h){
-if(t>dt[0]&&t<dt[1]){
-  double velo2=0;
-  double pos1=0;
-for (int i = 0; i< 3; i++){
-  velo2 += (double) current.velocity[i]*current.velocity[i];
-  pos1 += (double) current.position[i]*current.position[i];
-}
-  double pos2 = sqrt(pos1);
-  dA1 += (double) 1/2*velo2*pos2*h;
-}
-if(t>dt[2]&&t<dt[3]){
-  double velo2=0;
-  double pos1=0;
-for (int i = 0; i< 3; i++){
-  velo2 += (double) current.velocity[i]*current.velocity[i];
-  pos1 += (double) current.position[i]*current.position[i];
-}
-  double pos2 = sqrt(pos1);
-  dA2 += (double) 1/2*velo2*pos2*h;
-}
+  if(t>dt[0]&&t<dt[1]){
+    double velo2=0;
+    double pos1=0;
+    for (int i = 0; i< 3; i++){
+      velo2 += (double) current.velocity[i]*current.velocity[i];
+      pos1 += (double) current.position[i]*current.position[i];
+    }
+    double pos2 = sqrt(pos1);
+    dA1 += (double) 1/2*velo2*pos2*h;
+  }
+  if(t>dt[2]&&t<dt[3]){
+    double velo2=0;
+    double pos1=0;
+    for (int i = 0; i< 3; i++){
+      velo2 += (double) current.velocity[i]*current.velocity[i];
+      pos1 += (double) current.position[i]*current.position[i];
+    }
+    double pos2 = sqrt(pos1);
+    dA2 += (double) 1/2*velo2*pos2*h;
+  }
 }
