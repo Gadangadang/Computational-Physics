@@ -102,13 +102,16 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   double dA1=0;
   double dA2=0;
   double h = final_time/((double) integration_points);
+  double cm[3]
   double dt[4];
   dt[0] = 0.19*final_time;
   dt[1]=0.2*final_time;
   dt[2]=0.69*final_time;
   dt[3] = 0.7*final_time;
-
-
+  for(int i=0; i<total_planets;i++){
+    object &current = all_planets[i]
+    center_of_mass(current, double cm[3], int dimension);
+  }
   std::ofstream ofile;
   std::string outfilename = "Planets_pos.txt";
   ofile.open(outfilename);
@@ -142,8 +145,9 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
 
       //Calculate position for each planet
       for (int k = 0; k<dimension; k++){
-        current.position[k] += current.velocity[k]*h + 0.5*h*h*acceleration[nr][k];
+        current.position[k] += current.velocity[k]*h + 0.5*h*h*acceleration[nr][k]-cm[k];
       }
+      center_of_mass(current, cm, dimension);
       //Loop again over all other planets
       for (int nr2 = 0; nr2 < total_planets; nr2++){
         if (nr2 != nr && nr < total_planets-1){
@@ -195,7 +199,11 @@ void solving::PotentialEnergySystem(object &current, object &other, double &Pot)
     Pot = 0;
   }
 }
-
+void solving::center_of_mass(object &current, double cm[3], int dimension){
+  for(int i=0;i<dimension;i++){
+    cm[i] += (double)current.mass*current.position[i]/total_mass
+  }
+}
 
 void solving::KineticEnergySystem(object &current, double &Kin){
   double velo2 = 0;
