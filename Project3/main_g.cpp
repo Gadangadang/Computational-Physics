@@ -25,7 +25,7 @@ int main(int argc, char const *argv[]) {
 
 
   int IntegrationPoints = 10000;
-  double FinalTime = 5.0;
+  double FinalTime = 18.0;
 
   //double TimeStep = FinalTime/((double) IntegrationPoints);
   double x[3],v[3];
@@ -43,7 +43,7 @@ int main(int argc, char const *argv[]) {
 
   object planet1(earth_mass,1.,0.0,0.0,stab_vel[0], stab_vel[1], stab_vel[2]);
   //object planet1(earth_mass,1.,0.0,0.0,0,5,0);
-  object planet2(jup_mass,5.2,0.0,0.0,stab_vel_jup[0], stab_vel_jup[1], stab_vel_jup[2]);
+  object planet2(jup_mass,5.2,0.0,0.0,0, 3, 0);
   object planet3(sun_mass, 0,0,0,0,0,0);
 
   solving binary_verlet(5.0);
@@ -54,8 +54,7 @@ int main(int argc, char const *argv[]) {
     x[r] = binary_verlet.all_planets[0].position[r];
     v[r] = binary_verlet.all_planets[0].velocity[r];
   }
-  //double ***planets;
-  //binary_verlet.print_to_file(x,IntegrationPoints);
+
   return 0;
 }
 

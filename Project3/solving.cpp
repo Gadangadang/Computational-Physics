@@ -128,23 +128,6 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
         if (nr2 != nr && nr < total_planets-1){
           object &other = all_planets[nr2];
           GravitationalForce(current, other, Fx, Fy, Fz, epsilon, beta);
-        }
-
-      }
-
-      acceleration[nr][0] = Fx/current.mass;
-      acceleration[nr][1] = Fy/current.mass;
-      acceleration[nr][2] = Fz/current.mass;
-
-      //Calculate position for each planet
-      for (int k = 0; k<dimension; k++){
-        current.position[k] += current.velocity[k]*h + h*h/2*acceleration[nr][k];
-      }
-      //Loop again over all other planets
-      for (int nr2 = 0; nr2 < total_planets; nr2++){
-        if (nr2 != nr && nr < total_planets-1){
-          object &other = all_planets[nr2];
-          GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon, beta);
           PotentialEnergySystem(current, other, Pot);
           KineticEnergySystem(current, Kin);
           if(nr ==0){
@@ -153,13 +136,30 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       }
       }
 
+      acceleration[nr][0] = Fx/current.mass;
+      acceleration[nr][1] = Fy/current.mass;
+      acceleration[nr][2] = Fz/current.mass;
+
+      //Calculate position for each planet
+      for (int k = 0; k<dimension; k++){
+        current.position[k] += current.velocity[k]*h + 0.5*h*h*acceleration[nr][k];
+      }
+      //Loop again over all other planets
+      for (int nr2 = 0; nr2 < total_planets; nr2++){
+        if (nr2 != nr && nr < total_planets-1){
+          object &other = all_planets[nr2];
+          GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon, beta);
+        }
+      }
+
+
       acceleration_next[nr][0] = Fxnew/current.mass;
       acceleration_next[nr][1] = Fynew/current.mass;
       acceleration_next[nr][2] = Fznew/current.mass;
 
       //calculate velocity for planets
       for (int y = 0; y < dimension; y++){
-        current.velocity[y] += h/2*(acceleration[nr][y] + acceleration_next[nr][y]);
+        current.velocity[y] += 0.5*h*(acceleration[nr][y] + acceleration_next[nr][y]);
       }
       //Calculate kinetic energy for current object
 
