@@ -35,7 +35,7 @@ for line in data:
 #print(p[i])
 p = np.asarray(p)
 potential = np.asarray(potential)
-for i in range(tot_p-1):
+for i in range(tot_p):
     x,y,z = p[i,:,0], p[i,:,1], p[i,:,2]
     ax.plot3D(x,y,z)
 x,y,z = p[1,:,0], p[1,:,1], p[1,:,2]

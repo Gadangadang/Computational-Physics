@@ -91,7 +91,7 @@ void solving::GravitationalForce(object &current,object &other,double &Fx,double
     Fz -= this->G*current.mass*other.mass*relative_distance[2]/((r*R) + smoothing);
 }
 
-void solving::VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon, double beta){
+void solving::VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon, double beta, int fixed){
 
 
 
@@ -102,15 +102,21 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   double dA1=0;
   double dA2=0;
   double h = final_time/((double) integration_points);
-  double cm[3]
+  double cm[3];
   double dt[4];
   dt[0] = 0.19*final_time;
   dt[1]=0.2*final_time;
   dt[2]=0.69*final_time;
   dt[3] = 0.7*final_time;
-  for(int i=0; i<total_planets;i++){
-    object &current = all_planets[i]
-    center_of_mass(current, double cm[3], int dimension);
+  if(fixed==1){
+  center_of_mass(cm,  dimension);
+  std::cout<<cm[0]<<" "<<cm[1]<<" "<<cm[2]<<endl;
+  for(int i =0; i<total_planets;i++){
+    object &current = all_planets[i];
+    for(int j = 0; j<dimension;j++){
+      current.position[j]-=cm[j];
+    }
+  }
   }
   std::ofstream ofile;
   std::string outfilename = "Planets_pos.txt";
@@ -118,7 +124,6 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   ofile << integration_points << " " << total_planets<< " "<< endl;
 
   while (t < final_time){
-
     //Loop over all planets
     for (int nr = 0; nr < total_planets; nr++){
 
@@ -137,6 +142,10 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
             Delta_A(current,t, dt, dA1, dA2,h);
         }
       }
+      else if(fixed==1 && nr==total_planets-1){
+        object &other = all_planets[nr2];
+        GravitationalForce(current, other, Fx, Fy, Fz, epsilon, beta);
+      }
       }
 
       acceleration[nr][0] = Fx/current.mass;
@@ -147,13 +156,17 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       for (int k = 0; k<dimension; k++){
         current.position[k] += current.velocity[k]*h + 0.5*h*h*acceleration[nr][k]-cm[k];
       }
-      center_of_mass(current, cm, dimension);
       //Loop again over all other planets
       for (int nr2 = 0; nr2 < total_planets; nr2++){
         if (nr2 != nr && nr < total_planets-1){
           object &other = all_planets[nr2];
           GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon, beta);
         }
+        else if(fixed==1 && nr==total_planets-1){
+          object &other = all_planets[nr2];
+          GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon, beta);
+          }
+
       }
 
 
@@ -174,6 +187,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       }
     }
     t+= h;
+    center_of_mass(cm,dimension);
   }
   // Clear memory
   ofile.close();
@@ -199,10 +213,14 @@ void solving::PotentialEnergySystem(object &current, object &other, double &Pot)
     Pot = 0;
   }
 }
-void solving::center_of_mass(object &current, double cm[3], int dimension){
-  for(int i=0;i<dimension;i++){
-    cm[i] += (double)current.mass*current.position[i]/total_mass
+void solving::center_of_mass(double cm[3], int dimension){
+  cm[0]=cm[1]=cm[2]=0;
+  for(int j =0;j<total_planets;j++){
+    object &current = all_planets[j];
+    for(int i=0;i<dimension;i++){
+      cm[i] += (double)current.mass*current.position[i]/total_mass;
   }
+}
 }
 
 void solving::KineticEnergySystem(object &current, double &Kin){

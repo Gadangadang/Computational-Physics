@@ -25,9 +25,9 @@ class solving{
     void add(object newplanet);
     void addM(object newplanet);
     void GravitationalConstant();
-    void center_of_mass(object &current, double cm[3], int dimension);
+    void center_of_mass(double cm[3], int dimension);
     void print_position(std::ofstream &output, int dimension, double time, int number,object &current, object &other);
-    void VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon, double beta);
+    void VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon, double beta, int fixed);
     void delete_matrix3d(double ***matrix,int Integration_points);
     double **setup_matrix(int height,int width);
     void Delta_A(object &current,double &t, double dt[4],double &dA1, double &dA2,double h);
