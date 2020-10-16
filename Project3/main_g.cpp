@@ -25,7 +25,7 @@ int main(int argc, char const *argv[]) {
 
 
   int IntegrationPoints = 10000;
-  double FinalTime = 50.0;
+  double FinalTime = 5.0;
 
   //double TimeStep = FinalTime/((double) IntegrationPoints);
   double x[3],v[3];
@@ -47,7 +47,7 @@ int main(int argc, char const *argv[]) {
   object planet3(sun_mass, 0,0,0,0,0,0);
 
   solving binary_verlet(5.0);
-  binary_verlet.add(planet1); binary_verlet.add(planet2);
+  binary_verlet.add(planet1); binary_verlet.add(planet2);binary_verlet.add(planet3);
   binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta);
 
   for (int r = 0; r < Dimension; r++){

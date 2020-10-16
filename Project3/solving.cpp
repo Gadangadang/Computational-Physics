@@ -147,7 +147,9 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
           GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon, beta);
           PotentialEnergySystem(current, other, Pot);
           KineticEnergySystem(current, Kin);
-          Delta_A(current,t, dt, dA1, dA2,h);
+          if(nr ==0){
+            Delta_A(current,t, dt, dA1, dA2,h);
+        }
       }
       }
 
