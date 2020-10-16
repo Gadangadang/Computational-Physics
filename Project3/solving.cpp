@@ -110,7 +110,6 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   dt[3] = 0.7*final_time;
   if(fixed==1){
   center_of_mass(cm,  dimension);
-  std::cout<<cm[0]<<" "<<cm[1]<<" "<<cm[2]<<endl;
   for(int i =0; i<total_planets;i++){
     object &current = all_planets[i];
     for(int j = 0; j<dimension;j++){
@@ -142,12 +141,11 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
             Delta_A(current,t, dt, dA1, dA2,h);
         }
       }
-      else if(fixed==1 && nr==total_planets-1){
+      else if(fixed==1 && nr==total_planets-1&&nr!=nr2){
         object &other = all_planets[nr2];
         GravitationalForce(current, other, Fx, Fy, Fz, epsilon, beta);
       }
       }
-
       acceleration[nr][0] = Fx/current.mass;
       acceleration[nr][1] = Fy/current.mass;
       acceleration[nr][2] = Fz/current.mass;
@@ -162,7 +160,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
           object &other = all_planets[nr2];
           GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon, beta);
         }
-        else if(fixed==1 && nr==total_planets-1){
+        else if(fixed==1 && nr==total_planets-1 && nr!=nr2){
           object &other = all_planets[nr2];
           GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon, beta);
           }
@@ -188,6 +186,8 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
     }
     t+= h;
     center_of_mass(cm,dimension);
+
+
   }
   // Clear memory
   ofile.close();
