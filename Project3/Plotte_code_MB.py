@@ -45,7 +45,7 @@ u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
 x = r*np.cos(u)*np.sin(v)
 y = r*np.sin(u)*np.sin(v)
 z = r*np.cos(v)
-ax.plot_wireframe(x, y, z, color="r")
+ax.plot_wireframe(x, y, z, color="y")
 
 ax.set_xlim3d([-np.max(p[1,:,0]),np.max(p[1,:,0])])
 ax.set_ylim3d([-np.max(p[1,:,1]),np.max(p[1,:,1])])
