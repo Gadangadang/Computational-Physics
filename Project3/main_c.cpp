@@ -33,7 +33,7 @@ int main(int argc, char const *argv[]) {
   double sun_mass = 1.0;
 
   vec pos(3); pos = {1,0,0};
-  vec stab_vel =stable_orbiter(pos);
+  //vec stab_vel =stable_orbiter(pos);
 
   object planet1(earth_mass,1.,0.0,0.0,stab_vel[0], stab_vel[1], stab_vel[2]);
   object planet2(sun_mass, 0,0,0,0,0,0);
@@ -48,11 +48,10 @@ int main(int argc, char const *argv[]) {
   }
   //double ***planets;
   //binary_verlet.print_to_file(x,IntegrationPoints);
-
   return 0;
 }
 
-vec stable_orbiter(vec pos){
+vec stable_circle_orbiter(vec pos){
   double GMstar = 4*M_PI*M_PI; // AU^3/yr^2
   vec hyp = -pos;
   vec tanvec(3);
