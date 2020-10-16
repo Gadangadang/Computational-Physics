@@ -39,8 +39,21 @@ potential = np.asarray(potential)
 for i in range(tot_p):
     x,y,z = p[i,:,0], p[i,:,1], p[i,:,2]
     ax.plot3D(x,y,z)
+
+r=0.00464913034
+u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
+x = r*np.cos(u)*np.sin(v)
+y = r*np.sin(u)*np.sin(v)
+z = r*np.cos(v)
+ax.plot_wireframe(x, y, z, color="r")
+
+ax.set_xlim3d([-np.max(p[0,:,0]),np.max(p[0,:,0])])
+ax.set_ylim3d([-np.max(p[0,:,1]),np.max(p[0,:,1])])
+ax.set_zlim3d([-1,1])
+
 year = 5
 plt.show()
+
 plt.subplot(1,2,1)
 plt.scatter(t,potential)
 plt.xlabel('Time[years]')

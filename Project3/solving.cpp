@@ -74,7 +74,7 @@ void solving::delete_matrix3d(double ***matrix,int Integration_points)
         delete [] matrix[i][k];
 }
 
-void solving::GravitationalForce(object &current,object &other,double &Fx,double &Fy,double &Fz,double epsilon)
+void solving::GravitationalForce(object &current,object &other,double &Fx,double &Fy,double &Fz,double epsilon, double beta)
 {   // Function that calculates the gravitational force between two objects, component by component.
 
     // Calculate relative distance between current planet and all other planets
@@ -83,14 +83,15 @@ void solving::GravitationalForce(object &current,object &other,double &Fx,double
     for(int j = 0; j < 3; j++) relative_distance[j] = current.position[j]-other.position[j];
     double r = current.distance(other);
     double smoothing = epsilon*epsilon*epsilon;
+    double R = pow(r,beta);
 
     // Calculate the forces in each direction
-    Fx -= this->G*current.mass*other.mass*relative_distance[0]/((r*r*r) + smoothing);
-    Fy -= this->G*current.mass*other.mass*relative_distance[1]/((r*r*r) + smoothing);
-    Fz -= this->G*current.mass*other.mass*relative_distance[2]/((r*r*r) + smoothing);
+    Fx -= this->G*current.mass*other.mass*relative_distance[0]/((r*R) + smoothing);
+    Fy -= this->G*current.mass*other.mass*relative_distance[1]/((r*R) + smoothing);
+    Fz -= this->G*current.mass*other.mass*relative_distance[2]/((r*R) + smoothing);
 }
 
-void solving::VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon){
+void solving::VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon, double beta){
 
 
 
@@ -125,7 +126,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       //Find forces on other planets
       for (int nr2 = nr + 1; nr2 < total_planets; nr2++){
         object &other = all_planets[nr2];
-        GravitationalForce(current, other, Fx, Fy, Fz, epsilon);
+        GravitationalForce(current, other, Fx, Fy, Fz, epsilon, beta);
       }
 
       acceleration[nr][0] = Fx/current.mass;
@@ -139,7 +140,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       //Loop again over all other planets
       for (int nr2 = nr + 1; nr2 < total_planets; nr2++){
         object &other = all_planets[nr2];
-        GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon);
+        GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon, beta);
         PotentialEnergySystem(current, other, Pot);
         KineticEnergySystem(current, Kin);
         Delta_A(current,t, dt, dA1, dA2,h);
