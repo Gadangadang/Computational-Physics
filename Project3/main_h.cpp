@@ -24,36 +24,30 @@ int main(int argc, char const *argv[]) {
   int Dimension = 3;
 
 
-  int IntegrationPoints = 10000;
-  double FinalTime = 18.0;
+  int IntegrationPoints = 50000;
+  double FinalTime = .5;
 
   //double TimeStep = FinalTime/((double) IntegrationPoints);
-  double x[3],v[3];
   double earth_mass = 3.003e-6;
   double sun_mass = 1.0;
   double jup_mass = 0.0009543;
   int fixed =1;
-  vec pos(3); pos = {1,0,0};
-  vec pos_jup(3); pos = {5.2,0,0};
-  vec stab_vel = stable_circle_orbiter(pos);
-  vec stab_vel_jup = stable_circle_orbiter(pos_jup);
-
+  vec vel(3);vel={-6.957269992142644*1e-03, 1.579734315560513*1e-02, -2.582593092148153*1e-07};
+  vec vel2(3);vel2={6.442741439253338*1e-03, 4.130146620372741*1e-03, -1.612738541610256*1e-04};
+  vec vel3(3);vel3 = {-7.280593132276730*1e-06,-5.090234498858063*1e-06,2.181619304215098*1e-07};
+  //vec vels(3);vels = (-vel2*jup_mass-vel*earth_mass)/sun_mass;
   double beta = 2;
   cout << "Beta " << beta << endl;
-
-  object planet1(earth_mass,1.,0.0,0.0,stab_vel[0], stab_vel[1], stab_vel[2]);
-  //object planet1(earth_mass,1.,0.0,0.0,0,5,0);
-  object planet2(jup_mass,5.2,0.0,0.0,0, 3, 0);
-  object planet3(sun_mass, 0,0,0,0.5,0,0);
-
+  //Earth
+  object planet1(earth_mass,9.128884513088843*1e-01,3.928032801600736*1e-01,6.577938183713410*1e-05,-6.957269992142644*1e-03, 1.579734315560513*1e-02, -2.582593092148153*1e-07);
+  //Jupiter
+  object planet2(jup_mass,2.556653950007264,-4.428596022378350,-3.882840438937561*1e-02,6.442741439253338*1e-03, 4.130146620372741*1e-03, -1.612738541610256*1e-04);
+  //Sun
+  object planet3(sun_mass, -6.107925513172998*1e-03,6.420679726598624*1e-03,8.893727401374147*1e-05,-7.280593132276730*1e-06,-5.090234498858063*1e-06,2.181619304215098*1e-07);
+  //object planet3(sun_mass, -6.107925513172998*1e-03,6.420679726598624*1e-03,8.893727401374147*1e-05,vels[0],vels[1],vels[2]);
   solving binary_verlet(5.0);
   binary_verlet.add(planet1); binary_verlet.add(planet2);binary_verlet.add(planet3);
   binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta, fixed);
-
-  for (int r = 0; r < Dimension; r++){
-    x[r] = binary_verlet.all_planets[0].position[r];
-    v[r] = binary_verlet.all_planets[0].velocity[r];
-  }
 
   return 0;
 }

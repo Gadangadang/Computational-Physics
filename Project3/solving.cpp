@@ -108,15 +108,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   dt[1]=0.2*final_time;
   dt[2]=0.69*final_time;
   dt[3] = 0.7*final_time;
-  if(fixed==1){
-  center_of_mass(cm,  dimension);
-  for(int i =0; i<total_planets;i++){
-    object &current = all_planets[i];
-    for(int j = 0; j<dimension;j++){
-      current.position[j]-=cm[j];
-    }
-  }
-  }
+  if(fixed==1){center_of_mass(cm,  dimension);}
   std::ofstream ofile;
   std::string outfilename = "Planets_pos.txt";
   ofile.open(outfilename);
@@ -164,10 +156,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
           object &other = all_planets[nr2];
           GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon, beta);
           }
-
       }
-
-
       acceleration_next[nr][0] = Fxnew/current.mass;
       acceleration_next[nr][1] = Fynew/current.mass;
       acceleration_next[nr][2] = Fznew/current.mass;
@@ -197,7 +186,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   std::cout<<"Area of the second time interval is ="<<dA2<<endl;
 }
 void solving::print_to_file(double planets[3],int dimension, std::ofstream &ofile){
-  ofile << std::setprecision(5)<< planets[0] << " "<< planets[1] << " "<< planets[2] <<endl;
+  ofile << std::setprecision(16)<< planets[0] << " "<< planets[1] << " "<< planets[2] <<endl;
 }
 void solving::print_energi(double &Pot, double &Kin, double &t, std::ofstream &ofile){
   ofile <<std::setprecision(20)<<Pot<< " " << Kin <<" " << t<< endl;
