@@ -32,15 +32,13 @@ solving::solving(double radi){
     totalPotential = 0;
 }
 
-
 void solving::add(object newplanet){
   total_planets += 1;
   total_mass += newplanet.mass;
   all_planets.push_back(newplanet);
 }
 
-double ** solving::setup_matrix(int height,int width)
-{   // Function to set up a 2D array
+double ** solving::setup_matrix(int height,int width){   // Function to set up a 2D array
 
     // Set up matrix
     double **matrix;
@@ -59,23 +57,35 @@ double ** solving::setup_matrix(int height,int width)
     return matrix;
 }
 
-void solving::delete_matrix(double **matrix)
-{   // Function to deallocate memory of a 2D array
+void solving::delete_matrix(double **matrix){   // Function to deallocate memory of a 2D array
 
     for (int i=0; i<total_planets; i++)
         delete [] matrix[i];
     delete [] matrix;
 }
-void solving::delete_matrix3d(double ***matrix,int Integration_points)
-{   // Function to deallocate memory of a 2D array
+
+void solving::delete_matrix3d(double ***matrix,int Integration_points){   // Function to deallocate memory of a 2D array
 
     for (int i=0; i<total_planets; i++)
       for (int k = 0; k<Integration_points;k++)
         delete [] matrix[i][k];
 }
 
-void solving::GravitationalForce(object &current,object &other,double &Fx,double &Fy,double &Fz,double epsilon, double beta)
-{   // Function that calculates the gravitational force between two objects, component by component.
+double solving::angularmomentum(double pos[3], double vel[3]){
+    double spinvec[3];
+    spinvec[0] = pos[1] * vel[2] - pos[2] * vel[1];
+    spinvec[1] = pos[2] * vel[0] - pos[0] * vel[2];
+    spinvec[2] = pos[0] * vel[1] - pos[1] * vel[0];
+
+    double l = 0;
+    for (int i = 0; i<3; i++){
+      l += spinvec[i]*spinvec[i];
+    }
+    l = sqrt(l);
+    return l;
+}
+
+void solving::GravitationalForce(object &current,object &other,double &Fx,double &Fy,double &Fz,double epsilon, double beta){   // Function that calculates the gravitational force between two objects, component by component.
 
     // Calculate relative distance between current planet and all other planets
     double relative_distance[3];
@@ -84,9 +94,10 @@ void solving::GravitationalForce(object &current,object &other,double &Fx,double
     double r = current.distance(other);
     double smoothing = epsilon*epsilon*epsilon;
     double R = pow(r,beta);
+    double l = angularmomentum(current.position, current.velocity);
 
     // Calculate the forces in each direction
-    Fx -= this->G*current.mass*other.mass*relative_distance[0]/((r*R) + smoothing);
+    Fx -= this->G*current.mass*other.mass*relative_distance[0]/((r*R)*( 1 + 3*l*l/(R*c*c) ) + smoothing);
     Fy -= this->G*current.mass*other.mass*relative_distance[1]/((r*R) + smoothing);
     Fz -= this->G*current.mass*other.mass*relative_distance[2]/((r*R) + smoothing);
 }
@@ -185,15 +196,16 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   std::cout<<"Area of the first time interval is ="<<dA1<<endl;
   std::cout<<"Area of the second time interval is ="<<dA2<<endl;
 }
+
 void solving::print_to_file(double planets[3],int dimension, std::ofstream &ofile){
   ofile << std::setprecision(16)<< planets[0] << " "<< planets[1] << " "<< planets[2] <<endl;
 }
+
 void solving::print_energi(double &Pot, double &Kin, double &t, std::ofstream &ofile){
   ofile <<std::setprecision(20)<<Pot<< " " << Kin <<" " << t<< endl;
 }
 
 void solving::PotentialEnergySystem(object &current, object &other, double &Pot){
-
   double r = current.distance(other);
   if ( r != 0){
     Pot = -this->G*current.mass*other.mass/r;
@@ -202,14 +214,15 @@ void solving::PotentialEnergySystem(object &current, object &other, double &Pot)
     Pot = 0;
   }
 }
+
 void solving::center_of_mass(double cm[3], int dimension){
   cm[0]=cm[1]=cm[2]=0;
   for(int j =0;j<total_planets;j++){
     object &current = all_planets[j];
     for(int i=0;i<dimension;i++){
       cm[i] += (double)current.mass*current.position[i]/total_mass;
+    }
   }
-}
 }
 
 void solving::KineticEnergySystem(object &current, double &Kin){
@@ -219,6 +232,7 @@ void solving::KineticEnergySystem(object &current, double &Kin){
   }
   Kin = (double) 1/2*current.mass*velo2;
 }
+
 void solving::Delta_A(object &current,double &t, double dt[4],double &dA1, double &dA2,double h){
   if(t>dt[0]&&t<dt[1]){
     double velo2=0;

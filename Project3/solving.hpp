@@ -17,6 +17,7 @@ class solving{
     vector<object> all_planets;
     double totalKinetic;
     double totalPotential;
+    double c = 63239.7263; // Speed of light in AU/year
     // initializers
     solving();
     solving(double radi);
@@ -25,6 +26,7 @@ class solving{
     void add(object newplanet);
     void addM(object newplanet);
     void GravitationalConstant();
+    double angularmomentum(double pos[3], double vel[3]);
     void center_of_mass(double cm[3], int dimension);
     void print_position(std::ofstream &output, int dimension, double time, int number,object &current, object &other);
     void VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon, double beta, int fixed);
