@@ -35,11 +35,17 @@ for line in data:
 #print(p[i])
 p = np.asarray(p)
 potential = np.asarray(potential)
+names=("Mercury","Venus","Earth","Moon","Mars","Jupiter","Saturn","Neptune", "Uranus","Sun")
+
 for i in range(tot_p):
+    #print(i,names[i])
     x,y,z = p[i,:,0], p[i,:,1], p[i,:,2]
-    ax.plot3D(x,y,z)
+
+    ax.plot3D(x,y,z, label="{}".format( names[i] ))
+
 x,y,z = p[1,:,0], p[1,:,1], p[1,:,2]
 ax.plot3D(x,y,z)
+ax.legend()
 r=0.00464913034
 u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
 """x = r*np.cos(u)*np.sin(v)
