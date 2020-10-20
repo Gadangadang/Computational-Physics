@@ -43,6 +43,7 @@ int main(int argc, char const *argv[]) {
   double beta = 2;
   cout << "Beta " << beta << endl;
   //When initializing the planets; make sure to initialize the sun last, and the planet furthest away from the sun second last.
+  //Also add earth second.
   //Earth
   object planetearth(earth_mass,9.128884513088843*1e-01,3.928032801600736*1e-01,6.577938183713410*1e-05,-6.957269992142644*1e-03*365, 1.579734315560513*1e-02*365, -2.582593092148153*1e-07*365);
   //Earth moon
@@ -65,8 +66,8 @@ int main(int argc, char const *argv[]) {
   object planeturanus(uran_mass,1.555699248858926e+01, 1.221910146632133e+01,-1.561607729538915e-01,-2.458296642987987e-03*365,2.909798437857242e-03*365,4.256035053183806e-05*365);
 
   solving binary_verlet(5.0);
-  binary_verlet.add(planetmercury); binary_verlet.add(planetvenus);
-  binary_verlet.add(planetearth); binary_verlet.add(moon);
+  binary_verlet.add(planetearth);binary_verlet.add(moon);
+  binary_verlet.add(planetmercury);binary_verlet.add(planetvenus);
   binary_verlet.add(planetmar); binary_verlet.add(planetjup);
   binary_verlet.add(planetsat); binary_verlet.add(planetnep);
   binary_verlet.add(planeturanus); binary_verlet.add(sun);
