@@ -38,12 +38,12 @@ int main(int argc, char const *argv[]) {
   double uran_mass = 0.00004365;
   double merc_mass = 1.651e-7;
   double moon_mass = 3.69396868e-8;
-  int fixed =1;
+  int fixed =0;
 
   double beta = 2;
   cout << "Beta " << beta << endl;
   //When initializing the planets; make sure to initialize the sun last, and the planet furthest away from the sun second last.
-  //Also add earth second.
+  //Also add earth first.
   //Earth
   object planetearth(earth_mass,9.128884513088843*1e-01,3.928032801600736*1e-01,6.577938183713410*1e-05,-6.957269992142644*1e-03*365, 1.579734315560513*1e-02*365, -2.582593092148153*1e-07*365);
   //Earth moon
