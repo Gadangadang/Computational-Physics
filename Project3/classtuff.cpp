@@ -65,6 +65,5 @@ tuple<vec, vec> classtuff::integrator(){
     vel_y[i+1] = vel_y[i] + h/2*(find_acc(Pos_X[i+1], Pos_Y[i+1])(1) + find_acc(Pos_X[i], Pos_Y[i])(1));
     i = i + 1;
   }
-
   return {Pos_X, Pos_Y};
 }

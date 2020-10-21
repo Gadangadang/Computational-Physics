@@ -39,9 +39,9 @@ unittest_solv.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta, f
   //  }
   //}
 
-  int *integrationpoints;
-  float *number_o_planet;
-  float *t;
+  int *integrationpoints = nullptr;
+  float *number_o_planet = nullptr;
+  float *t = nullptr;
 
   double *kin, *pot, *x, *y, *z ;
 
@@ -59,9 +59,9 @@ unittest_solv.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta, f
 
   //Read info from file
   int j = 0;
-  for (int i = 0; i < (number_o_planet+1)*integrationpoints; i++){
+  for (int i = 0; i < (*number_o_planet+1)**integrationpoints; i++){
     if ( j ==1  ){
-    fscanf(fp_init, "%lf %lf %e ", &pot[i], &kin[i], *t);
+    fscanf(fp_init, "%lf %lf %e ", &pot[i], &kin[i], t);
     }
     else {
       fscanf(fp_init,"%lf %lf %lf ", &x[i], &y[i], &z[i]);
@@ -80,22 +80,22 @@ unittest_solv.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta, f
 
     //Now sum up energy
     double toten[*integrationpoints];
-    for (int i = 0; i < integrationpoints; i++){
+    for (int i = 0; i < *integrationpoints; i++){
       toten[i] = kin[i] + pot[i];
     }
 
     //Find max total energy value for each half of the array.
     double maxval = toten[0];
-    for (int i = 1; i < integrationpoints/2; i++){
+    for (int i = 1; i < *integrationpoints/2; i++){
       if (toten[i] > maxval){
         maxval = toten[i];
       }
     }
 
     double maxval2 = toten[*integrationpoints/2];
-    for (int i = integrationpoints/2; i < integrationpoints; i++){
-      if (toten[i] > maxval2){
-        maxval2 = toten[i];
+    for (int k = *integrationpoints/2; k < *integrationpoints; k++){
+      if (toten[k] > maxval2){
+        maxval2 = toten[k];
       }
     }
 
