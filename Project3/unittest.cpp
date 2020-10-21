@@ -60,33 +60,25 @@ TEST_CASE( "Check for errors in code" ) {
 
   //Read info from file
   int j = 0;
-  //std::cout << (2+1)*IntegrationPoints << endl;
   int k = 0;
   int o = 0;
   int u = 0;
   for (int i = 0; i < (2+1)*IntegrationPoints; i++){
-
     if (j == 1){
-      //std::cout << "j = " << j << endl;
       fscanf(fp_init, "%lf %lf %e %lf", &pot[k], &kin[k], t, &l[k]);
       k += 1;
       j+=1;
     }
     else if (j == 2){
-      //std::cout << "j = " << j << endl;
       fscanf(fp_init, "%lf %lf %lf", &sunx[u], &suny[u], &sunz[u] );
       u += 1;
       j = 0;
     }
     else if (j == 0){
-      //std::cout << "j = " << j << endl;
-      //std::cout<< "x = " << x[l] << " y = " << y[l] << " z = " << z[l] << endl;
       fscanf(fp_init,"%lf %lf %lf ", &x[o], &y[o], &z[o]);
-      //std::cout<< "x = " << x[l] << " y = " << y[l] << " z = " << z[l] << endl;
       o += 1;
       j += 1;
     }
-    //std::cout<< "i = " << i << endl;
   }
 
   fclose(fp_init);
@@ -114,7 +106,7 @@ TEST_CASE( "Check for errors in code" ) {
         maxval2 = toten[k];
       }
     }
-    //Checking if the difference between the peak in max-value in the totale-energy
+    // Checking if the difference between the peak in max-value in the totale-energy
     // is relativley equal for both halves. Therby making the energy periodic,
     // and therfore constant for each period.
     REQUIRE( fabs(maxval - maxval2) < fabs(maxval2)/150 );

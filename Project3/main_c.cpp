@@ -27,15 +27,14 @@ int main(int argc, char const *argv[]) {
   int IntegrationPoints = 10000;
   double FinalTime = 50.0;
 
-  //double TimeStep = FinalTime/((double) IntegrationPoints);
-  double x[3],v[3];
   double earth_mass = 3.003e-6;
   double sun_mass = 1.0;
 
   vec pos(3); pos = {1,0,0};
   vec stab_vel = stable_circle_orbiter(pos);
 
-  double beta = 3;
+  double beta = 2;
+  int fixed =1;
   cout << "Beta " << beta << endl;
 
   //object planet1(earth_mass,1.,0.0,0.0,stab_vel[0], stab_vel[1], stab_vel[2]);
@@ -44,14 +43,8 @@ int main(int argc, char const *argv[]) {
 
   solving binary_verlet(5.0);
   binary_verlet.add(planet1); binary_verlet.add(planet2);
-  binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta);
+  binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta,fixed);
 
-  for (int r = 0; r < Dimension; r++){
-    x[r] = binary_verlet.all_planets[0].position[r];
-    v[r] = binary_verlet.all_planets[0].velocity[r];
-  }
-  //double ***planets;
-  //binary_verlet.print_to_file(x,IntegrationPoints);
   return 0;
 }
 
