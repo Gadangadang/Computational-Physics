@@ -17,7 +17,7 @@
 using namespace std;
 using namespace arma;
 
-vec stable_circle_orbiter(vec pos);
+
 
 int main(int argc, char const *argv[]) {
 
@@ -74,24 +74,4 @@ int main(int argc, char const *argv[]) {
   binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta, fixed);
 
   return 0;
-}
-
-vec stable_circle_orbiter(vec pos){
-  double GMstar = 4*M_PI*M_PI; // AU^3/yr^2
-  vec hyp = -pos;
-  vec tanvec(3);
-  tanvec[0] = -hyp[1]/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1] + hyp[2]*hyp[2]);
-  tanvec[1] = hyp[0]/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1] + hyp[2]*hyp[2]);
-  tanvec[2] = hyp[2]/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1] + hyp[2]*hyp[2]);
-  double v_stable = sqrt(GMstar/sqrt(hyp[0]*hyp[0] + hyp[1]*hyp[1] + hyp[2]*hyp[2]));
-  vec stable_orbit(3);
-  stable_orbit[0] = v_stable*tanvec[0]; stable_orbit[1] = v_stable*tanvec[1];
-  stable_orbit[2] = v_stable*tanvec[2];
-  for (int i = 0; i<3; i++){
-    if (isnan(stable_orbit[i]) == true){
-      stable_orbit[i] = 0;
-    }
-  }
-
-  return stable_orbit;
 }
