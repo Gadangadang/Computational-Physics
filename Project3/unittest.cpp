@@ -42,8 +42,7 @@ TEST_CASE( "Check for errors in code" ) {
   t = new float;
 
   double *kin, *pot, *l, *x, *y, *z ;
-
-  char* planet_info = "Planets_pos.txt";
+  const char* planet_info = "Planets_pos.txt";
   FILE *fp_init = fopen(planet_info, "r"); //Open file to read, specified by "r".
   fscanf(fp_init, "%d %e", integrationpoints, number_o_planet);
 
