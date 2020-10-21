@@ -38,7 +38,6 @@ unittest_solv.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta, f
   //    REQUIRE();
   //  }
   //}
-
   int *integrationpoints = nullptr;
   float *number_o_planet = nullptr;
   float *t = nullptr;
@@ -48,23 +47,22 @@ unittest_solv.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta, f
 
   char* planet_info = "Planets_pos.txt";
   FILE *fp_init = fopen(planet_info, "r"); //Open file to read, specified by "r".
-
-  fscanf(fp_init, "%d %e ", integrationpoints, number_o_planet);
-
-  kin = new double[*integrationpoints];
-  pot = new double[*integrationpoints];
-  x = new double[*integrationpoints];
-  y = new double[*integrationpoints];
-  z = new double[*integrationpoints];
-
+  fscanf(fp_init, "d e ", integrationpoints, number_o_planet);
+  kin = new double[IntegrationPoints];
+  pot = new double[IntegrationPoints];
+  x = new double[IntegrationPoints];
+  y = new double[IntegrationPoints];
+  z = new double[IntegrationPoints];
+  std::cout<<"pikk"<< endl;
   //Read info from file
   int j = 0;
-  for (int i = 0; i < (*number_o_planet+1)**integrationpoints; i++){
+  for (int i = 0; i < (2+1)*IntegrationPoints; i++){
     if ( j ==1  ){
-    fscanf(fp_init, "%lf %lf %e ", &pot[i], &kin[i], t);
+    fscanf(fp_init, "%lf %lf e ", &pot[i], &kin[i], t);
     }
     else {
       fscanf(fp_init,"%lf %lf %lf ", &x[i], &y[i], &z[i]);
+      std::cout<<"pikk"<< endl;
     }
     if (j == 2){
       j *= 0;
@@ -73,34 +71,31 @@ unittest_solv.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta, f
       j += 1;
     }
   }
-
-
   SECTION("Check conservation of energy"){
 
 
     //Now sum up energy
-    double toten[*integrationpoints];
-    for (int i = 0; i < *integrationpoints; i++){
+    std::cout<<IntegrationPoints<< endl;
+    double toten[IntegrationPoints];
+    for (int i = 0; i < IntegrationPoints; i++){
       toten[i] = kin[i] + pot[i];
     }
-
+    std::cout << *toten<<endl;
     //Find max total energy value for each half of the array.
     double maxval = toten[0];
-    for (int i = 1; i < *integrationpoints/2; i++){
-      if (toten[i] > maxval){
+    for (int i = 1; i < IntegrationPoints/2; i++){
+      if (fabs(toten[i]) > fabs(maxval)){
         maxval = toten[i];
       }
     }
 
-    double maxval2 = toten[*integrationpoints/2];
-    for (int k = *integrationpoints/2; k < *integrationpoints; k++){
-      if (toten[k] > maxval2){
+    double maxval2 = toten[IntegrationPoints/2];
+    for (int k = IntegrationPoints/2; k < IntegrationPoints; k++){
+      if (fabs(toten[k]) > fabs(maxval2)){
         maxval2 = toten[k];
       }
     }
 
-
-
-    REQUIRE( fabs((maxval - maxval2) < (double)maxval2) );
+    REQUIRE( fabs(maxval - maxval2) < 100*fabs(maxval2) );
   }
 }
