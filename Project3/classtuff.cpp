@@ -41,7 +41,8 @@ vec classtuff::find_acc(double x, double y){
   acc[1] = -GMstar*y/(r*r*r);
   return acc;
 }
-tuple<vec, vec> classtuff::integrator(){
+
+tuple<vec, vec> classtuff::V_Verlet(){
 
   vec Pos_X(N_size+1);
   vec Pos_Y(N_size+1);
@@ -65,5 +66,38 @@ tuple<vec, vec> classtuff::integrator(){
     vel_y[i+1] = vel_y[i] + h/2*(find_acc(Pos_X[i+1], Pos_Y[i+1])(1) + find_acc(Pos_X[i], Pos_Y[i])(1));
     i = i + 1;
   }
+<<<<<<< HEAD
+=======
+    return {Pos_X, Pos_Y};
+}
+
+
+tuple<vec, vec> classtuff::Euler(){
+
+  vec Pos_X(N_size+1);
+  vec Pos_Y(N_size+1);
+
+  Pos_X[0] = start_pos[0];
+  Pos_Y[0] = start_pos[1];
+
+
+  double time = 10.0; //Years
+  double h = time/(N_size+1);
+
+  int i = 0;
+
+  vec vel_x(N_size+1); vel_x[0] = start_vel[0];
+  vec vel_y(N_size+1); vel_y[0] = start_vel[1];
+
+
+  while ( i < N_size ){
+    vel_x[i+1] = vel_x[i] + h*(find_acc(Pos_X[i], Pos_Y[i])(0));
+    vel_y[i+1] = vel_y[i] + h*(find_acc(Pos_X[i], Pos_Y[i])(1));
+    Pos_X[i+1] = Pos_X[i] + h*vel_x[i+1];
+    Pos_Y[i+1] = Pos_Y[i] + h*vel_y[i+1];
+    i = i + 1;
+  }
+
+>>>>>>> AddEuler
   return {Pos_X, Pos_Y};
 }

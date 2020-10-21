@@ -10,7 +10,7 @@ compile:
 	g++ -std=c++17 -O2 -flto -Wall -o unit.x unittest.cpp solving.cpp object.cpp -larmadillo -llapack -lblas
 execute:
 	#./main.x
-  #python3 Plotte_code.py
+	#python3 Plotte_code.py
 	#./main_c.x
 	#./main_f.x
 	#./main_g.x
