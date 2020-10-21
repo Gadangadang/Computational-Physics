@@ -38,7 +38,7 @@ int main(int argc, char const *argv[]) {
   int N = 1.0e6;
 
   mysolver.initialization(N, earth_mass, vel, pos);
-  auto[posx, posy] = mysolver.V_Verlet();
+  auto[posx, posy] = mysolver.Euler();
   for(int k = 0; k<N; k++){
     ofile << setprecision(15) << posx(k) << " " <<posy(k)<< endl;
   }
