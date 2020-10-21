@@ -42,10 +42,16 @@ for i in range(tot_p):
 
 x,y,z = p[1,:,0], p[1,:,1], p[1,:,2]
 ax.plot3D(x,y,z)
-ax.legend(["Earth","Moon","Mercury","Venus","Mars","Jupiter","Saturn","Neptune", "Uranus","Sun"])
+names = ["Earth","Moon","Mercury","Venus","Mars","Jupiter","Saturn","Neptune", "Uranus","Sun"]
+lgd =[]
+for i in range(tot_p-1):
+    lgd.append(names[i])
+lgd.append(names[-1])
+ax.legend(lgd)
+"""
 r=0.00464913034
 u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
-"""x = r*np.cos(u)*np.sin(v)
+x = r*np.cos(u)*np.sin(v)
 y = r*np.sin(u)*np.sin(v)
 z = r*np.cos(v)
 ax.plot_wireframe(x, y, z, color="y")"""

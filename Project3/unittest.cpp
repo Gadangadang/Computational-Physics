@@ -17,7 +17,7 @@ TEST_CASE( "Check for errors in code" ) {
   double FinalTime = 10;
   int Dimension = 3;
   double beta = 2;
-  int fixed =1;
+  int fixed =0;
 
   double earth_mass = 3.003e-6;
   double sun_mass = 1.0;
@@ -115,11 +115,12 @@ TEST_CASE( "Check for errors in code" ) {
         maxval2 = toten[k];
       }
     }
-
+    //Checking if the difference between the peak in max-value in the totale-energy
+    // is relativley equal for both halves. Therby making the energy periodic,
+    // and therfore constant for each period.
     REQUIRE( fabs(maxval - maxval2) < fabs(maxval2)/150 );
   }
   SECTION("Check conservation of angular momentum"){
-
     double ldiff[IntegrationPoints/2];
     int count = 0;
     for (int i = 1; i < IntegrationPoints+1; i++){
@@ -134,7 +135,7 @@ TEST_CASE( "Check for errors in code" ) {
     REQUIRE( count < 1);
   }
 
-  SECTION("Check if orbit is relatively stable"){
+  SECTION("Checking if the earth is still in orbit "){
     //Calculate absolute relative distance for planet in beginning and end of simulation
     double xrel_start = x[0] - sunx[0]; double xrel_end = x[IntegrationPoints-1] - sunx[IntegrationPoints-1];
     double yrel_start = y[0] - suny[0]; double yrel_end = y[IntegrationPoints-1] - suny[IntegrationPoints-1];
