@@ -31,6 +31,7 @@ int main(int argc, char const *argv[]) {
   vec pos(3); pos = {1,0,0};
 
   double beta = 2;
+  int alpha =0;
   cout << "Beta " << beta << endl;
 
   //object planet1(earth_mass,1.,0.0,0.0,stab_vel[0], stab_vel[1], stab_vel[2]);
@@ -39,7 +40,7 @@ int main(int argc, char const *argv[]) {
 
   solving binary_forward(5.0);
   binary_forward.add(planet1); binary_forward.add(planet2);
-  binary_forward.Forward_Euler(Dimension,IntegrationPoints,FinalTime,0., beta);
-  binary_forward.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta,0);
+  binary_forward.Forward_Euler(Dimension,IntegrationPoints,FinalTime,0., beta,alpha);
+  binary_forward.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta,0,alpha);
   return 0;
 }

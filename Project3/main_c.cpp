@@ -34,6 +34,7 @@ int main(int argc, char const *argv[]) {
   vec stab_vel = stable_circle_orbiter(pos);
 
   double beta = 2;
+  int alpha =0;
   int fixed =1;
   cout << "Beta " << beta << endl;
 
@@ -43,7 +44,7 @@ int main(int argc, char const *argv[]) {
 
   solving binary_verlet(5.0);
   binary_verlet.add(planet1); binary_verlet.add(planet2);
-  binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta,fixed);
+  binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta,fixed,alpha);
 
   return 0;
 }

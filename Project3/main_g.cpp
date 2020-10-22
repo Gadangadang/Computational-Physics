@@ -39,6 +39,7 @@ int main(int argc, char const *argv[]) {
   vec stab_vel_jup = stable_circle_orbiter(pos_jup);
 
   double beta = 2;
+  int alpha =0;
   cout << "Beta " << beta << endl;
 
   object planet1(earth_mass,1.,0.0,0.0,stab_vel[0], stab_vel[1], stab_vel[2]);
@@ -48,7 +49,7 @@ int main(int argc, char const *argv[]) {
 
   solving binary_verlet(5.0);
   binary_verlet.add(planet1); binary_verlet.add(planet2);binary_verlet.add(planet3);
-  binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta);
+  binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta,alpha);
 
   for (int r = 0; r < Dimension; r++){
     x[r] = binary_verlet.all_planets[0].position[r];
