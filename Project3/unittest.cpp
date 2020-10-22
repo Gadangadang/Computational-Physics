@@ -118,7 +118,7 @@ TEST_CASE( "Check for errors in code" ) {
     //does not change too much over time
     int count = 0;
     for (int i = 1; i < IntegrationPoints+1; i++){
-      if (l[i]-l[i-1] > l[i]/500){
+      if (fabs(l[i])-fabs(l[i-1]) > fabs(l[i])/500){
         count +=1;
       }
     }

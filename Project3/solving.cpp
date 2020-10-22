@@ -71,11 +71,13 @@ void solving::delete_matrix3d(double ***matrix,int Integration_points){   // Fun
         delete [] matrix[i][k];
 }
 
-double solving::angularmomentum(double pos[3], double vel[3]){
+double solving::angularmomentum(object &current){
     double spinvec[3];
-    spinvec[0] = pos[1] * vel[2] - pos[2] * vel[1];
-    spinvec[1] = pos[2] * vel[0] - pos[0] * vel[2];
-    spinvec[2] = pos[0] * vel[1] - pos[1] * vel[0];
+    double pos = current.position;
+    double m = current.mass;
+    spinvec[0] = pos[1] * m*vel[2] - pos[2] * m*vel[1];
+    spinvec[1] = pos[2] * m*vel[0] - pos[0] * m*vel[2];
+    spinvec[2] = pos[0] * m*vel[1] - pos[1] * m*vel[0];
 
     double l = 0;
     for (int i = 0; i<3; i++){
@@ -94,7 +96,7 @@ void solving::GravitationalForce(object &current,object &other,double &Fx,double
     double r = current.distance(other);
     double smoothing = epsilon*epsilon*epsilon;
     double R = pow(r,beta);
-    double l = angularmomentum(current.position, current.velocity);
+    double l = angularmomentum(current);
 
     // Calculate the forces in each direction
     Fx -= this->G*current.mass*other.mass*relative_distance[0]/((r*R)*( 1 + 3*l*l/(R*c*c) ) + smoothing);
@@ -103,9 +105,6 @@ void solving::GravitationalForce(object &current,object &other,double &Fx,double
 }
 
 void solving::VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon, double beta, int fixed){
-
-
-
   double **acceleration = setup_matrix(total_planets, 3);
   double **acceleration_next = setup_matrix(total_planets, 3);
   double t = 0;
