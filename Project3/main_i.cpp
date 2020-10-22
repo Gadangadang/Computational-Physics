@@ -25,7 +25,7 @@ int main(int argc, char const *argv[]) {
 
 
   int IntegrationPoints = 50000;
-  double FinalTime = 10;
+  double FinalTime = 100;
 
   //double TimeStep = FinalTime/((double) IntegrationPoints);
   double sun_mass = 1.0;

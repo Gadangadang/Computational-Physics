@@ -100,7 +100,7 @@ void solving::GravitationalForce(object &current,object &other,double &Fx,double
 
     // Calculate the forces in each direction
     Fx -= this->G*current.mass*other.mass*relative_distance[0]/((r*R)*( 1 + 3*l*l/(R*c*c) ) + smoothing);
-    Fy -= this->G*current.mass*other.mass*relative_distance[1]/((r*R) + smoothing);
+    Fy -= this->G*current.mass*other.mass*relative_distance[1]/((r*R)+ smoothing);
     Fz -= this->G*current.mass*other.mass*relative_distance[2]/((r*R) + smoothing);
 }
 

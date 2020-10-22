@@ -21,7 +21,7 @@ using namespace arma;
 int main(int argc, char const *argv[]) {
   ofstream ofile;
   string outfilename;
-  outfilename = "values.txt";
+  outfilename = "values_Euler.txt";
   ofile.open(outfilename);
   //Define class object
   classtuff mysolver;
@@ -41,6 +41,16 @@ int main(int argc, char const *argv[]) {
   auto[posx, posy] = mysolver.Euler();
   for(int k = 0; k<N; k++){
     ofile << setprecision(15) << posx(k) << " " <<posy(k)<< endl;
+  }
+  //vec posx(N); vec posy(N);
+  ofile.close();
+
+  outfilename = "values_Verlet.txt";
+  ofile.open(outfilename);
+
+  auto[posVx, posVy] = mysolver.V_Verlet();
+  for(int k = 0; k<N; k++){
+    ofile << setprecision(15) << posVx(k) << " " <<posVy(k)<< endl;
   }
   //vec posx(N); vec posy(N);
   ofile.close();
