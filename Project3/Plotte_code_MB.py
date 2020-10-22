@@ -63,6 +63,9 @@ ax.plot_wireframe(x, y, z, color="y")"""
 ax.set_xlim3d([-np.max(p[-2,:,0]),np.max(p[-2,:,0])])
 ax.set_ylim3d([-np.max(p[-2,:,1]),np.max(p[-2,:,1])])
 ax.set_zlim3d([-1,1])
+ax.set_xlabel('Distance [AU]')
+ax.set_ylabel('Distance [AU]')
+ax.set_zlabel('Distance [AU]')
 
 plt.show()
 plt.subplot(1,2,1)
