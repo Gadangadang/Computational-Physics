@@ -74,6 +74,7 @@ void solving::delete_matrix3d(double ***matrix,int Integration_points){   // Fun
 double solving::angularmomentum(object &current){
     double spinvec[3];
     double pos = current.position;
+    double vel = current.velocity;
     double m = current.mass;
     spinvec[0] = pos[1] * m*vel[2] - pos[2] * m*vel[1];
     spinvec[1] = pos[2] * m*vel[0] - pos[0] * m*vel[2];
@@ -181,7 +182,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       print_to_file(all_planets[nr].position, dimension, ofile);
 
       //Calculate angular momentum for print
-      double l_print = angularmomentum(current.position, current.velocity);
+      double l_print = angularmomentum(current);
       if (nr==0) {
         print_energi(Pot, Kin, t, l_print,ofile);
       }
