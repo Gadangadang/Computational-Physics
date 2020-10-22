@@ -113,14 +113,7 @@ TEST_CASE( "Check for errors in code" ) {
     REQUIRE( fabs(maxval - maxval2) < fabs(maxval2)/150 );
   }
   SECTION("Check conservation of angular momentum"){
-    double ldiff[IntegrationPoints/2];
-    int count = 0;
-    for (int i = 1; i < IntegrationPoints+1; i++){
-      if (l[i]-l[i-1] > l[i]/500){
-        count +=1;
-      }
-    }
-    REQUIRE( count < 1);
+    REQUIRE(fabs(l[1]-l[-1]) <l[0]/100);
   }
 
   SECTION("Checking if the earth is still in orbit "){
