@@ -25,7 +25,7 @@ int main(int argc, char const *argv[]) {
 
 
   int IntegrationPoints = 50000;
-  double FinalTime = 10;
+  double FinalTime = 2;
 
   //double TimeStep = FinalTime/((double) IntegrationPoints);
   double earth_mass = 3.003e-6;
@@ -38,7 +38,7 @@ int main(int argc, char const *argv[]) {
   double uran_mass = 0.00004365;
   double merc_mass = 1.651e-7;
   double moon_mass = 3.69396868e-8;
-  int fixed =0;
+  int fixed =1;
 
   double beta = 2;
   cout << "Beta " << beta << endl;

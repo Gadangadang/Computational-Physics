@@ -17,7 +17,7 @@ TEST_CASE( "Check for errors in code" ) {
   double FinalTime = 10;
   int Dimension = 3;
   double beta = 2;
-  int fixed =1;
+  int fixed =0;
 
   double earth_mass = 3.003e-6;
   double sun_mass = 1.0;
@@ -42,8 +42,7 @@ TEST_CASE( "Check for errors in code" ) {
   t = new float;
 
   double *kin, *pot, *l, *x, *y, *z ;
-
-  char* planet_info = (char*)"Planets_pos.txt";
+  const char* planet_info = "Planets_pos.txt";
   FILE *fp_init = fopen(planet_info, "r"); //Open file to read, specified by "r".
   fscanf(fp_init, "%d %e", integrationpoints, number_o_planet);
 
@@ -108,14 +107,13 @@ TEST_CASE( "Check for errors in code" ) {
         maxval2 = toten[k];
       }
     }
-
-    //Check that the difference in the two maxima does not
-    //exceed the 1/500th part of the first max, can be changed to
-    REQUIRE( (maxval - maxval2) < fabs(maxval2)/500 );
+    // Checking if the difference between the peak in max-value in the totale-energy
+    // is relativley equal for both halves. Therby making the energy periodic,
+    // and therfore constant for each period.
+    REQUIRE( fabs(maxval - maxval2) < fabs(maxval2)/150 );
   }
   SECTION("Check conservation of angular momentum"){
-    //Check that the difference in angular momentum for each timestep
-    //does not change too much over time
+    double ldiff[IntegrationPoints/2];
     int count = 0;
     for (int i = 1; i < IntegrationPoints+1; i++){
       if (l[i]-l[i-1] > l[i]/500){
@@ -125,7 +123,7 @@ TEST_CASE( "Check for errors in code" ) {
     REQUIRE( count < 1);
   }
 
-  SECTION("Check if orbit is relatively stable"){
+  SECTION("Checking if the earth is still in orbit "){
     //Calculate absolute relative distance for planet in beginning and end of simulation
     double xrel_start = x[0] - sunx[0]; double xrel_end = x[IntegrationPoints-1] - sunx[IntegrationPoints-1];
     double yrel_start = y[0] - suny[0]; double yrel_end = y[IntegrationPoints-1] - suny[IntegrationPoints-1];
