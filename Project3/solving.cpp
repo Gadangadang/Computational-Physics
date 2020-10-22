@@ -73,8 +73,10 @@ void solving::delete_matrix3d(double ***matrix,int Integration_points){   // Fun
 
 double solving::angularmomentum(object &current){
     double spinvec[3];
-    double pos = current.position;
-    double vel = current.velocity;
+    double pos[3]; pos[0] = current.position[0];
+    pos[1] = current.position[1]; pos[2] = current.position[2];
+    double vel[3]; vel[0] = current.velocity[0];
+    vel[1] = current.velocity[1]; vel[2] = current.velocity[2];
     double m = current.mass;
     spinvec[0] = pos[1] * m*vel[2] - pos[2] * m*vel[1];
     spinvec[1] = pos[2] * m*vel[0] - pos[0] * m*vel[2];
