@@ -24,7 +24,7 @@ int main(int argc, char const *argv[]) {
   int Dimension = 3;
 
 
-  int IntegrationPoints = 10000;
+  int IntegrationPoints = 100000; 
   double FinalTime = 18.0;
 
   //double TimeStep = FinalTime/((double) IntegrationPoints);
@@ -37,7 +37,10 @@ int main(int argc, char const *argv[]) {
   vec pos_jup(3); pos = {5.2,0,0};
   vec stab_vel = stable_circle_orbiter(pos);
   vec stab_vel_jup = stable_circle_orbiter(pos_jup);
-
+  // Verdier for fixed:
+  // massesenter i midten fixed = 1;
+  // Sola i midten fixed = 0;
+  int fixed = 0;
   double beta = 2;
   cout << "Beta " << beta << endl;
 
@@ -48,7 +51,7 @@ int main(int argc, char const *argv[]) {
 
   solving binary_verlet(5.0);
   binary_verlet.add(planet1); binary_verlet.add(planet2);binary_verlet.add(planet3);
-  binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta);
+  binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta, fixed);
 
   for (int r = 0; r < Dimension; r++){
     x[r] = binary_verlet.all_planets[0].position[r];

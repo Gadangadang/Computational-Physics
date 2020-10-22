@@ -33,8 +33,8 @@ int main(int argc, char const *argv[]) {
   vec pos(3); pos = {1,0,0};
   vec stab_vel = stable_circle_orbiter(pos);
 
-  double beta = 2;
-  int fixed =1;
+  double beta = 3;
+  int fixed = 0;
   cout << "Beta " << beta << endl;
 
   //object planet1(earth_mass,1.,0.0,0.0,stab_vel[0], stab_vel[1], stab_vel[2]);

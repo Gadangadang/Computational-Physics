@@ -34,7 +34,7 @@ int main(int argc, char const *argv[]) {
 
   vec pos(3); pos = {1,0,0};
   double r = sqrt( (pos[0]*pos[0]) + (pos[1]*pos[1]) + (pos[2]*pos[2])  );
-
+  int fixed = 1;
   double beta = 2;
   cout << "Beta " << beta << endl;
 
@@ -49,7 +49,7 @@ int main(int argc, char const *argv[]) {
   double vesc = sqrt(2*binary_verlet.G/(r));
 
   cout << "V_esc = " << vesc << endl;
-  binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta);
+  binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta, fixed);
 
   for (int r = 0; r < Dimension; r++){
     x[r] = binary_verlet.all_planets[0].position[r];
