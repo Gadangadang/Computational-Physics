@@ -202,6 +202,48 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   std::cout<<"Area of the second time interval is ="<<dA2<<endl;
 }
 
+void solving::Forward_Euler(int dimension, int integration_points, double final_time,double epsilon,double beta)
+{
+  double **acceleration = setup_matrix(total_planets, 3);
+  double t = 0;
+  double Fx, Fy, Fz;
+  double h = final_time/((double) integration_points);
+  std::ofstream ofile;
+  std::string outfilename = "values_Euler.txt";
+  ofile.open(outfilename);
+  while (t < final_time){
+    //Loop over all planets
+    for (int nr = 0; nr < total_planets; nr++){
+
+      object &current = all_planets[nr];
+
+      Fx = Fy = Fz;
+
+      //Find forces on other planets
+      for (int nr2 = 0; nr2 < total_planets; nr2++){
+        if (nr2 != nr && nr < total_planets-1){
+          object &other = all_planets[nr2];
+          GravitationalForce(current, other, Fx, Fy, Fz, epsilon, beta);
+      }
+      }
+      acceleration[nr][0] = Fx/current.mass;
+      acceleration[nr][1] = Fy/current.mass;
+      acceleration[nr][2] = Fz/current.mass;
+      //Calculate position for each planet
+      for (int k = 0; k<dimension; k++){
+        current.position[k] += current.velocity[k]*h;
+      }
+      for (int k = 0; k<dimension; k++){
+        current.velocity[k] += h*acceleration[nr][k];
+      }
+      if(nr ==0){print_to_file(all_planets[nr].position, dimension, ofile);}
+    }
+    t+= h;
+  }
+  // Clear memory
+  ofile.close();
+  delete_matrix(acceleration);
+}
 void solving::print_to_file(double planets[3],int dimension, std::ofstream &ofile){
   ofile << std::setprecision(16)<< planets[0] << " "<< planets[1] << " "<< planets[2] <<endl;
 }
