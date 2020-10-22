@@ -66,8 +66,6 @@ tuple<vec, vec> classtuff::V_Verlet(){
     vel_y[i+1] = vel_y[i] + h/2*(find_acc(Pos_X[i+1], Pos_Y[i+1])(1) + find_acc(Pos_X[i], Pos_Y[i])(1));
     i = i + 1;
   }
-<<<<<<< HEAD
-=======
     return {Pos_X, Pos_Y};
 }
 
@@ -98,6 +96,5 @@ tuple<vec, vec> classtuff::Euler(){
     i = i + 1;
   }
 
->>>>>>> AddEuler
   return {Pos_X, Pos_Y};
 }
