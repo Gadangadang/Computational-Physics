@@ -43,7 +43,7 @@ TEST_CASE( "Check for errors in code" ) {
 
   double *kin, *pot, *l, *x, *y, *z ;
 
-  char* planet_info = "Planets_pos.txt";
+  char* planet_info = (char*)"Planets_pos.txt";
   FILE *fp_init = fopen(planet_info, "r"); //Open file to read, specified by "r".
   fscanf(fp_init, "%d %e", integrationpoints, number_o_planet);
 
@@ -94,6 +94,7 @@ TEST_CASE( "Check for errors in code" ) {
     }
 
     //Find max total energy value for each half of the array.
+
     double maxval = toten[0];
     for (int i = 1; i < IntegrationPoints/2; i++){
       if (fabs(toten[i]) > fabs(maxval)){
@@ -108,9 +109,13 @@ TEST_CASE( "Check for errors in code" ) {
       }
     }
 
-    REQUIRE( fabs(maxval - maxval2) < fabs(maxval2)/150 );
+    //Check that the difference in the two maxima does not
+    //exceed the 1/500th part of the first max, can be changed to
+    REQUIRE( (maxval - maxval2) < fabs(maxval2)/500 );
   }
   SECTION("Check conservation of angular momentum"){
+    //Check that the difference in angular momentum for each timestep
+    //does not change too much over time
     int count = 0;
     for (int i = 1; i < IntegrationPoints+1; i++){
       if (l[i]-l[i-1] > l[i]/500){
