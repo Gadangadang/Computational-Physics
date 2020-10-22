@@ -181,8 +181,10 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
 
       print_to_file(all_planets[nr].position, dimension, ofile);
 
+      //Calculate angular momentum for print
+      double l_print = angularmomentum(current.position, current.velocity);
       if (nr==0) {
-        print_energi(Pot, Kin, t,ofile);
+        print_energi(Pot, Kin, t, l_print,ofile);
       }
     }
     t+= h;
@@ -202,8 +204,8 @@ void solving::print_to_file(double planets[3],int dimension, std::ofstream &ofil
   ofile << std::setprecision(16)<< planets[0] << " "<< planets[1] << " "<< planets[2] <<endl;
 }
 
-void solving::print_energi(double &Pot, double &Kin, double &t, std::ofstream &ofile){
-  ofile <<std::setprecision(20)<<Pot<< " " << Kin <<" " << t<< endl;
+void solving::print_energi(double &Pot, double &Kin, double &t, double &l,std::ofstream &ofile){
+  ofile <<std::setprecision(20)<<Pot<< " " << Kin <<" " << t<< " " << l << endl;
 }
 
 void solving::PotentialEnergySystem(object &current, object &other, double &Pot){

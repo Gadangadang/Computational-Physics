@@ -35,7 +35,7 @@ class solving{
     void Delta_A(object &current,double &t, double dt[4],double &dA1, double &dA2,double h);
     void delete_matrix(double **matrix);
     void print_to_file(double planets[3],int dimension, std::ofstream &ofile);
-    void print_energi(double &pot, double &Kin, double &t,std::ofstream &ofile);
+    void print_energi(double &pot, double &Kin, double &t, double &l, std::ofstream &ofile);
     void GravitationalForce(object &current, object &other, double &Fx, double &Fy, double &Fz, double epsilon, double beta);
     void GravitationalForce_RK(double x_rel, double y_rel, double z_rel, double &Fx, double &Fy, double &Fz, double mass1, double mass2);
     void KineticEnergySystem(object &current, double &Kin);

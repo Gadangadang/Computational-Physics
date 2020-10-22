@@ -17,4 +17,4 @@ execute:
 	#./main_h.x
 	#./main_i.x
 	./unit.x
-	python3 Plotte_code_MB.py
+	#python3 Plotte_code_MB.py
