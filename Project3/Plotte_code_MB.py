@@ -40,12 +40,14 @@ for i in range(tot_p):
     x,y,z = p[i,:,0], p[i,:,1], p[i,:,2]
     ax.plot3D(x,y,z)
 
-x,y,z = p[1,:,0], p[1,:,1], p[1,:,2]
-ax.plot3D(x,y,z)
+#x,y,z = p[1,:,0], p[1,:,1], p[1,:,2]
+#ax.plot3D(x,y,z)
 """
 Rearange the planets in the order the main has added the planets.
 """
 names = ["Earth","Moon","Mercury","Venus","Mars","Jupiter","Saturn","Neptune", "Uranus","Sun"]
+if tot_p < 5:
+    names = ["Earth","Jupiter","Sun"]
 lgd =[]
 for i in range(tot_p-1):
     lgd.append(names[i])
