@@ -29,24 +29,27 @@ execute:
 ```
 ### Editing instructions
 a makefile comment is a '#' character. to run the makefile open a editor and type 'make all' to execute.
+
 To run task a):
   - uncomment the top line under the 'compile' section line
   - uncomment the main_a.x line under the 'execute' section
   - uncomment the Plotte_code.py line under the 'execute' section
   - uncomment the Plotte_code_MB.py line under the 'execute' section
  
- Expected result for a):
+Expected result for a):
  - there should be a plot for the Earth-Sun-system solved using the Forward-Euler
  - there should be a more accurate plot of the same system using the Velocity-Verlet-solver
+  
   
 To run task c):
   - uncomment the top main_c line under the 'compile' section line
   - uncomment the main_c.x line under the 'execute' section
   - uncomment the Plotte_code_MB.py line under the 'execute' section
  
-  Expected result for c):
+Expected result for c):
  - there should be a plot for the Earth-Sun-system 
  - Testing for the tdelta times were done manually by changing the 'IntegrationPoints' value in line 25 in main_c.cpp
+
 
 To run task d):
   - uncomment the top main_c line under the 'compile' section line
@@ -56,6 +59,7 @@ Expected result for d):
 - there will be a print called 'Area of the first time-interval' and 'Area of the second time interval' these are computations of Keplers law.
 - Example Run: "Area of the first time interval is =9.85778, Area of the second time interval is =9.91112"
 
+
 To run task e):
   - uncomment the top main_e line under the 'compile' section line
   - uncomment the main_e.x line under the 'execute' section
@@ -63,6 +67,7 @@ To run task e):
 
 Expected result for e):
   - There should be a plot of the orbit, and a printed statement saying Beta = 3.
+
 
 To run task f):
   - uncomment the top main_f line under the 'compile' section line
@@ -74,6 +79,7 @@ Expected result for f):
 - There should be a print called 'V_esc' which is the display velocity  
 - Example Run "V_esc = 8.88577"
 
+
 To run task g):
   - uncomment the top main_g line under the 'compile' section line
   - uncomment the main_g.x line under the 'execute' section
@@ -82,6 +88,7 @@ To run task g):
 Expected result for g):
   - A plot showing the orbits of jupyter and Earth around the Sun.
 
+
 To run task h):
   - uncomment the top main_h line under the 'compile' section line
   - uncomment the main_h.x line under the 'execute' section
@@ -89,6 +96,7 @@ To run task h):
 
 Expected result for h):
   -  A plot showing the orbits of all the planetary objects.
+
 
 To run task i):
   - uncomment the top main_i line under the 'compile' section line
