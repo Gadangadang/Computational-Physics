@@ -18,7 +18,7 @@ TEST_CASE( "Check for errors in code" ) {
   int Dimension = 3;
   double beta = 2;
   int fixed =0;
-
+  double alpha =0;
   double earth_mass = 3.003e-6;
   double sun_mass = 1.0;
 
@@ -30,7 +30,7 @@ TEST_CASE( "Check for errors in code" ) {
 
 
   //Run simulation to aquire data
-  unittest_solv.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta, fixed);
+  unittest_solv.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta, fixed,alpha);
 
 
   int *integrationpoints = nullptr;
@@ -113,7 +113,7 @@ TEST_CASE( "Check for errors in code" ) {
     REQUIRE( fabs(maxval - maxval2) < fabs(maxval2)/150 );
   }
   SECTION("Check conservation of angular momentum"){
-    REQUIRE(fabs(l[1]-l[-1]) <l[0]/100);
+    REQUIRE(fabs(l[1]-l[int(IntegrationPoints/FinalTime)]) <l[0]/100);
   }
 
   SECTION("Checking if the earth is still in orbit "){

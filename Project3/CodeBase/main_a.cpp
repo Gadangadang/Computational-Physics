@@ -38,7 +38,7 @@ int main(int argc, char const *argv[]) {
   object planet1(earth_mass,1.,0.0,0.0,0,6.3,0);
   object planet2(sun_mass, 0,0,0,0,0,0);
 
-  solving binary_forward(5.0);
+  solving binary_forward;
   binary_forward.add(planet1); binary_forward.add(planet2);
   binary_forward.Forward_Euler(Dimension,IntegrationPoints,FinalTime,0., beta,alpha);
   binary_forward.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta,0,alpha);

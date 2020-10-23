@@ -65,7 +65,7 @@ int main(int argc, char const *argv[]) {
   //Uranus
   object planeturanus(uran_mass,1.555699248858926e+01, 1.221910146632133e+01,-1.561607729538915e-01,-2.458296642987987e-03*365,2.909798437857242e-03*365,4.256035053183806e-05*365);
 
-  solving binary_verlet(5.0);
+  solving binary_verlet;
   binary_verlet.add(planetearth);binary_verlet.add(moon);
   binary_verlet.add(planetmercury);binary_verlet.add(planetvenus);
   binary_verlet.add(planetmar); binary_verlet.add(planetjup);

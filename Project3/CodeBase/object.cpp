@@ -11,10 +11,6 @@ object::object(double M,double x,double y,double z,double vx, double vy,double v
     velocity[0] = vx;
     velocity[1] = vy;
     velocity[2] = vz;
-    potential = 0.;
-    kinetic = 0.;
-    Gconst = 4*M_PI*M_PI;
-    epsilon = 0.;
 }
 
 double object::distance(object otherObject){
@@ -34,33 +30,4 @@ double object::distance(object otherObject){
     zz = z1-z2;
 
     return sqrt(xx*xx + yy*yy + zz*zz);
-}
-
-
-
-
-double object::GravitationalForce(object otherObject,double &Gconst)
-{
-    double r = this->distance(otherObject);
-    if(r!=0) return Gconst*this->mass*otherObject.mass/(r*r);
-    else return 0;
-}
-
-double object::Acceleration(object otherObject, double &Gconst)
-{
-    double r = this->distance(otherObject);
-    if(r!=0) return this->GravitationalForce(otherObject,Gconst)/(this->mass*r);
-    else return 0;
-}
-
-double object::KineticEnergy()
-{
-    double velocity2 = (this->velocity[0]*this->velocity[0]) + (this->velocity[1]*this->velocity[1]) + (this->velocity[2]*this->velocity[2]);
-    return 0.5*this->mass*velocity2;
-}
-
-double object::PotentialEnergy(object &otherObject, double &Gconst, double &epsilon)
-{
-    if(epsilon==0.0) return -Gconst*this->mass*otherObject.mass/this->distance(otherObject);
-    else return (Gconst*this->mass*otherObject.mass/epsilon)*(atan(this->distance(otherObject)/epsilon) - (0.5*M_PI));
 }

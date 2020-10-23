@@ -31,7 +31,7 @@ int main(int argc, char const *argv[]) {
   double sun_mass = 1.0;
   double merc_mass = 1.651e-7;
   int fixed =0;
-  int alpha =0;
+  int alpha =1;
   double beta = 2;
   cout << "Beta " << beta << endl;
   //When initializing the planets; make sure to initialize the sun last, and the planet furthest away from the sun second last.
@@ -40,7 +40,7 @@ int main(int argc, char const *argv[]) {
   //Sun
   object sun(sun_mass, 0,0,0,0,0,0);
 
-  solving binary_verlet(5.0);
+  solving binary_verlet;
   binary_verlet.add(planetmercury); binary_verlet.add(sun);
   binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta, fixed,alpha);
 

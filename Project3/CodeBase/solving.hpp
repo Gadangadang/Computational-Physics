@@ -15,12 +15,10 @@ class solving{
     double radius,total_mass,G;
     int total_planets;
     vector<object> all_planets;
-    double totalKinetic;
-    double totalPotential;
     double c = 63239.7263; // Speed of light in AU/year
     // initializers
     solving();
-    solving(double radi);
+
 
     // functions
     void add(object newplanet);

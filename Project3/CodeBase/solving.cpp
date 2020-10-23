@@ -16,20 +16,8 @@
 
 solving::solving(){
     total_planets = 0;
-    radius = 100;
     total_mass = 0;
     G = 4*M_PI*M_PI;
-    totalKinetic = 0;
-    totalPotential = 0;
-}
-
-solving::solving(double radi){
-    total_planets = 0;
-    radius = radi;
-    total_mass = 0;
-    G = 4*M_PI*M_PI;
-    totalKinetic = 0;
-    totalPotential = 0;
 }
 
 void solving::add(object newplanet){
@@ -92,6 +80,7 @@ double solving::angularmomentum(object &current){
 void solving::peri(object &current,object &other, double &thetha,double mon,double tue,double wen,double x_p,double y_p){
   if(mon>tue&&wen>tue){
     thetha = atan(y_p/x_p);
+    //std::cout << thetha<<endl;
   }
 }
 void solving::GravitationalForce(object &current,object &other,double &Fx,double &Fy,double &Fz,double epsilon, double beta,int alpha){   // Function that calculates the gravitational force between two objects, component by component.
@@ -106,7 +95,7 @@ void solving::GravitationalForce(object &current,object &other,double &Fx,double
     double l = angularmomentum(current);
     double ex;
     if(alpha == 1){
-      ex = ( 1 + (double)3*l*l/(R*c*c) );
+      ex = (double)( 1. + 3.*l*l/(R*c*c));
     }
     else{
       ex = 1;
