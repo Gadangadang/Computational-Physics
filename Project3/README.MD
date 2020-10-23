@@ -31,7 +31,7 @@ execute:
 a makefile comment is a '#' character. to run the makefile open a editor and type 'make all' to execute.
 
 To run task a):
-  - uncomment the top line under the 'compile' section line
+  - uncomment the main_a line under the 'compile' section
   - uncomment the main_a.x line under the 'execute' section
   - uncomment the Plotte_code.py line under the 'execute' section
   - uncomment the Plotte_code_MB.py line under the 'execute' section
@@ -42,7 +42,7 @@ Expected result for a):
   
   
 To run task c):
-  - uncomment the top main_c line under the 'compile' section line
+  - uncomment the main_c line under the 'compile' section
   - uncomment the main_c.x line under the 'execute' section
   - uncomment the Plotte_code_MB.py line under the 'execute' section
  
@@ -52,7 +52,7 @@ Expected result for c):
 
 
 To run task d):
-  - uncomment the top main_c line under the 'compile' section line
+  - uncomment the main_c line under the 'compile' section
   - uncomment the main_c.x line under the 'execute' section
 
 Expected result for d):
@@ -61,7 +61,7 @@ Expected result for d):
 
 
 To run task e):
-  - uncomment the top main_e line under the 'compile' section line
+  - uncomment the main_e line under the 'compile' section
   - uncomment the main_e.x line under the 'execute' section
   - uncomment the Plotte_code_MB.py line under the 'execute' section
 
@@ -70,7 +70,7 @@ Expected result for e):
 
 
 To run task f):
-  - uncomment the top main_f line under the 'compile' section line
+  - uncomment the main_f line under the 'compile' section
   - uncomment the main_f.x line under the 'execute' section
   - uncomment the Plotte_code_MB.py line under the 'execute' section
 
@@ -81,7 +81,7 @@ Expected result for f):
 
 
 To run task g):
-  - uncomment the top main_g line under the 'compile' section line
+  - uncomment the main_g line under the 'compile' section
   - uncomment the main_g.x line under the 'execute' section
   - uncomment the Plotte_code_MB.py line under the 'execute' section
 
@@ -90,7 +90,7 @@ Expected result for g):
 
 
 To run task h):
-  - uncomment the top main_h line under the 'compile' section line
+  - uncomment the main_h line under the 'compile' section
   - uncomment the main_h.x line under the 'execute' section
   - uncomment the Plotte_code_MB.py line under the 'execute' section
 
@@ -99,7 +99,7 @@ Expected result for h):
 
 
 To run task i):
-  - uncomment the top main_i line under the 'compile' section line
+  - uncomment the main_i line under the 'compile' section
   - uncomment the main_i.x line under the 'execute' section
   - uncomment the Plotte_code_MB.py line under the 'execute' section
 
