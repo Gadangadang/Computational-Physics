@@ -7,7 +7,7 @@ Due to the nature of the solution there are different mains for different tasks.
 
 ### Makefile setup
 The contents of the makefile look like this:
-'''
+```
 compile:
   #g++ -std=c++17 -O2 -flto -Wall -o CodeBase/main_a.x CodeBase/main_a.cpp CodeBase/object.cpp CodeBase/solving.cpp  -larmadillo -llapack -lblas
 	#g++ -std=c++17 -O2 -flto -Wall -o CodeBase/main_c.x CodeBase/main_c.cpp CodeBase/object.cpp CodeBase/solving.cpp  -larmadillo -llapack -lblas
@@ -26,7 +26,7 @@ execute:
 	#CodeBase/./main_i.x
 	#CodeBase/./unit.x
 	#python3 CodeBase/Plotte_code_MB.py
-'''
+```
 ### Editing instructions
 a makefile comment is a '#' character.
 To run task a):
