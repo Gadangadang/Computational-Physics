@@ -87,7 +87,7 @@ double solving::angularmomentum(object &current){
     }
     l = sqrt(l);
     return l;
-}
+    }
 
 void solving::peri(object &current,object &other, double &thetha,double mon,double tue,double wen,double x_p,double y_p){
   if(mon>tue&&wen>tue){
@@ -106,7 +106,7 @@ void solving::GravitationalForce(object &current,object &other,double &Fx,double
     double l = angularmomentum(current);
     double ex;
     if(alpha == 1){
-      ex = ( 1 + 3*l*l/(R*c*c) );
+      ex = ( 1 + (double)3*l*l/(R*c*c) );
     }
     else{
       ex = 1;

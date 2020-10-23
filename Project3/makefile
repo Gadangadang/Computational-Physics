@@ -17,4 +17,4 @@ execute:
 	#CodeBase/./main_h.x
 	CodeBase/./main_i.x
 	#CodeBase/./unit.x
-	#python3 CodeBase/Plotte_code_MB.py
+	python3 CodeBase/Plotte_code_MB.py
