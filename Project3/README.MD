@@ -9,7 +9,7 @@ Due to the nature of the solution there are different mains for different tasks.
 The contents of the makefile look like this:
 ```
 compile:
-  #g++ -std=c++17 -O2 -flto -Wall -o CodeBase/main_a.x CodeBase/main_a.cpp CodeBase/object.cpp CodeBase/solving.cpp  -larmadillo -llapack -lblas
+  	#g++ -std=c++17 -O2 -flto -Wall -o CodeBase/main_a.x CodeBase/main_a.cpp CodeBase/object.cpp CodeBase/solving.cpp  -larmadillo -llapack -lblas
 	#g++ -std=c++17 -O2 -flto -Wall -o CodeBase/main_c.x CodeBase/main_c.cpp CodeBase/object.cpp CodeBase/solving.cpp  -larmadillo -llapack -lblas
 	#g++ -std=c++17 -O2 -flto -Wall -o CodeBase/main_f.x CodeBase/main_f.cpp Codebase/object.cpp CodeBase/solving.cpp  -larmadillo -llapack -lblas
 	#g++ -std=c++17 -O2 -flto -Wall -o CodeBase/main_g.x CodeBase/main_g.cpp CodeBase/object.cpp CodeBase/solving.cpp  -larmadillo -llapack -lblas
@@ -21,14 +21,14 @@ execute:
 	#python3 CodeBase/Plotte_code.py
 	#CodeBase/./main_c.x
 	#CodeBase/./main_f.x
-	CodeBase/./main_g.x
+	#CodeBase/./main_g.x
 	#CodeBase/./main_h.x
 	#CodeBase/./main_i.x
 	#CodeBase/./unit.x
 	#python3 CodeBase/Plotte_code_MB.py
 ```
 ### Editing instructions
-a makefile comment is a '#' character.
+a makefile comment is a '#' character. to run the makefile open a editor and type 'make all' to execute.
 To run task a):
   - uncomment the top line under the 'compile' section line
   - uncomment the main_a.x line under the 'execute' section
@@ -80,18 +80,22 @@ To run task g):
   - uncomment the Plotte_code_MB.py line under the 'execute' section
 
 Expected result for g):
-  - 
+  - A plot showing the orbits of jupyter and Earth around the Sun.
 
 To run task h):
-  - uncomment the top main_f line under the 'compile' section line
-  - uncomment the main_f.x line under the 'execute' section
+  - uncomment the top main_h line under the 'compile' section line
+  - uncomment the main_h.x line under the 'execute' section
   - uncomment the Plotte_code_MB.py line under the 'execute' section
 
 Expected result for h):
+  -  A plot showing the orbits of all the planetary objects.
 
 To run task i):
-  - uncomment the top main_f line under the 'compile' section line
-  - uncomment the main_f.x line under the 'execute' section
+  - uncomment the top main_i line under the 'compile' section line
+  - uncomment the main_i.x line under the 'execute' section
   - uncomment the Plotte_code_MB.py line under the 'execute' section
 
 Expected result for i):
+  - A plot of Mercury orbiting the Sun
+  - A print of the change in degrees after a century as "Perihilion angle = "
+  - Example Run: "Perihilion angle =-1.02577"
