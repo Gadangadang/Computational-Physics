@@ -28,7 +28,7 @@ execute:
 	#python3 CodeBase/Plotte_code_MB.py
 ```
 ### Instructions for running code
-a makefile comment is a '#' character. to run the makefile open a editor and type 'make all' to execute.
+a makefile comment is a '#' character. to run the makefile open a terminal and type 'make all' to execute.
 
 To run task a):
   - uncomment the main_a line under the 'compile' section
