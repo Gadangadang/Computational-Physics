@@ -27,7 +27,7 @@ execute:
 	#CodeBase/./unit.x
 	#python3 CodeBase/Plotte_code_MB.py
 ```
-### Editing instructions
+### Instructions for running code
 a makefile comment is a '#' character. to run the makefile open a editor and type 'make all' to execute.
 
 To run task a):
