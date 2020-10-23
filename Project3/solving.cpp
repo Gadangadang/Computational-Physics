@@ -92,6 +92,7 @@ double solving::angularmomentum(object &current){
 
 void solving::peri(object &current,object &other, double &thetha,double mon,double tue,double wen,double x_p,double y_p){
   if(mon>tue&&wen>tue){
+    std::cout<<x_p<<" "<<y_p<<endl;
     thetha = atan(y_p/x_p);
   }
 }
@@ -122,7 +123,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   double **acceleration = setup_matrix(total_planets, 3);
   double **acceleration_next = setup_matrix(total_planets, 3);
   double t = 0;
-  double Fx, Fy, Fz, Fxnew, Fynew, Fznew, Pot, Kin,mon=100,tue=100,thetha,x_p,y_p;
+  double Fx, Fy, Fz, Fxnew, Fynew, Fznew, Pot, Kin,mon=0,tue=0,thetha,x_p,y_p;
   double dA1=0;
   double dA2=0;
   double h = final_time/((double) integration_points);
