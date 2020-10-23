@@ -34,7 +34,6 @@ int main(int argc, char const *argv[]) {
   int alpha =0;
   cout << "Beta " << beta << endl;
 
-  //object planet1(earth_mass,1.,0.0,0.0,stab_vel[0], stab_vel[1], stab_vel[2]);
   object planet1(earth_mass,1.,0.0,0.0,0,6.3,0);
   object planet2(sun_mass, 0,0,0,0,0,0);
 

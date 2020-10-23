@@ -17,14 +17,12 @@
 using namespace std;
 using namespace arma;
 
-vec stable_circle_orbiter(vec pos);
-
 int main(int argc, char const *argv[]) {
 
   int Dimension = 3;
 
 
-  int IntegrationPoints = 5e6;
+  int IntegrationPoints = 5e7;
   double FinalTime = 100;
 
   //double TimeStep = FinalTime/((double) IntegrationPoints);

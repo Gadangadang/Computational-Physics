@@ -12,7 +12,7 @@
 #include "time.h"
 #include <stdio.h>
 #include <tuple>
-#include <math.h>
+#include <cmath>
 
 solving::solving(){
     total_planets = 0;
@@ -66,7 +66,7 @@ double solving::angularmomentum(object &current){
     double vel[3]; vel[0] = current.velocity[0];
     vel[1] = current.velocity[1]; vel[2] = current.velocity[2];
     spinvec[0] = pos[1] * vel[2] - pos[2] * vel[1];
-    spinvec[1] = pos[2] * vel[0] - pos[0] * vel[2];
+    spinvec[1] = pos[0] * vel[2] - pos[2] * vel[0];
     spinvec[2] = pos[0] * vel[1] - pos[1] * vel[0];
 
     double l = 0;
@@ -77,10 +77,10 @@ double solving::angularmomentum(object &current){
     return l;
     }
 
-void solving::peri(object &current,object &other, double &thetha,double mon,double tue,double wen,double x_p,double y_p){
+void solving::peri(double &thetha,double mon,double tue,double wen,double x_p,double y_p){
   if(mon>tue&&wen>tue){
-    thetha = atan(y_p/x_p);
-    //std::cout << thetha<<endl;
+    thetha = atan2(y_p,x_p);
+    std::cout << thetha<<endl;
   }
 }
 void solving::GravitationalForce(object &current,object &other,double &Fx,double &Fy,double &Fz,double epsilon, double beta,int alpha){   // Function that calculates the gravitational force between two objects, component by component.
@@ -185,7 +185,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       if(nr==0){
       object &other = all_planets[-1];
       double wen = current.distance(other);
-      peri(current, other,thetha,mon,tue,wen,x_p,y_p);
+      peri(thetha,mon,tue,wen,x_p,y_p);
       x_p = current.position[0];
       y_p = current.position[1];
       mon = tue;
@@ -207,7 +207,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   ofile.close();
   delete_matrix(acceleration);
   delete_matrix(acceleration_next);
-  std::cout<<"Perihilion angle ="<<thetha*57.2957795<<endl;
+  std::cout<<"Perihilion angle ="<<thetha*206264.806<<endl;
   std::cout<<"Area of the first time interval is ="<<dA1<<endl;
   std::cout<<"Area of the second time interval is ="<<dA2<<endl;
 }
