@@ -107,3 +107,46 @@ Expected result for i):
   - A plot of Mercury orbiting the Sun
   - A print of the change in degrees after a century as "Perihilion angle = "
   - Example Run: "Perihilion angle =-1.02577"
+
+#### Example Use
+As mentioned previously, we have an object class which mostly stores variables, and one function, but the solver class is the biggest part of the project, and this section will be devoted to showing how to use the class, and an example derived from a), which solves for an Earth-Sun orbit, which also fixes the Sun at origo.
+
+There are two different solvers in the class, but this example will focus on the Verlet function because its the one in use most of the time, and the Euler solver is built to the same spec. The Verlet function has eight different parameters that govern how it operates. A user calls only the solver.add function, to load the planets, and the solver function. Everything else is done 'behind the scenes'. The Verlet parameters are:
+- int dimension: sets the dimension of the solution. It should stay at 3
+- int integration_points: Number of integration points
+- double final_time: the number of years to simulate. Should be given as a whole number
+- int print_number: ??
+- double epsilon: ??
+- double beta: The Beta variable given in 3e) to variate gravity force. Should stay as 2
+- int fixed: Should be 0 for fixing the Sun in origo, otherwise 1 to simulate the center of mass at origo.
+- int alpha: input 1 to add the extra relativistic considerations given in i), otherwise it should be 0.
+- 
+```
+int main(int argc, char const *argv[]) {
+
+  int Dimension = 3;
+
+
+  int IntegrationPoints = 15000;
+  double FinalTime = 150.0;
+
+  double earth_mass = 3.003e-6;
+  double sun_mass = 1.0;
+
+  vec pos(3); pos = {1,0,0};
+
+  double beta = 2;
+  int alpha =0;
+  cout << "Beta " << beta << endl;
+
+  object planet1(earth_mass,1.,0.0,0.0,0,6.3,0);
+  object planet2(sun_mass, 0,0,0,0,0,0);
+
+  solving binary_forward;
+  binary_forward.add(planet1); binary_forward.add(planet2);
+  binary_forward.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta,0,alpha);
+  return 0;
+}
+
+
+```
