@@ -1,22 +1,20 @@
 all: compile execute
 
 compile:
-	#g++ -std=c++17 -O2 -flto -Wall -o main.x main.cpp classtuff.cpp  -larmadillo -llapack -lblas
-	#g++ -std=c++17 -O2 -flto -Wall -o main_a.x main_a.cpp object.cpp solving.cpp  -larmadillo -llapack -lblas
-	#g++ -std=c++17 -O2 -flto -Wall -o main_c.x main_c.cpp object.cpp solving.cpp  -larmadillo -llapack -lblas
-	#g++ -std=c++17 -O2 -flto -Wall -o main_f.x main_f.cpp object.cpp solving.cpp  -larmadillo -llapack -lblas
-	#g++ -std=c++17 -O2 -flto -Wall -o main_g.x main_g.cpp object.cpp solving.cpp  -larmadillo -llapack -lblas
-	#g++ -std=c++17 -O2 -flto -Wall -o main_h.x main_h.cpp object.cpp solving.cpp  -larmadillo -llapack -lblas
-	g++ -std=c++17 -O2 -flto -Wall -o main_i.x main_i.cpp object.cpp solving.cpp  -larmadillo -llapack -lblas
-	#g++ -std=c++17 -O2 -flto -Wall -o unit.x unittest.cpp solving.cpp object.cpp -larmadillo -llapack -lblas
+	g++ -std=c++17 -O2 -flto -Wall -o CodeBase/main_a.x CodeBase/main_a.cpp CodeBase/object.cpp CodeBase/solving.cpp  -larmadillo -llapack -lblas
+	#g++ -std=c++17 -O2 -flto -Wall -o CodeBase/main_c.x CodeBase/main_c.cpp CodeBase/object.cpp CodeBase/solving.cpp  -larmadillo -llapack -lblas
+	#g++ -std=c++17 -O2 -flto -Wall -o CodeBase/main_f.x CodeBase/main_f.cpp object.cpp CodeBase/solving.cpp  -larmadillo -llapack -lblas
+	#g++ -std=c++17 -O2 -flto -Wall -o CodeBase/main_g.x CodeBase/main_g.cpp CodeBase/object.cpp CodeBase/solving.cpp  -larmadillo -llapack -lblas
+	#g++ -std=c++17 -O2 -flto -Wall -o CodeBase/main_h.x CodeBase/main_h.cpp CodeBase/object.cpp CodeBase/solving.cpp  -larmadillo -llapack -lblas
+	#g++ -std=c++17 -O2 -flto -Wall -o CodeBase/main_i.x CodeBase/main_i.cpp CodeBase/object.cpp CodeBase/solving.cpp  -larmadillo -llapack -lblas
+	#g++ -std=c++17 -O2 -flto -Wall -o CodeBase/unit.x CodeBase/unittest.cpp CodeBase/solving.cpp CodeBase/object.cpp -larmadillo -llapack -lblas
 execute:
-	#./main_a.x
-	#./main.x
-	#python3 Plotte_code.py
-	#./main_c.x
-	#./main_f.x
-	#./main_g.x
-	#./main_h.x
-	./main_i.x
-	#./unit.x
-	python3 Plotte_code_MB.py
+	CodeBase/./main_a.x
+	python3 CodeBase/Plotte_code.py
+	#CodeBase/./main_c.x
+	#CodeBase/./main_f.x
+	#CodeBase/./main_g.x
+	#CodeBase/./main_h.x
+	#CodeBase/./main_i.x
+	#CodeBase/./unit.x
+	python3 CodeBase/Plotte_code_MB.py
