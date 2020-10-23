@@ -95,7 +95,7 @@ void solving::GravitationalForce(object &current,object &other,double &Fx,double
     double l = angularmomentum(current);
     double ex;
     if(alpha == 1){
-      ex = (double)( 1. + 3.*l*l/(R*c*c));
+      ex = (double)( 1. + 3.*l*l/(R*cc));
     }
     else{
       ex = 1;
@@ -114,6 +114,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   double dA1=0;
   double dA2=0;
   double h = final_time/((double) integration_points);
+  double hh = h*h;
   double cm[3];
   double dt[4];
   dt[0] = 0.19*final_time;
@@ -156,7 +157,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
 
       //Calculate position for each planet
       for (int k = 0; k<dimension; k++){
-        current.position[k] += current.velocity[k]*h + 0.5*h*h*acceleration[nr][k];
+        current.position[k] += current.velocity[k]*h + 0.5*hh*acceleration[nr][k];
       }
       if(fixed==1){for(int j =0;j<dimension;j++){current.position[j]-=cm[j];}}
       //Loop again over all other planets
@@ -207,7 +208,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   ofile.close();
   delete_matrix(acceleration);
   delete_matrix(acceleration_next);
-  std::cout<<"Perihilion angle ="<<thetha*206264.806<<endl;
+  std::cout<<setprecision(15)<<"Perihilion angle ="<<thetha*206264.806<<endl;
   std::cout<<"Area of the first time interval is ="<<dA1<<endl;
   std::cout<<"Area of the second time interval is ="<<dA2<<endl;
 }

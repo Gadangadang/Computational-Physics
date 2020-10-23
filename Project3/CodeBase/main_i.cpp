@@ -22,7 +22,7 @@ int main(int argc, char const *argv[]) {
   int Dimension = 3;
 
 
-  int IntegrationPoints = 5e7;
+  int IntegrationPoints = 5*1e5;
   double FinalTime = 100;
 
   //double TimeStep = FinalTime/((double) IntegrationPoints);

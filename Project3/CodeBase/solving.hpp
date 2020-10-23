@@ -15,7 +15,7 @@ class solving{
     double radius,total_mass,G;
     int total_planets;
     vector<object> all_planets;
-    double c = 63239.7263; // Speed of light in AU/year
+    double cc = 3999262982.5; // Speed of light (in AU/year) squared
     // initializers
     solving();
 
