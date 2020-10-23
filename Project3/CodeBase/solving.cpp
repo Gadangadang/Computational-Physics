@@ -77,10 +77,9 @@ double solving::angularmomentum(object &current){
     pos[1] = current.position[1]; pos[2] = current.position[2];
     double vel[3]; vel[0] = current.velocity[0];
     vel[1] = current.velocity[1]; vel[2] = current.velocity[2];
-    double m = current.mass;
-    spinvec[0] = pos[1] * m*vel[2] - pos[2] * m*vel[1];
-    spinvec[1] = pos[2] * m*vel[0] - pos[0] * m*vel[2];
-    spinvec[2] = pos[0] * m*vel[1] - pos[1] * m*vel[0];
+    spinvec[0] = pos[1] * vel[2] - pos[2] * vel[1];
+    spinvec[1] = pos[2] * vel[0] - pos[0] * vel[2];
+    spinvec[2] = pos[0] * vel[1] - pos[1] * vel[0];
 
     double l = 0;
     for (int i = 0; i<3; i++){
@@ -92,7 +91,6 @@ double solving::angularmomentum(object &current){
 
 void solving::peri(object &current,object &other, double &thetha,double mon,double tue,double wen,double x_p,double y_p){
   if(mon>tue&&wen>tue){
-    std::cout<<x_p<<" "<<y_p<<endl;
     thetha = atan(y_p/x_p);
   }
 }
@@ -114,9 +112,9 @@ void solving::GravitationalForce(object &current,object &other,double &Fx,double
       ex = 1;
     }
     // Calculate the forces in each direction
-    Fx -= this->G*current.mass*other.mass*relative_distance[0]/((r*R)*ex + smoothing);
-    Fy -= this->G*current.mass*other.mass*relative_distance[1]/((r*R)*ex+ smoothing);
-    Fz -= this->G*current.mass*other.mass*relative_distance[2]/((r*R)*ex + smoothing);
+    Fx -= this->G*current.mass*other.mass*relative_distance[0]/((r*R) + smoothing)*ex;
+    Fy -= this->G*current.mass*other.mass*relative_distance[1]/((r*R)+ smoothing)*ex;
+    Fz -= this->G*current.mass*other.mass*relative_distance[2]/((r*R) + smoothing)*ex;
 }
 
 void solving::VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon, double beta, int fixed, int alpha){
@@ -195,7 +193,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
 
       print_to_file(all_planets[nr].position, dimension, ofile);
 
-      if(alpha ==1&&nr==0){
+      if(nr==0){
       object &other = all_planets[-1];
       double wen = current.distance(other);
       peri(current, other,thetha,mon,tue,wen,x_p,y_p);
@@ -220,9 +218,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   ofile.close();
   delete_matrix(acceleration);
   delete_matrix(acceleration_next);
-  if(alpha==1){
-    std::cout<<"Perihilion angle ="<<thetha*206264.806<<endl;
-  }
+  std::cout<<"Perihilion angle ="<<thetha*57.2957795<<endl;
   std::cout<<"Area of the first time interval is ="<<dA1<<endl;
   std::cout<<"Area of the second time interval is ="<<dA2<<endl;
 }

@@ -47,14 +47,14 @@ Rearange the planets in the order the main has added the planets.
 """
 names = ["Earth","Moon","Mercury","Venus","Mars","Jupiter","Saturn","Neptune", "Uranus","Sun"]
 if tot_p < 5:
-    names = ["Earth","Jupiter","Sun"]
+    names = ["Mercury","Jupiter","Sun"]
 lgd =[]
 for i in range(tot_p-1):
     lgd.append(names[i])
 lgd.append(names[-1])
 ax.legend(lgd)
 """
-#Sphere around the sun 
+#Sphere around the sun
 r=0.00464913034
 u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
 x = r*np.cos(u)*np.sin(v)
