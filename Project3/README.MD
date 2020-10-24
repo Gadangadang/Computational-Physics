@@ -115,8 +115,6 @@ There are two different solvers in the class, but this example will focus on the
 - int dimension: sets the dimension of the solution. It should stay at 3
 - int integration_points: Number of integration points
 - double final_time: the number of years to simulate. Should be given as a whole number
-- int print_number: ??
-- double epsilon: ??
 - double beta: The Beta variable given in 3e) to variate gravity force. Should stay as 2
 - int fixed: Should be 0 for fixing the Sun in origo, otherwise 1 to simulate the center of mass at origo.
 - int alpha: input 1 to add the extra relativistic considerations given in i), otherwise it should be 0.
