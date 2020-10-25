@@ -2,7 +2,7 @@
 
 Here are the instructions for operating the numerical machinery.
 
-## preamble: 
+## preamble:
 Due to the nature of the solution there are different mains for different tasks. This is because our solver class is very general, and therefore requires specialized input for different solutions. Therefore, all code is inside the 'CodeBase' folder and you will execute the different aspects by editing and running the makefile. Its intended to run only one main_X at a time. We have not tested with multiple mains, but it should work.
 
 ### Makefile setup
@@ -35,19 +35,19 @@ To run task a):
   - uncomment the main_a.x line under the 'execute' section
   - uncomment the Plotte_code.py line under the 'execute' section
   - uncomment the Plotte_code_MB.py line under the 'execute' section
- 
+
 Expected result for a):
  - there should be a plot for the Earth-Sun-system solved using the Forward-Euler
  - there should be a more accurate plot of the same system using the Velocity-Verlet-solver
-  
-  
+
+
 To run task c):
   - uncomment the main_c line under the 'compile' section
   - uncomment the main_c.x line under the 'execute' section
   - uncomment the Plotte_code_MB.py line under the 'execute' section
- 
+
 Expected result for c):
- - there should be a plot for the Earth-Sun-system 
+ - there should be a plot for the Earth-Sun-system
  - Testing for the tdelta times were done manually by changing the 'IntegrationPoints' value in line 25 in main_c.cpp
 
 
@@ -120,29 +120,21 @@ There are two different solvers in the class, but this example will focus on the
 - int alpha: input 1 to add the extra relativistic considerations given in i), otherwise it should be 0.
 
 ```
-int main(int argc, char const *argv[]) {
+int main() {
 
   int Dimension = 3;
-
-
   int IntegrationPoints = 15000;
   double FinalTime = 150.0;
-
   double earth_mass = 3.003e-6;
   double sun_mass = 1.0;
-
-  vec pos(3); pos = {1,0,0};
-
   double beta = 2;
   int alpha =0;
   cout << "Beta " << beta << endl;
-
   object planet1(earth_mass,1.,0.0,0.0,0,6.3,0);
   object planet2(sun_mass, 0,0,0,0,0,0);
-
   solving binary_forward;
   binary_forward.add(planet1); binary_forward.add(planet2);
-  binary_forward.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta,0,alpha);
+  binary_forward.VelocityVerlet(Dimension,IntegrationPoints,FinalTime, beta,0,alpha);
   return 0;
 }
 
