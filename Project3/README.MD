@@ -124,11 +124,17 @@ Example:
 
 ```
   solving binary_verlet;
-  binary_verlet.add(planetearth);binary_verlet.add(moon);
-  binary_verlet.add(planetmercury);binary_verlet.add(planetvenus);
-  binary_verlet.add(planetmar); binary_verlet.add(planetjup);
-  binary_verlet.add(planetsat); binary_verlet.add(planetnep);
-  binary_verlet.add(planeturanus); binary_verlet.add(sun);
+  binary_verlet.add(planetearth);
+  binary_verlet.add(moon);
+  binary_verlet.add(planetmercury);
+  binary_verlet.add(planetvenus);
+  binary_verlet.add(planetmar); 
+  binary_verlet.add(planetjup);
+  binary_verlet.add(planetsat); 
+  binary_verlet.add(planetnep);
+  binary_verlet.add(planeturanus); 
+  binary_verlet.add(sun);
+  
   binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime, beta, fixed,alpha);
 ```
 
