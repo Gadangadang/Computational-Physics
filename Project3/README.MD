@@ -122,10 +122,18 @@ There are two different solvers in the class, but this example will focus on the
 Important! When loading the planets into the solver, you must always load the sun last. If the Earth is one of the planets in the simulation it must be loaded first. Also in general when loading the planets, they should be loaded by their distance, from closest to furthest.
 Example:
 
+```
+  solving binary_verlet;
+  binary_verlet.add(planetearth);binary_verlet.add(moon);
+  binary_verlet.add(planetmercury);binary_verlet.add(planetvenus);
+  binary_verlet.add(planetmar); binary_verlet.add(planetjup);
+  binary_verlet.add(planetsat); binary_verlet.add(planetnep);
+  binary_verlet.add(planeturanus); binary_verlet.add(sun);
+  binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime, beta, fixed,alpha);
+```
 
 
-
-General example:
+General example for an Earth-Sun system, with a fixed helio-centric attitude:
 ```
 int main() {
 
