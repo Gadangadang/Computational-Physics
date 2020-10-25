@@ -119,6 +119,13 @@ There are two different solvers in the class, but this example will focus on the
 - int fixed: Should be 0 for fixing the Sun in origo, otherwise 1 to simulate the center of mass at origo.
 - int alpha: input 1 to add the extra relativistic considerations given in i), otherwise it should be 0.
 
+Important! When loading the planets into the solver, you must always load the sun last. If the Earth is one of the planets in the simulation it must be loaded first. Also in general when loading the planets, they should be loaded by their distance, from closest to furthest.
+Example:
+
+
+
+
+General example:
 ```
 int main() {
 
