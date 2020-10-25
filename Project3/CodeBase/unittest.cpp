@@ -25,12 +25,12 @@ TEST_CASE( "Check for errors in code" ) {
   object planetearth(earth_mass,9.128884513088843*1e-01,3.928032801600736*1e-01,6.577938183713410*1e-05,-6.957269992142644*1e-03*365, 1.579734315560513*1e-02*365, -2.582593092148153*1e-07*365);
   object sun(sun_mass, -6.107925513172998*1e-03,6.420679726598624*1e-03,8.893727401374147*1e-05,-7.280593132276730*1e-06*365,-5.090234498858063*1e-06*365,2.181619304215098*1e-07*365);
 
-  solving unittest_solv(5.0);
+  solving unittest_solv;
   unittest_solv.add(planetearth); unittest_solv.add(sun);
 
 
   //Run simulation to aquire data
-  unittest_solv.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta, fixed,alpha);
+  unittest_solv.VelocityVerlet(Dimension,IntegrationPoints,FinalTime, beta, fixed,alpha);
 
 
   int *integrationpoints = nullptr;
@@ -113,7 +113,7 @@ TEST_CASE( "Check for errors in code" ) {
     REQUIRE( fabs(maxval - maxval2) < fabs(maxval2)/150 );
   }
   SECTION("Check conservation of angular momentum"){
-    REQUIRE(fabs(l[1]-l[int(IntegrationPoints/FinalTime)]) <l[0]/100);
+    REQUIRE(fabs(l[0]-l[int(IntegrationPoints/FinalTime)]) <l[0]/100);
   }
 
   SECTION("Checking if the earth is still in orbit "){

@@ -19,7 +19,7 @@ using namespace arma;
 
 
 
-int main(int argc, char const *argv[]) {
+int main() {
 
   int Dimension = 3;
 
@@ -71,7 +71,7 @@ int main(int argc, char const *argv[]) {
   binary_verlet.add(planetmar); binary_verlet.add(planetjup);
   binary_verlet.add(planetsat); binary_verlet.add(planetnep);
   binary_verlet.add(planeturanus); binary_verlet.add(sun);
-  binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta, fixed,alpha);
+  binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime, beta, fixed,alpha);
 
   return 0;
 }

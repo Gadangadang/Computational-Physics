@@ -19,7 +19,7 @@ using namespace arma;
 
 
 
-int main(int argc, char const *argv[]) {
+int main() {
 
   int Dimension = 3;
 
@@ -35,8 +35,6 @@ int main(int argc, char const *argv[]) {
   int alpha =0;
   cout << "Beta " << beta << endl;
 
-  //object planet1(earth_mass,1.,0.0,0.0,stab_vel[0], stab_vel[1], stab_vel[2]);
-
   object planet1(earth_mass,1.,0.0,0.0,0,8.88577,0);
   object planet2(sun_mass, 0,0,0,0,0,0);
 
@@ -46,7 +44,7 @@ int main(int argc, char const *argv[]) {
   double vesc = sqrt(2*binary_verlet.G/(r));
 
   cout << "V_esc = " << vesc << endl;
-  binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta,fixed,alpha);
+  binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime, beta,fixed,alpha);
 
   return 0;
 }

@@ -17,7 +17,7 @@
 using namespace std;
 using namespace arma;
 
-int main(int argc, char const *argv[]) {
+int main() {
 
   int Dimension = 3;
 
@@ -39,7 +39,7 @@ int main(int argc, char const *argv[]) {
 
   solving binary_forward;
   binary_forward.add(planet1); binary_forward.add(planet2);
-  binary_forward.Forward_Euler(Dimension,IntegrationPoints,FinalTime,0., beta,alpha);
-  binary_forward.VelocityVerlet(Dimension,IntegrationPoints,FinalTime,1,0., beta,0,alpha);
+  binary_forward.Forward_Euler(Dimension,IntegrationPoints,FinalTime, beta,alpha);
+  binary_forward.VelocityVerlet(Dimension,IntegrationPoints,FinalTime, beta,0,alpha);
   return 0;
 }

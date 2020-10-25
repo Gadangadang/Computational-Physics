@@ -83,14 +83,13 @@ void solving::peri(double &thetha,double mon,double tue,double wen,double x_p,do
     std::cout << thetha<<endl;
   }
 }
-void solving::GravitationalForce(object &current,object &other,double &Fx,double &Fy,double &Fz,double epsilon, double beta,int alpha){   // Function that calculates the gravitational force between two objects, component by component.
+void solving::GravitationalForce(object &current,object &other,double &Fx,double &Fy,double &Fz, double beta,int alpha){   // Function that calculates the gravitational force between two objects, component by component.
 
     // Calculate relative distance between current planet and all other planets
     double relative_distance[3];
 
     for(int j = 0; j < 3; j++) relative_distance[j] = current.position[j]-other.position[j];
     double r = current.distance(other);
-    double smoothing = epsilon*epsilon*epsilon;
     double R = pow(r,beta);
     double l = angularmomentum(current);
     double ex;
@@ -101,12 +100,12 @@ void solving::GravitationalForce(object &current,object &other,double &Fx,double
       ex = 1;
     }
     // Calculate the forces in each direction
-    Fx -= this->G*current.mass*other.mass*relative_distance[0]/((r*R) + smoothing)*ex;
-    Fy -= this->G*current.mass*other.mass*relative_distance[1]/((r*R)+ smoothing)*ex;
-    Fz -= this->G*current.mass*other.mass*relative_distance[2]/((r*R) + smoothing)*ex;
+    Fx -= this->G*current.mass*other.mass*relative_distance[0]/(r*R)*ex;
+    Fy -= this->G*current.mass*other.mass*relative_distance[1]/(r*R)*ex;
+    Fz -= this->G*current.mass*other.mass*relative_distance[2]/(r*R)*ex;
 }
 
-void solving::VelocityVerlet(int dimension, int integration_points, double final_time, int print_number, double epsilon, double beta, int fixed, int alpha){
+void solving::VelocityVerlet(int dimension, int integration_points, double final_time, double beta, int fixed, int alpha){
   double **acceleration = setup_matrix(total_planets, 3);
   double **acceleration_next = setup_matrix(total_planets, 3);
   double t = 0;
@@ -139,7 +138,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       for (int nr2 = 0; nr2 < total_planets; nr2++){
         if (nr2 != nr && nr < total_planets-1){
           object &other = all_planets[nr2];
-          GravitationalForce(current, other, Fx, Fy, Fz, epsilon, beta,alpha);
+          GravitationalForce(current, other, Fx, Fy, Fz, beta,alpha);
           PotentialEnergySystem(current, other, Pot);
           KineticEnergySystem(current, Kin);
           if(nr ==0){
@@ -148,7 +147,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       }
       else if(fixed==1 && nr==total_planets-1&&nr!=nr2){
         object &other = all_planets[nr2];
-        GravitationalForce(current, other, Fx, Fy, Fz, epsilon, beta,alpha);
+        GravitationalForce(current, other, Fx, Fy, Fz, beta,alpha);
       }
       }
       acceleration[nr][0] = Fx/current.mass;
@@ -164,11 +163,11 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
       for (int nr2 = 0; nr2 < total_planets; nr2++){
         if (nr2 != nr && nr < total_planets-1){
           object &other = all_planets[nr2];
-          GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon, beta,alpha);
+          GravitationalForce(current, other, Fxnew, Fynew, Fznew, beta,alpha);
         }
         else if(fixed==1 && nr==total_planets-1 && nr!=nr2){
           object &other = all_planets[nr2];
-          GravitationalForce(current, other, Fxnew, Fynew, Fznew, epsilon, beta,alpha);
+          GravitationalForce(current, other, Fxnew, Fynew, Fznew, beta,alpha);
           }
       }
       acceleration_next[nr][0] = Fxnew/current.mass;
@@ -213,7 +212,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
   std::cout<<"Area of the second time interval is ="<<dA2<<endl;
 }
 
-void solving::Forward_Euler(int dimension, int integration_points, double final_time,double epsilon,double beta,int alpha)
+void solving::Forward_Euler(int dimension, int integration_points, double final_time,double beta,int alpha)
 {
   double **acceleration = setup_matrix(total_planets, 3);
   double t = 0;
@@ -234,7 +233,7 @@ void solving::Forward_Euler(int dimension, int integration_points, double final_
       for (int nr2 = 0; nr2 < total_planets; nr2++){
         if (nr2 != nr && nr < total_planets-1){
           object &other = all_planets[nr2];
-          GravitationalForce(current, other, Fx, Fy, Fz, epsilon, beta,alpha);
+          GravitationalForce(current, other, Fx, Fy, Fz, beta,alpha);
       }
       }
       acceleration[nr][0] = Fx/current.mass;
