@@ -20,12 +20,12 @@ using namespace arma;
 int main() {
 
   int Dimension = 3;
-  int IntegrationPoints = 1*1e7;
+  int IntegrationPoints = 7*1e6;
   double FinalTime = 100;
   double sun_mass = 1.0;
   double merc_mass = 1.651e-7;
   int fixed =0;
-  int alpha =1;
+  int alpha =0;
   double beta = 2;
   cout << "Beta " << beta << endl;
   //When initializing the planets; make sure to initialize the sun last, and the planet furthest away from the sun second last.
