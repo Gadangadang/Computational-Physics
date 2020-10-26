@@ -25,9 +25,7 @@ int main() {
 
 
   int IntegrationPoints = 50000;
-  double FinalTime = 2;
-
-  //double TimeStep = FinalTime/((double) IntegrationPoints);
+  double FinalTime = 1;
   double earth_mass = 3.003e-6;
   double sun_mass = 1.0;
   double jup_mass = 0.0009543;

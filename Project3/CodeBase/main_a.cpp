@@ -24,12 +24,8 @@ int main() {
 
   int IntegrationPoints = 15000;
   double FinalTime = 150.0;
-
   double earth_mass = 3.003e-6;
   double sun_mass = 1.0;
-
-  vec pos(3); pos = {1,0,0};
-
   double beta = 2;
   int alpha =0;
   cout << "Beta " << beta << endl;

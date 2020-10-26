@@ -29,13 +29,6 @@ int main() {
   double earth_mass = 3.003e-6;
   double sun_mass = 1.0;
   double jup_mass = 0.0009543;
-
-  vec pos(3); pos = {1,0,0};
-  vec pos_jup(3); pos = {5.2,0,0};
-
-  // Verdier for fixed:
-  // massesenter i midten fixed = 1;
-  // Sola i midten fixed = 0;
   int fixed = 0;
   double beta = 2;
   int alpha =0;

@@ -27,15 +27,11 @@ int main() {
 
   double earth_mass = 3.003e-6;
   double sun_mass = 1.0;
-
-  vec pos(3); pos = {1,0,0};
-
   double beta = 2;
   int alpha =0;
   int fixed =1;
   cout << "Beta " << beta << endl;
 
-  //object planet1(earth_mass,1.,0.0,0.0,stab_vel[0], stab_vel[1], stab_vel[2]);
   object planet1(earth_mass,1.,0.0,0.0,0,5,0);
   object planet2(sun_mass, 0,0,0,0,0,0);
 

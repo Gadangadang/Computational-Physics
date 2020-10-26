@@ -20,12 +20,8 @@ using namespace arma;
 int main() {
 
   int Dimension = 3;
-
-
   int IntegrationPoints = 5*1e5;
   double FinalTime = 100;
-
-  //double TimeStep = FinalTime/((double) IntegrationPoints);
   double sun_mass = 1.0;
   double merc_mass = 1.651e-7;
   int fixed =0;

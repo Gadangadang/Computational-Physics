@@ -46,9 +46,6 @@ for i in range(tot_p):
 Rearange the planets in the order the main has added the planets.
 """
 names = ["Earth","Moon","Mercury","Venus","Mars","Jupiter","Saturn","Neptune", "Uranus","Sun"]
-if tot_p < 5:
-    names = ["Mercury","Jupiter","Sun"]
-lgd =[]
 for i in range(tot_p-1):
     lgd.append(names[i])
 lgd.append(names[-1])
