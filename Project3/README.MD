@@ -119,6 +119,27 @@ There are two different solvers in the class, but this example will focus on the
 - int fixed: Should be 0 for fixing the Sun in origo, otherwise 1 to simulate the center of mass at origo.
 - int alpha: input 1 to add the extra relativistic considerations given in i), otherwise it should be 0.
 
+Important! When loading the planets into the solver, you must always load the sun last. If the Earth is one of the planets in the simulation it must be loaded first. Also in general when loading the planets, they should be loaded by their distance, from closest to furthest.
+Example:
+
+```
+  solving binary_verlet;
+  binary_verlet.add(planetearth);
+  binary_verlet.add(moon);
+  binary_verlet.add(planetmercury);
+  binary_verlet.add(planetvenus);
+  binary_verlet.add(planetmar); 
+  binary_verlet.add(planetjup);
+  binary_verlet.add(planetsat); 
+  binary_verlet.add(planetnep);
+  binary_verlet.add(planeturanus); 
+  binary_verlet.add(sun);
+  
+  binary_verlet.VelocityVerlet(Dimension,IntegrationPoints,FinalTime, beta, fixed,alpha);
+```
+
+
+General example for an Earth-Sun system, with a fixed helio-centric attitude:
 ```
 int main() {
 
