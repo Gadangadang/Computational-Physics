@@ -46,10 +46,8 @@ for i in range(tot_p):
 Rearange the planets in the order the main has added the planets.
 """
 names = ["Earth","Moon","Mercury","Venus","Mars","Jupiter","Saturn","Neptune", "Uranus","Sun"]
-for i in range(tot_p-1):
-    lgd.append(names[i])
-lgd.append(names[-1])
-ax.legend(lgd)
+ax.legend(names)
+
 """
 #Sphere around the sun
 r=0.00464913034

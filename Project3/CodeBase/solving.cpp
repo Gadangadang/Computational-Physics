@@ -182,7 +182,7 @@ void solving::VelocityVerlet(int dimension, int integration_points, double final
 
       print_to_file(all_planets[nr].position, dimension, ofile);
 
-      if(nr==0){
+      if(nr==0&&t>0.997*final_time){
       object &other = all_planets[-1];
       double wen = current.distance(other);
       peri(thetha,mon,tue,wen,x_p,y_p);
