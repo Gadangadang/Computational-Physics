@@ -101,12 +101,16 @@ Expected result for h):
 To run task i):
   - uncomment the main_i line under the 'compile' section
   - uncomment the main_i.x line under the 'execute' section
-  - uncomment the Plotte_code_MB.py line under the 'execute' section
+  - You must also do the following:
+  	- go into the main_i.cpp file inside the CodeBase folder (setup is like the example below)
+	- change fixed == 0, and alpha == 1, then run with the makefile
+	- change fixed == 0, and alpha == 0, then run with the makefile
 
 Expected result for i):
-  - A plot of Mercury orbiting the Sun
   - A print of the change in degrees after a century as "Perihilion angle = "
-  - Example Run: "Perihilion angle =-1.02577"
+  - First run: "Perihilion angle = 74"
+  - Second run: "Perihelion angle = 28"
+  - Together they differ by about ~45.50 arcseconds/century.  
 
 #### Example Use
 As mentioned previously, we have an object class which mostly stores variables, and one function, but the solver class is the biggest part of the project, and this section will be devoted to showing how to use the class, and an example derived from a), which solves for an Earth-Sun orbit, which also fixes the Sun at origo.
@@ -144,6 +148,8 @@ General example for an Earth-Sun system, with a fixed helio-centric attitude:
 int main() {
 
   int Dimension = 3;
+
+
   int IntegrationPoints = 15000;
   double FinalTime = 150.0;
   double earth_mass = 3.003e-6;
@@ -151,10 +157,13 @@ int main() {
   double beta = 2;
   int alpha =0;
   cout << "Beta " << beta << endl;
+
   object planet1(earth_mass,1.,0.0,0.0,0,6.3,0);
   object planet2(sun_mass, 0,0,0,0,0,0);
+
   solving binary_forward;
   binary_forward.add(planet1); binary_forward.add(planet2);
+  binary_forward.Forward_Euler(Dimension,IntegrationPoints,FinalTime, beta,alpha);
   binary_forward.VelocityVerlet(Dimension,IntegrationPoints,FinalTime, beta,0,alpha);
   return 0;
 }
