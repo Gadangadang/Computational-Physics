@@ -111,6 +111,8 @@ Expected result for i):
   - First run: "Perihilion angle = 74"
   - Second run: "Perihelion angle = 28"
   - Together they differ by about ~45.50 arcseconds/century.  
+  
+*Regarding Plot names and labels: Labels for the planets may not be accurate for all tasks. For different scenarios, like perihelion & three body plots, the names may be incorrect, and must be changed manually in the python "Plotte_code_Mb- or Plotte_code-.py".
 
 #### Example Use
 As mentioned previously, we have an object class which mostly stores variables, and one function, but the solver class is the biggest part of the project, and this section will be devoted to showing how to use the class, and an example derived from a), which solves for an Earth-Sun orbit, which also fixes the Sun at origo.
