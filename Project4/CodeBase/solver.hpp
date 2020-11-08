@@ -11,6 +11,9 @@ class solver
     // Attributes
     mat m_smatrix;
     long m_part;
+    double m_M;
+    double m_E;
+
 
 
 
@@ -20,6 +23,7 @@ class solver
     void Initialize(int n_spins, int mcs, double init_temp, double final_temp, double t_step);
     //Functions
     void Metropolis(mat m_smatrix, double& E, double&M, double *w);
+    int periodic(int i, int limit, int add)
     void output();
     
 
