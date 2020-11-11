@@ -23,7 +23,7 @@ class solver
     void Initialize(int n_spins, int mcs, double init_temp, double final_temp, double t_step);
     //Functions
     void Metropolis(mat m_smatrix, double& E, double&M, double *w);
-    int periodic(int i, int limit, int add)
+    int periodic(int i, int limit, int add);
     void output();
     
 
