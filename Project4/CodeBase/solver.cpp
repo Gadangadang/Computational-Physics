@@ -27,7 +27,7 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, double final_tem
     m_mcs = mcs;
     m_M = 0;
     m_E = 0;
-    m_final_temp = final_temp;
+    m_final_temp = final_temp; //Purge this. Use only in Main.cpp in the future. 
     m_init_temp = init_temp;
     m_tstep = t_step;
     cout << "Feil 10" << endl;
