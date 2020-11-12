@@ -63,7 +63,7 @@ long solver::ran1(){ // can I even call double(long) to specify long storage of 
     mt19937_64 generator (123);
     uniform_real_distribution<long> dis(0.0, 1.0);
     long Rnum = dis(generator);
-    return Rnum
+    return Rnum;
 }
 
 int periodic(int i, int limit, int add){
