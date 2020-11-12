@@ -1,15 +1,12 @@
 #include <iostream>
 #include "armadillo"
 #include "solver.hpp"
-#include <iostream>
 #include <new>
 #include <cstdio>
 #include <cstdlib>
-#include <cmath>
 #include <fstream>
 #include <iomanip>
 #include <string>
-#include "armadillo"
 #include "time.h"
 #include <stdio.h>
 #include <tuple>
@@ -29,7 +26,15 @@ int main(int argc, char* argv[])
 
 // This section wont be filled until the whole class is finished.
 // Will probably be very small. Solver will be general, and also the scope of questions is limited.
-
+   int mcs = atoi(argv[1]);
+   int spins = atoi(argv[2]);
+   double final_temp = atof(argv[3]);
+   double init_temp = atof(argv[4]);
+   double t_step = atof(argv[5]);
+    cout << "mcs i main er: " << mcs << endl;
+   solver Mcint1;
+   Mcint1.Initialize(spins, mcs, init_temp, final_temp, t_step);
+   Mcint1.MonteCarloV1();
 
 return 0;
 }

@@ -5,6 +5,8 @@
 #include "armadillo"
 
 using namespace arma;
+using namespace std;
+
 class solver
 {
     private:
@@ -21,17 +23,20 @@ class solver
     double m_init_temp;
     double m_tstep;
 
+    mt19937_64 generator;
+    uniform_real_distribution<double> dis;
 
 
 
 
+    public:
     //Initializer
     void Initialize(int n_spins, int mcs, double init_temp, double final_temp, double t_step);
     //Functions
-    void Metropolis(mat& m_smatrix, long& m_part, double& m_E, double& m_M, vec& m_w);
+    void Metropolis();
     void MonteCarloV1();
     int periodic(int i, int limit, int add);
-    long ran1();
+    double ran1();
     void output();
     
 
