@@ -31,6 +31,7 @@ class solver
     void Metropolis(mat& m_smatrix, long& m_part, double& m_E, double& m_M, vec& m_w);
     void MonteCarloV1();
     int periodic(int i, int limit, int add);
+    long ran1();
     void output();
     
 
