@@ -22,12 +22,15 @@ using namespace std;
 
 
 void solver::Initialize(int n_spins, int mcs, double init_temp, double final_temp, double t_step){
-// Initialize values by reference, and set them to point at internal Class variables
+// Initialize internal Class variables
     m_smatrix = zeros<mat>(n_spins, n_spins);
     m_spins = n_spins;
     m_mcs = mcs;
     m_M = 0;
     m_E = 0;
+    m_final_temp = final_temp;
+    m_init_temp = init_temp;
+    m_tstep = t_step;
     long m_part = -1; // what does this do ? Example sets this to -1, calls it random??
     vec m_w(17);
     vec m_average(5);
@@ -64,73 +67,48 @@ int periodic(int i, int limit, int add){
     //  Idunno how this works, but Im keeping it until we can figure out something better. 
     return (i+limit+add) % (limit);
 }
-void solver::Metropolis(mat& m_smatrix, long& m_part, double& m_E, double& m_M, double& w){
+void solver::Metropolis(mat& m_smatrix, long& m_part, double& m_E, double& m_M, vec& m_w){
+
 // loop over all spins
     for(int y =0; y < m_spins; y++) {
-    for (int x= 0; x < m_spins; x++){
-// Find random position
-    int ix = (int) (ran1(m_part)*(double)m_spins);
-    int iy = (int) (ran1(m_part)*(double)m_spins);
-    int deltaE = 2*m_smatrix(iy, ix)*
-    (m_smatrix(iy, periodic(ix,m_spins,-1))+
-    m_smatrix(periodic(iy,m_spins,-1), ix) +
-    m_smatrix(iy, periodic(ix,m_spins,1)) +
-    m_smatrix(periodic(iy,m_spins,1), ix));
-// Here we perform the Metropolis test
-    if ( ran1(m_part) <= m_w(deltaE+8) ) {
-    m_smatrix(iy, ix) *= -1; // flip one spin and accept new spin config
-// update energy and magnetization
-    m_M += (double) 2*m_smatrix(iy, ix);
-    m_E += (double) deltaE;
-}
-}
-}
-
-}
+        for (int x= 0; x < m_spins; x++){
+        // Find random position
+            int ix = (int) (ran1(m_part)*(double)m_spins);
+            int iy = (int) (ran1(m_part)*(double)m_spins);
+            int deltaE = 2*m_smatrix(iy, ix)*
+            (m_smatrix(iy, periodic(ix,m_spins,-1))+
+            m_smatrix(periodic(iy,m_spins,-1), ix) +
+            m_smatrix(iy, periodic(ix,m_spins,1)) +
+            m_smatrix(periodic(iy,m_spins,1), ix));
+        // Here we perform the Metropolis test
+            if ( ran1(m_part) <= m_w(deltaE+8) ) {
+            m_smatrix(iy, ix) *= -1; // flip one spin and accept new spin config
+        // update energy and magnetization
+            m_M += (double) 2*m_smatrix(iy, ix);
+            m_E += (double) deltaE;
+            }
+        }
+    }
+}// End of the Metropolis function.
 
 
 
 
 void solver::MonteCarloV1(){
-    // Main solver loop and Datagenerator. 
+    // Main solver loop
     // This section needs work. 
 
     // Monte Carlo cycles
-    for (int cycles = 1; cycles <= mcs; cycles++){
-    Metropolis(n_spins, idum, m_smatrix, E, M, w);
+    for (int cycles = 1; cycles <= m_mcs; cycles++){
+        Metropolis(m_smatrix, m_part, m_E, m_M, m_w);
     // update expectation values
-    average[0] += E; average[1] += E*E;
-    average[2] += M; average[3] += M*M; average[4] += fabs(M);
+        m_average(0) += m_E; m_average(1) += m_E*m_E;
+        m_average(2) += m_M; m_average(3) += m_M*m_M; m_average(4) += fabs(m_M);
     }
-    }
-
 }// end function MonteCarloV1
 
-solver::output(){}
 
+void solver::output(){
 
-/* Example function
-void Metropolis(int n_spins, long& idum, int **m_smatrix, double& E, double&M, double *w)
-{
-// loop over all spins
-for(int y =0; y < n_spins; y++) {
-for (int x= 0; x < n_spins; x++){
-// Find random position
-int ix = (int) (ran1(&idum)*(double)n_spins);
-int iy = (int) (ran1(&idum)*(double)n_spins);
-int deltaE = 2*m_smatrix[iy][ix]*
-(m_smatrix[iy][periodic(ix,n_spins,-1)]+
-m_smatrix[periodic(iy,n_spins,-1)][ix] +
-m_smatrix[iy][periodic(ix,n_spins,1)] +
-spin_matrix[periodic(iy,n_spins,1)][ix]);
-// Here we perform the Metropolis test
-if ( ran1(&idum) <= w[deltaE+8] ) {
-spin_matrix[iy][ix] *= -1; // flip one spin and accept new spin config
-// update energy and magnetization
-M += (double) 2*spin_matrix[iy][ix];
-E += (double) deltaE;
 }
-}
-}
-} // end of Metropolis sampling over spins¨
-*/
+
