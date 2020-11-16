@@ -109,22 +109,6 @@ void solver::MonteCarloV1(){
 
 void solver::output(){ 
 // Borrowed most of this. Will probably make changes to the output structure, maybe. 
-  // stupid file checking, but it works
-  ifstream ofile;
-  ofile.open("MonteCarloRun.txt");
-  if(ofile.peek() == std::ifstream::traits_type::eof()){
-    ofile.close();
-    ofstream ofile;
-    ofile.open("MonteCarloRun.txt");
-      ofile << setiosflags(ios::showpoint | ios::uppercase);
-      ofile << setw(15) << "Inital Temp";
-      ofile << setw(15) << "E average";
-      ofile << setw(15) << "E variance";
-      ofile << setw(15) << "M average";
-      ofile << setw(15) << "M abs total";
-    ofile.close();
-  }
-  ofile.close();
   ofstream ofile;
   ofile.open("MonteCarloRun.txt", fstream::app);
   double norma = 1/((double) (m_mcs));  // divided by total number of cycles 

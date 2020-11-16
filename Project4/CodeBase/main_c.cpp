@@ -31,7 +31,17 @@ int main(int argc, char* argv[])
    double final_temp = atof(argv[3]);
    double init_temp = atof(argv[4]);
    double t_step = atof(argv[5]);
-    cout << "mcs i main er: " << mcs << endl;
+    ofstream ofile;
+        ofile.open("MonteCarloRun.txt");
+        ofile << setiosflags(ios::showpoint | ios::uppercase);
+        ofile << setw(15) << "Inital Temp";
+        ofile << setw(15) << "E average";
+        ofile << setw(15) << "E variance";
+        ofile << setw(15) << "M average";
+        ofile << setw(15) << "M variance";
+        ofile << setw(15) << "M abs total" << endl;
+    ofile.close();
+
    solver Mcint1;
    for (double i_temp = init_temp; i_temp <= final_temp; i_temp += t_step){
    Mcint1.Initialize(spins, mcs, i_temp);
