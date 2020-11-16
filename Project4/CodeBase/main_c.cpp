@@ -28,8 +28,8 @@ int main(int argc, char* argv[])
 // Will probably be very small. Solver will be general, and also the scope of questions is limited.
    int mcs = atoi(argv[1]);
    int spins = atoi(argv[2]);
-   double final_temp = atof(argv[3]);
-   double init_temp = atof(argv[4]);
+   double init_temp = atof(argv[3]);
+   double final_temp = atof(argv[4]);
    double t_step = atof(argv[5]);
     ofstream ofile;
         ofile.open("MonteCarloRun.txt");
@@ -43,10 +43,15 @@ int main(int argc, char* argv[])
     ofile.close();
 
    solver Mcint1;
+   clock_t start, finish;
+   start = clock();
    for (double i_temp = init_temp; i_temp <= final_temp; i_temp += t_step){
    Mcint1.Initialize(spins, mcs, i_temp);
    Mcint1.MonteCarloV1();
    }
+   finish = clock();
+   double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
+   cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
 
 return 0;
 }
