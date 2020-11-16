@@ -19,9 +19,7 @@ class solver
     int m_mcs;
     vec m_w;
     vec m_average;
-    double m_final_temp;
     double m_init_temp;
-    double m_tstep;
 
     mt19937_64 generator;
     uniform_real_distribution<double> dis;
@@ -31,7 +29,7 @@ class solver
 
     public:
     //Initializer
-    void Initialize(int n_spins, int mcs, double init_temp, double final_temp, double t_step);
+    void Initialize(int n_spins, int mcs, double init_temp);
     //Functions
     void Metropolis();
     void MonteCarloV1();

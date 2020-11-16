@@ -33,8 +33,10 @@ int main(int argc, char* argv[])
    double t_step = atof(argv[5]);
     cout << "mcs i main er: " << mcs << endl;
    solver Mcint1;
-   Mcint1.Initialize(spins, mcs, init_temp, final_temp, t_step);
+   for (double i_temp = init_temp; i_temp <= final_temp; i_temp += t_step){
+   Mcint1.Initialize(spins, mcs, i_temp);
    Mcint1.MonteCarloV1();
+   }
 
 return 0;
 }
