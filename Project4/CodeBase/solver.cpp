@@ -31,12 +31,12 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
     m_w = vec(17);
     m_average = vec(5);
 
-    if(init_temp<1.5 && param_1==1)m_smatrix.fill(1);
+    m_smatrix.fill(1);
 // function to initialise energy, magnetization, and populate spin-matrix
     for(int y =0; y < m_spins; y++) {
     for (int x= 0; x < m_spins; x++){
-    if(init_temp<1.5 && param_1!=1){
-      if(ran1()<0.5){m_smatrix *=-1;}
+    if(param_1==0){
+      if(ran1()<0.5){m_smatrix(y,x) *=-1;}
     }
     m_M += (double) m_smatrix(y, x);
     }

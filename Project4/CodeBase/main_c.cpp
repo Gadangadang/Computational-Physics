@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
    //Mcint1.Initialize(spins, mcs, i_temp);
    //Mcint1.MonteCarloV1();
    //}
-   double T = 1;
+   double T = 2.4;
    int param_1=1;
    Mcint1.Initialize(2, mcs,T, param_1);
    Mcint1.MonteCarloV1();
