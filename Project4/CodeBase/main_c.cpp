@@ -50,7 +50,8 @@ int main(int argc, char* argv[])
    //Mcint1.MonteCarloV1();
    //}
    double T = 1;
-   Mcint1.Initialize(2, mcs,T);
+   int param_1=1;
+   Mcint1.Initialize(2, mcs,T, param_1);
    Mcint1.MonteCarloV1();
    finish = clock();
    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );

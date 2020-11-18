@@ -18,10 +18,11 @@ using namespace arma;
 using namespace std;
 
 
-void solver::Initialize(int n_spins, int mcs, double init_temp){
+void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
 // Initialize internal Class variables
     m_smatrix = zeros<mat>(n_spins, n_spins);
     m_spins = n_spins;
+    m_tot_spins = m_spins*m_spins;
     m_mcs = mcs;
     m_M = 0;
     m_E = 0;
@@ -34,7 +35,7 @@ void solver::Initialize(int n_spins, int mcs, double init_temp){
 // function to initialise energy, magnetization, and populate spin-matrix
     for(int y =0; y < m_spins; y++) {
     for (int x= 0; x < m_spins; x++){
-    if (init_temp < 1.5) m_smatrix(y, x) = 1; // spin orientation for the ground state
+    if (init_temp < 1.5 && param_1 ==1) m_smatrix(y, x) = 1; // spin orientation for the ground state
     m_M += (double) m_smatrix(y, x);
     }
     }
@@ -70,7 +71,7 @@ int solver::periodic(int i, int limit, int add){
 void solver::Metropolis(){
 
 // loop over all spins
-
+            for(int spin =0; spin < m_tot_spins; spin++){
             int ix = (int) (ran1()*(double)m_spins);
             int iy = (int) (ran1()*(double)m_spins);
             int deltaE = 2*m_smatrix(iy, ix)*
@@ -90,7 +91,7 @@ void solver::Metropolis(){
             m_E += (double) deltaE;
             }
 }// End of the Metropolis function.
-
+}
 
 
 
@@ -102,9 +103,9 @@ void solver::MonteCarloV1(){
     // update expectation values
         m_average(0) += m_E; m_average(1) += m_E*m_E;
         m_average(2) += m_M; m_average(3) += m_M*m_M; m_average(4) += fabs(m_M);
+        m_cycles = cycles;
+        output();
     }
-    output();
-
 }// end function MonteCarloV1
 
 void solver::init_output(){
@@ -112,6 +113,7 @@ void solver::init_output(){
       ofile.open("MonteCarloRun.txt");
       ofile << setiosflags(ios::showpoint | ios::uppercase);
       ofile << setw(15) << "Inital Temp";
+      ofile << setw(15) << "MC_cycles";
       ofile << setw(15) << "E average";
       ofile << setw(15) << "E variance";
       ofile << setw(15) << "M average";
@@ -134,6 +136,7 @@ void solver::output(){
   double Mvariance = (M2total_average - Mtotal_average*Mtotal_average)/m_spins/m_spins;
   ofile << setiosflags(ios::showpoint | ios::uppercase);
   ofile << setw(15) << setprecision(8) << m_init_temp;
+  ofile << setw(15) << setprecision(8) << m_cycles;
   ofile << setw(15) << setprecision(8) << Etotal_average/m_spins/m_spins;
   ofile << setw(15) << setprecision(8) << Evariance/m_init_temp/m_init_temp;
   ofile << setw(15) << setprecision(8) << Mtotal_average/m_spins/m_spins;

@@ -24,8 +24,9 @@ int main(int argc, char* argv[])
    start = clock();
    double L = 20.;
    double T = 1.;
-   for i in range()
-   Mcint1.Initialize(L, mcs,T);
+   int mcs_max = 1e6;
+   int param_1 = 1;
+   Mcint1.Initialize(L, mcs_max,T,param_1);
    Mcint1.MonteCarloV1();
    finish = clock();
    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );

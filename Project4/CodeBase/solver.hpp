@@ -12,10 +12,11 @@ class solver
     private:
     // Attributes
     mat m_smatrix;
-    long m_part;
     double m_M;
     double m_E;
     int m_spins;
+    int m_tot_spins;
+    int m_cycles;
     int m_mcs;
     vec m_w;
     vec m_average;
@@ -29,18 +30,19 @@ class solver
 
     public:
     //Initializer
-    void Initialize(int n_spins, int mcs, double init_temp);
+    void Initialize(int n_spins, int mcs, double init_temp, int param_1);
     //Functions
     void Metropolis();
     void MonteCarloV1();
     int periodic(int i, int limit, int add);
     double ran1();
+    void init_output();
     void output();
-    
+
 
 
 
 
 };
 
-#endif // SOLVER_MCINT 
+#endif // SOLVER_MCINT
