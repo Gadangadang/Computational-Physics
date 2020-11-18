@@ -30,6 +30,7 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
     // long m_part = -1; // what does this do ? Example sets this to -1, calls it random??
     m_w = vec(17);
     m_average = vec(5);
+    m_E_vals = vec(m_mcs)
 
     m_smatrix.fill(1);
 // function to initialise energy, magnetization, and populate spin-matrix
@@ -119,12 +120,31 @@ void solver::init_output(){
       ofile << setw(15) << "Number of accepted configs"<< endl;
   ofile.close();
 }
+void solver::find_PE(int N_bars, int stabile_inx){
+  double sum =0.;
+  int N =  m_mcs-stabil_indx;
+  for(int i = stabil_indx; i < m_mcs; i++)
+  {
+    sum += m_E_vals[i];
+  }
+  double avg = sum/((double) N);
+  bars = linspace(0.5*avg,1.5*avg,N_bars)
+  for(int i =0; i<N_bars; i++){
+    int k =0;
+    for(int j=0; j<N; j++){
+      while(k>0){
+      if(m_E_vals)
+    }
+    }
+  }
+}
 void solver::output(){
 // Borrowed most of this. Will probably make changes to the output structure, maybe.
   ofstream ofile;
   ofile.open("MonteCarloRun.txt", fstream::app);
   double norma = 1/((double) (m_cycles));  // divided by total number of cycles
   double Etotal_average = m_average[0]*norma;
+  m_E_vals[m_cycles]= Etotal_average
   double E2total_average = m_average[1]*norma;
   double Mtotal_average = m_average[2]*norma;
   double M2total_average = m_average[3]*norma;
