@@ -78,14 +78,13 @@ void solver::Metropolis(){
             (m_smatrix(iy, periodic(ix,m_spins,-1)) + m_smatrix(periodic(iy,m_spins,-1), ix) +
              m_smatrix(iy, periodic(ix,m_spins,1)) + m_smatrix(periodic(iy,m_spins,1), ix));
         // Here we perform the Metropolis test
-            if (deltaE < 0){
-                m_smatrix(iy, ix) *= -1;
-                m_E += (double) deltaE;
-                m_M += (double) 2*m_smatrix(iy, ix);
-            }
-            else if ( ran1() < m_w(deltaE+8) ) {
+            //if (deltaE < 0){
+              //  m_smatrix(iy, ix) *= -1;
+              //  m_E += (double) deltaE;
+              //  m_M += (double) 2*m_smatrix(iy, ix);
+            //}
+            if ( ran1() < m_w(deltaE+8) ) {
             m_smatrix(iy, ix) *= -1; // flip one spin and accept new spin config
-
         // update energy and magnetization
             m_M += (double) 2*m_smatrix(iy, ix);
             m_E += (double) deltaE;
@@ -132,15 +131,15 @@ void solver::output(){
   double M2total_average = m_average[3]*norma;
   double Mabstotal_average = m_average[4]*norma;
   // all expectation values are per spin, divide by 1/n_spins/n_spins
-  double Evariance = (E2total_average- Etotal_average*Etotal_average)/m_spins/m_spins;
-  double Mvariance = (M2total_average - Mtotal_average*Mtotal_average)/m_spins/m_spins;
+  double Evariance = (E2total_average- Etotal_average*Etotal_average)/m_tot_spins;
+  double Mvariance = (M2total_average - Mtotal_average*Mtotal_average)/m_tot_spins;
   ofile << setiosflags(ios::showpoint | ios::uppercase);
   ofile << setw(15) << setprecision(8) << m_init_temp;
   ofile << setw(15) << setprecision(8) << m_cycles;
-  ofile << setw(15) << setprecision(8) << Etotal_average/m_spins/m_spins;
+  ofile << setw(15) << setprecision(8) << Etotal_average/m_tot_spins;
   ofile << setw(15) << setprecision(8) << Evariance/m_init_temp/m_init_temp;
-  ofile << setw(15) << setprecision(8) << Mtotal_average/m_spins/m_spins;
+  ofile << setw(15) << setprecision(8) << Mtotal_average/m_tot_spins;
   ofile << setw(15) << setprecision(8) << Mvariance/m_init_temp;
-  ofile << setw(15) << setprecision(8) << Mabstotal_average/m_spins/m_spins << endl;
+  ofile << setw(15) << setprecision(8) << Mabstotal_average/m_tot_spins << endl;
   ofile.close();
 }// end output function
