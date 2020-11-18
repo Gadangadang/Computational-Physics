@@ -36,7 +36,7 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
     for(int y =0; y < m_spins; y++) {
     for (int x= 0; x < m_spins; x++){
     if(init_temp<1.5 && param_1!=1){
-      if(ran1()<0.5) m_smatrix *=-1
+      if(ran1()<0.5){m_smatrix *=-1;}
     }
     m_M += (double) m_smatrix(y, x);
     }
@@ -64,10 +64,6 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
 double solver::ran1(){ // can I even call double(long) to specify long storage of type double?;
     double Rnum = dis(generator);
     return Rnum;
-}
-double solver::up_down(double a){
-    if(a<0.5) return -1.;
-    else return 1.;
 }
 
 int solver::periodic(int i, int limit, int add){
