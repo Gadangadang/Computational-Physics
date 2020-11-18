@@ -35,5 +35,8 @@ plt.xlabel('Stuff [K]')
 plt.ylabel('Stuff [J]')
 #plt.tight_layout()
 plt.show()"""
+plt.subplot(1,2,1)
 plt.plot(Mcs_l,E_average)
+plt.subplot(1,2,2)
+plt.plot(Mcs_l,M_abs_tot)
 plt.show()
