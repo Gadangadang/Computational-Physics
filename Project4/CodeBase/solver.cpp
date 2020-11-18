@@ -42,7 +42,7 @@ void solver::Initialize(int n_spins, int mcs, double init_temp){
 // setup initial energy
     for(int y =0; y < m_spins; y++) {
     for (int x= 0; x < m_spins; x++){
-    // kan bytte om denne til å ligge på linje 37 ?? 
+    // kan bytte om denne til å ligge på linje 37 ??
     m_E -= (double) m_smatrix(y, x)*(m_smatrix(periodic(y,m_spins,-1), x) + m_smatrix(y, periodic(x,m_spins,-1)));
     }
     }
@@ -52,7 +52,7 @@ void solver::Initialize(int n_spins, int mcs, double init_temp){
     for( int de =-8; de <= 8; de+=4) m_w[de+8] = exp(-de/init_temp);
 
 
-    
+
 // initialise array for expectation values
     //for( int i = 0; i < 5; i++) m_average[i] = 0.;
 
@@ -78,13 +78,13 @@ void solver::Metropolis(){
              m_smatrix(iy, periodic(ix,m_spins,1)) + m_smatrix(periodic(iy,m_spins,1), ix));
         // Here we perform the Metropolis test
             if (deltaE < 0){
-                m_smatrix(iy, ix) *= -1;     
+                m_smatrix(iy, ix) *= -1;
                 m_E += (double) deltaE;
                 m_M += (double) 2*m_smatrix(iy, ix);
             }
             else if ( ran1() < m_w(deltaE+8) ) {
             m_smatrix(iy, ix) *= -1; // flip one spin and accept new spin config
-            
+
         // update energy and magnetization
             m_M += (double) 2*m_smatrix(iy, ix);
             m_E += (double) deltaE;
@@ -94,7 +94,7 @@ void solver::Metropolis(){
 
 
 
-void solver::MonteCarloV1(){ 
+void solver::MonteCarloV1(){
 
     // Monte Carlo cycles
     for (int cycles = 1; cycles <= m_mcs; cycles++){
@@ -103,16 +103,27 @@ void solver::MonteCarloV1(){
         m_average(0) += m_E; m_average(1) += m_E*m_E;
         m_average(2) += m_M; m_average(3) += m_M*m_M; m_average(4) += fabs(m_M);
     }
-    output();  
+    output();
 
 }// end function MonteCarloV1
 
-
-void solver::output(){ 
-// Borrowed most of this. Will probably make changes to the output structure, maybe. 
+void solver::init_output(){
+  ofstream ofile;
+      ofile.open("MonteCarloRun.txt");
+      ofile << setiosflags(ios::showpoint | ios::uppercase);
+      ofile << setw(15) << "Inital Temp";
+      ofile << setw(15) << "E average";
+      ofile << setw(15) << "E variance";
+      ofile << setw(15) << "M average";
+      ofile << setw(15) << "M variance";
+      ofile << setw(15) << "M abs total" << endl;
+  ofile.close();
+}
+void solver::output(){
+// Borrowed most of this. Will probably make changes to the output structure, maybe.
   ofstream ofile;
   ofile.open("MonteCarloRun.txt", fstream::app);
-  double norma = 1/((double) (m_mcs));  // divided by total number of cycles 
+  double norma = 1/((double) (m_mcs));  // divided by total number of cycles
   double Etotal_average = m_average[0]*norma;
   double E2total_average = m_average[1]*norma;
   double Mtotal_average = m_average[2]*norma;
@@ -130,4 +141,3 @@ void solver::output(){
   ofile << setw(15) << setprecision(8) << Mabstotal_average/m_spins/m_spins << endl;
   ofile.close();
 }// end output function
-

@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 // Available at: https://github.com/CompPhysics/ComputationalPhysics/tree/master/doc/Lectures
 // input needs the following: spins, mcs, initial_temp, final_temp, t_step
 
-// Will need to create an input handling structure to feed Class initialization. 
+// Will need to create an input handling structure to feed Class initialization.
 
 // This section wont be filled until the whole class is finished.
 // Will probably be very small. Solver will be general, and also the scope of questions is limited.
@@ -45,10 +45,13 @@ int main(int argc, char* argv[])
    solver Mcint1;
    clock_t start, finish;
    start = clock();
-   for (double i_temp = init_temp; i_temp <= final_temp; i_temp += t_step){
-   Mcint1.Initialize(spins, mcs, i_temp);
+   //for (double i_temp = init_temp; i_temp <= final_temp; i_temp += t_step){
+   //Mcint1.Initialize(spins, mcs, i_temp);
+   //Mcint1.MonteCarloV1();
+   //}
+   double T = 1;
+   Mcint1.Initialize(2, mcs,T);
    Mcint1.MonteCarloV1();
-   }
    finish = clock();
    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
    cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
