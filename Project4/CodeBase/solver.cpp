@@ -31,11 +31,13 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
     m_w = vec(17);
     m_average = vec(5);
 
-
+    if(init_temp<1.5 && param_1==1)m_smatrix.fill(1);
 // function to initialise energy, magnetization, and populate spin-matrix
     for(int y =0; y < m_spins; y++) {
     for (int x= 0; x < m_spins; x++){
-    if (init_temp < 1.5 && param_1 ==1) m_smatrix(y, x) = 1; // spin orientation for the ground state
+    if(init_temp<1.5 && param_1!=1){
+      if(ran1()<0.5) m_smatrix *=-1
+    }
     m_M += (double) m_smatrix(y, x);
     }
     }
@@ -63,6 +65,10 @@ double solver::ran1(){ // can I even call double(long) to specify long storage o
     double Rnum = dis(generator);
     return Rnum;
 }
+double solver::up_down(double a){
+    if(a<0.5) return -1.;
+    else return 1.;
+}
 
 int solver::periodic(int i, int limit, int add){
     //  Algorithm to keep the iteration within the lattice by detecting the boundary.
@@ -77,12 +83,6 @@ void solver::Metropolis(){
             int deltaE = 2*m_smatrix(iy, ix)*
             (m_smatrix(iy, periodic(ix,m_spins,-1)) + m_smatrix(periodic(iy,m_spins,-1), ix) +
              m_smatrix(iy, periodic(ix,m_spins,1)) + m_smatrix(periodic(iy,m_spins,1), ix));
-        // Here we perform the Metropolis test
-            //if (deltaE < 0){
-              //  m_smatrix(iy, ix) *= -1;
-              //  m_E += (double) deltaE;
-              //  m_M += (double) 2*m_smatrix(iy, ix);
-            //}
             if ( ran1() < m_w(deltaE+8) ) {
             m_smatrix(iy, ix) *= -1; // flip one spin and accept new spin config
         // update energy and magnetization
@@ -137,7 +137,7 @@ void solver::output(){
   ofile << setw(15) << setprecision(8) << m_init_temp;
   ofile << setw(15) << setprecision(8) << m_cycles;
   ofile << setw(15) << setprecision(8) << Etotal_average/m_tot_spins;
-  ofile << setw(15) << setprecision(8) << Evariance/m_init_temp/m_init_temp;
+  ofile << setw(15) << setprecision(8) << Evariance/m_init_temp_sq;
   ofile << setw(15) << setprecision(8) << Mtotal_average/m_tot_spins;
   ofile << setw(15) << setprecision(8) << Mvariance/m_init_temp;
   ofile << setw(15) << setprecision(8) << Mabstotal_average/m_tot_spins << endl;

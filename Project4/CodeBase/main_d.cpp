@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
    double L = 20.;
    double T = 1.;
    int mcs_max = 1e5;
-   int param_1 = 1;
+   int param_1 = 0.;
    Mcint1.Initialize(L, mcs_max,T,param_1);
    Mcint1.MonteCarloV1();
    finish = clock();

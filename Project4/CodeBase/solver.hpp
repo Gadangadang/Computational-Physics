@@ -21,6 +21,7 @@ class solver
     vec m_w;
     vec m_average;
     double m_init_temp;
+    double m_init_temp_sq;
 
     mt19937_64 generator;
     uniform_real_distribution<double> dis;
@@ -34,6 +35,7 @@ class solver
     //Functions
     void Metropolis();
     void MonteCarloV1();
+    double up_down(double a);
     int periodic(int i, int limit, int add);
     double ran1();
     void init_output();
