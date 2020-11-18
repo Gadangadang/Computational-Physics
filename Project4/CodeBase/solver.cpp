@@ -7,12 +7,13 @@
 #include <fstream>
 #include <iomanip>
 #include <string>
+#include "omp.h"
 #include "time.h"
 #include <stdio.h>
 #include <tuple>
 #include <cmath>
 #include <stdlib.h>
-
+#define NUM_THREADS 8 // set number of threads from cpu
 // polluting the namespaces
 using namespace arma;
 using namespace std;
@@ -29,9 +30,17 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
     m_init_temp = init_temp;
     // long m_part = -1; // what does this do ? Example sets this to -1, calls it random??
     m_w = vec(17);
-    m_average = vec(5);
-
+    m_average = zeros<vec>(5);
     m_smatrix.fill(1);
+
+// openMP initial setup
+    omp_set_num_threads(NUM_THREADS);
+    int thread_num = omp_get_max_threads ();
+    cout << "  The number of processors available = " << omp_get_num_procs () << endl ;
+    cout << "  The number of threads available    = " << thread_num <<  endl;
+
+
+
 // function to initialise energy, magnetization, and populate spin-matrix
     for(int y =0; y < m_spins; y++) {
     for (int x= 0; x < m_spins; x++){
@@ -61,6 +70,7 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
 
 }// end function initialise
 
+
 double solver::ran1(){ // can I even call double(long) to specify long storage of type double?;
     double Rnum = dis(generator);
     return Rnum;
@@ -73,6 +83,7 @@ int solver::periodic(int i, int limit, int add){
 void solver::Metropolis(){
 
 // loop over all spins
+            # pragma omp for 
             for(int spin =0; spin < m_tot_spins; spin++){
             int ix = (int) (ran1()*(double)m_spins);
             int iy = (int) (ran1()*(double)m_spins);
@@ -92,8 +103,10 @@ void solver::Metropolis(){
 
 
 void solver::MonteCarloV1(){
-
+# pragma omp parallel default(shared)  reduction(+:m_average)
+    {
     // Monte Carlo cycles
+    # pragma omp for
     for (int cycles = 1; cycles <= m_mcs; cycles++){
         m_counter =0;
         Metropolis();
@@ -102,6 +115,7 @@ void solver::MonteCarloV1(){
         m_average(2) += m_M; m_average(3) += m_M*m_M; m_average(4) += fabs(m_M);
         m_cycles = cycles;
         output();
+    }
     }
 }// end function MonteCarloV1
 
