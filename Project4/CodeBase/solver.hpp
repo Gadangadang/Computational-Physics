@@ -22,7 +22,7 @@ class solver
     vec m_average;
     double m_init_temp;
     double m_init_temp_sq;
-
+    int m_counter;
     mt19937_64 generator;
     uniform_real_distribution<double> dis;
 

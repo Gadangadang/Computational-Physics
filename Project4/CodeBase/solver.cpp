@@ -81,9 +81,10 @@ void solver::Metropolis(){
              m_smatrix(iy, periodic(ix,m_spins,1)) + m_smatrix(periodic(iy,m_spins,1), ix));
             if ( ran1() < m_w(deltaE+8) ) {
             m_smatrix(iy, ix) *= -1; // flip one spin and accept new spin config
-        // update energy and magnetization
+            // update energy and magnetization
             m_M += (double) 2*m_smatrix(iy, ix);
             m_E += (double) deltaE;
+            m_counter++;
             }
 }// End of the Metropolis function.
 }
@@ -94,6 +95,7 @@ void solver::MonteCarloV1(){
 
     // Monte Carlo cycles
     for (int cycles = 1; cycles <= m_mcs; cycles++){
+        m_counter =0;
         Metropolis();
     // update expectation values
         m_average(0) += m_E; m_average(1) += m_E*m_E;
@@ -113,7 +115,8 @@ void solver::init_output(){
       ofile << setw(15) << "E variance";
       ofile << setw(15) << "M average";
       ofile << setw(15) << "M variance";
-      ofile << setw(15) << "M abs total" << endl;
+      ofile << setw(15) << "M abs total";
+      ofile << setw(15) << "Number of accepted configs"<< endl;
   ofile.close();
 }
 void solver::output(){
@@ -136,6 +139,7 @@ void solver::output(){
   ofile << setw(15) << setprecision(8) << Evariance/m_init_temp_sq;
   ofile << setw(15) << setprecision(8) << Mtotal_average/m_tot_spins;
   ofile << setw(15) << setprecision(8) << Mvariance/m_init_temp;
-  ofile << setw(15) << setprecision(8) << Mabstotal_average/m_tot_spins << endl;
+  ofile << setw(15) << setprecision(8) << Mabstotal_average/m_tot_spins;
+  ofile << setw(15) << setprecision(8) << m_counter<<endl;
   ofile.close();
 }// end output function

@@ -23,9 +23,9 @@ int main(int argc, char* argv[])
    clock_t start, finish;
    start = clock();
    double L = 20.;
-   double T = 2.4;
+   double T = 1;
    int mcs_max = 2e4;
-   int param_1 = 0.;
+   int param_1 = 1.;
    Mcint1.Initialize(L, mcs_max,T,param_1);
    Mcint1.MonteCarloV1();
    finish = clock();

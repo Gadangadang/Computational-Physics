@@ -10,7 +10,7 @@ E_variance = []
 M_average = []
 M_variance = []
 M_abs_tot = []
-
+counter = []
 data.readline().split("      ")[0:5] #Discard first line
 for line in data:
         x1 = float(line.split()[0])
@@ -20,6 +20,7 @@ for line in data:
         x5 = float(line.split()[4])
         x6 = float(line.split()[5])
         x7 = float(line.split()[6])
+        x8 = float(line.split()[7])
         I_temp.append(x1)
         Mcs_l.append(x2)
         E_average.append(x3)
@@ -27,7 +28,7 @@ for line in data:
         M_average.append(x5)
         M_variance.append(x6)
         M_abs_tot.append(x7)
-
+        counter.append(x8)
 # Should probably amend this..
 """plt.title("Stuff [Plot]")
 plt.plot(I_temp, M_abs_tot)
@@ -35,6 +36,7 @@ plt.xlabel('Stuff [K]')
 plt.ylabel('Stuff [J]')
 #plt.tight_layout()
 plt.show()"""
+print(sum(counter))
 plt.subplot(1,2,1)
 plt.plot(Mcs_l,E_average)
 plt.xlabel("Time[MonteCarlo cycles]")
@@ -44,4 +46,6 @@ plt.plot(Mcs_l,M_abs_tot)
 plt.xlabel("Time[MonteCarlo cycles]")
 plt.ylabel("Magnetisaton")
 plt.tight_layout()
+plt.show()
+plt.plot(Mcs_l,counter)
 plt.show()
