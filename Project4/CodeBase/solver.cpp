@@ -124,7 +124,7 @@ void solver::output(){
 // Borrowed most of this. Will probably make changes to the output structure, maybe.
   ofstream ofile;
   ofile.open("MonteCarloRun.txt", fstream::app);
-  double norma = 1/((double) (m_mcs));  // divided by total number of cycles
+  double norma = 1/((double) (m_cycles));  // divided by total number of cycles
   double Etotal_average = m_average[0]*norma;
   double E2total_average = m_average[1]*norma;
   double Mtotal_average = m_average[2]*norma;
