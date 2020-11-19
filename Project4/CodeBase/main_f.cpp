@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 // Available at: https://github.com/CompPhysics/ComputationalPhysics/tree/master/doc/Lectures
 // input needs the following: spins, mcs, initial_temp, final_temp, t_step
 
-// Will need to create an input handling structure to feed Class initialization. 
+// Will need to create an input handling structure to feed Class initialization.
 
 // This section wont be filled until the whole class is finished.
 // Will probably be very small. Solver will be general, and also the scope of questions is limited.
@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
    clock_t start, finish;
    start = clock();
    for (double i_temp = init_temp; i_temp <= final_temp; i_temp += t_step){
-   Mcint1.Initialize(spins, mcs, i_temp, param);
+   Mcint1.Initialize(spins, mcs, i_temp, param, 0);
    Mcint1.MonteCarloV1();
    }
    finish = clock();
