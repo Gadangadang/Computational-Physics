@@ -33,35 +33,42 @@ int main(int argc, char* argv[])
    double final_temp = atof(argv[4]);
    double t_step = atof(argv[5]);
    int param = 0;
-   solver Mcint1;
+
+   int iter = int( (final_temp - init_temp) / t_step );
 
 
    // Parallel thread region
 
-   omp_set_num_threads(4);
-   double wtime = omp_get_wtime ( );
+   omp_set_num_threads(100);
+   // thread count analysis
+   double wtime = omp_get_wtime();
    #pragma omp parallel for
-   for (double i_temp = init_temp; i_temp <= final_temp; i_temp += t_step){
-   Mcint1.Initialize(spins, mcs, i_temp, param);
-   Mcint1.MonteCarloV1();
-   }
-
-   double finish = omp_get_wtime() - wtime; ;
-   cout << setprecision(10) << "Time used  for computing (Multithread) = " << finish  << " Seconds"<<endl;
-
-   
-   // single thread region
-   clock_t start, finish;
-   start = clock();
-
-   for (double i_temp = init_temp; i_temp <= final_temp; i_temp += t_step){
+   for (int i = 0; i <= iter; i++){
+   solver Mcint1;
+   Mcint1.init_output();
+   double i_temp = (double) init_temp + i*t_step;
    Mcint1.Initialize(spins, mcs, i_temp, param, 0);
-   Mcint1.MonteCarloV1();
+   cout << omp_get_num_threads() << endl;
+   Mcint1.MonteCarloV2();
    }
 
-   finish = clock();
-   double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
-   cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
+   double wtime2 = omp_get_wtime() - wtime; ;
+   cout << setprecision(10) << "Time used  for computing (Multithread) = " << wtime2  << " Seconds"<<endl;
+
+
+   // single thread region
+   solver Mcint1;
+   Mcint1.init_output();
+   double wtime3 = omp_get_wtime();
+   for (int i = 0; i <= iter; i++){
+   double i_temp = (double) init_temp + i*t_step;
+   cout << i_temp << endl;
+   Mcint1.Initialize(spins, mcs, i_temp, param, 0);
+   Mcint1.MonteCarloV2();
+   }
+
+   double wtime4 = omp_get_wtime() - wtime3;
+   cout << setprecision(10) << "Time used  for computing (single thread) = " << wtime4  << " Seconds"<<endl;
 
 return 0;
 }

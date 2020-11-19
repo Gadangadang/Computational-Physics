@@ -9,6 +9,6 @@ execute:
 	#CodeBase/./main_c.x 100000 10 1.0 2.5 0.05
 	#CodeBase/./main_d.x
 	#CodeBase/./main_e.x
-	CodeBase/./main_f.x 100000 40 2.0 2.5 0.05
+	CodeBase/./main_f.x 10000 40 2.0 2.5 0.05
 	#python3 CodeBase/Plotte_code_MB.py
 	#python3 CodeBase/plott_code_histo.py
