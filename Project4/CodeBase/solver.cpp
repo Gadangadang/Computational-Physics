@@ -156,19 +156,17 @@ void solver::find_PE(int N_bars, int stabile_indx){
   ofile.close();
 }
 
-double TC_calc(double &Tc_L, double Li){
+double solver::TC_calc(double &Tc_L, double Li){
 
   double TC_inf = Tc_L - pow(Li,-1);
   return TC_inf;
 }
 
-void find_tc_with_read(double &Tc_L){
+void solver::find_tc_with_read(double &Tc_L){
 
-  char *itemp = nullptr; char *mcc = nullptr; char *eav = nullptr;
-  char *eva = nullptr; char *mav = nullptr; char *mva = nullptr;
-  char *mab = nullptr; char *nac = nullptr;
+
   double *inittemp, *mc_cycles, *Eaverage, *Evariance;
-  double *Maverage, *Mvariance, *Mabs;
+  double *Maverage, *Mvariance, *Mabs, *noaccon;
   const char* vals = "MonteCarloRun.txt";
   FILE *fp_init = fopen(vals, "r"); //Open file to read, specified by "r".
 
@@ -185,14 +183,16 @@ void find_tc_with_read(double &Tc_L){
 
   for(int i = 0; i<m_mcs; i++){
     if(i == 0){
-      fscanf(fp_init,"%s %s %s %s %s %s %s %s", &itemp, &mcc, &eav, &eva,&mav, &mva, &mab, &nac);
+      fscanf(fp_init, "%*[^\n]\n");
     }
     fscanf(fp_init,"%lf %lf %lf %lf %lf %lf %lf %lf", &inittemp[i], &mc_cycles[i], &Eaverage[i], &Evariance[i],&Maverage[i], &Mvariance[i], &Mabs[i], &noaccon[i]);
-  }
+
     if (fabs(Maverage[i]) < tol){
       Tc_L = inittemp[i];
       break;
     }
+  }
+  fclose(fp_init);
 }
 
 void solver::output(){
