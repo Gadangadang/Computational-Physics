@@ -19,23 +19,39 @@ using namespace std;
 int main(int argc, char* argv[])
 {
    solver Mcint1;
+
    Mcint1.init_output();
+
    clock_t start, finish;
-   start = clock();
+
+
    double L1 = 20.; double L2 = 40.; double L3 = 60.; double L4 = 80.;
-   double T = 1;
-   int mcs_max = 2e4;
-   int param_1 = 1.;
+
+   int spins = L1;
+
+   int mcs = 1e5;
+   double init_temp = 1;
+   double final_temp = 4.4;
+   double t_step = 0.05;
+   int param = 0;
    double Tc_L;
+   int size = (int) (final_temp - init_temp)/t_step;
+   
 
-   Mcint1.Initialize(L, mcs_max,T,param_1);
-   Mcint1.MonteCarloV1();
-   finish = clock();
-   double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
-   cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
+   for (double i_temp = init_temp; i_temp <= final_temp; i_temp += t_step){
+     start = clock();
+     Mcint1.Initialize(spins, mcs, i_temp, param,size);
+     Mcint1.MonteCarloV2();
 
-   find_tc_with_read(double &Tc_L);
-   double Tc_Linf = TC_calc(Tc_L, L1);
+     finish = clock();
+     double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
+     cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
+
+   }
+
+   Mcint1.find_tc_with_read(Tc_L);
+   double Tc_Linf = Mcint1.TC_calc(Tc_L, L1);
+   cout << "Tc for L = infty is " << Tc_Linf << endl;
 
 
 

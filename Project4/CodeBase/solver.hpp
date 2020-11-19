@@ -19,6 +19,7 @@ class solver
     int m_cycles;
     int m_mcs;
     vec m_w;
+    int m_size;
     vec m_average;
     double m_init_temp;
     double m_init_temp_sq;
@@ -32,7 +33,7 @@ class solver
 
     public:
     //Initializer
-    void Initialize(int n_spins, int mcs, double init_temp, int param_1);
+    void Initialize(int n_spins, int mcs, double init_temp, int param_1, int size);
     //Functions
     void Metropolis();
     void MonteCarloV1();
@@ -45,6 +46,7 @@ class solver
     void find_PE(int N_bars, int stabil_indx);
     double TC_calc(double &Tc_L, double Li);
     void find_tc_with_read(double &Tc_L);
+  
 
 
 

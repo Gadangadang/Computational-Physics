@@ -18,7 +18,7 @@ using namespace arma;
 using namespace std;
 
 
-void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
+void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1, int size){
 // Initialize internal Class variables
     m_smatrix = zeros<mat>(n_spins, n_spins);
     m_spins = n_spins;
@@ -27,6 +27,7 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
     m_M = 0;
     m_E = 0;
     m_init_temp = init_temp;
+    m_size = size;
     // long m_part = -1; // what does this do ? Example sets this to -1, calls it random??
     m_w = vec(17);
     m_average = vec(5);
@@ -184,19 +185,35 @@ void solver::find_tc_with_read(double &Tc_L){
   double *Maverage, *Mvariance, *Mabs, *noaccon;
   const char* vals = "MonteCarloRun.txt";
   FILE *fp_init = fopen(vals, "r"); //Open file to read, specified by "r".
-
-  inittemp = new double[m_mcs];
-  mc_cycles = new double[m_mcs];
-  Eaverage = new double[m_mcs];
-  Evariance = new double[m_mcs];
-  Maverage = new double[m_mcs];
-  Mvariance = new double[m_mcs];
-  Mabs = new double[m_mcs];
-  noaccon = new double[m_mcs];
   double tol = 1e-4;
 
 
-  for(int i = 0; i<m_mcs; i++){
+  int numb = m_mcs;
+  if (m_size == 0){
+
+    inittemp = new double[m_mcs];
+    mc_cycles = new double[m_mcs];
+    Eaverage = new double[m_mcs];
+    Evariance = new double[m_mcs];
+    Maverage = new double[m_mcs];
+    Mvariance = new double[m_mcs];
+    Mabs = new double[m_mcs];
+    noaccon = new double[m_mcs];
+  }
+  else {
+    numb = m_size;
+    inittemp = new double[m_size];
+    mc_cycles = new double[m_size];
+    Eaverage = new double[m_size];
+    Evariance = new double[m_size];
+    Maverage = new double[m_size];
+    Mvariance = new double[m_size];
+    Mabs = new double[m_size];
+    noaccon = new double[m_size];
+  }
+
+
+  for(int i = 0; i < numb; i++){
     if(i == 0){
       fscanf(fp_init, "%*[^\n]\n");
     }
