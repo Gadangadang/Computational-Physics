@@ -30,6 +30,7 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
     // long m_part = -1; // what does this do ? Example sets this to -1, calls it random??
     m_w = vec(17);
     m_average = vec(5);
+    m_E_vals = vec(m_mcs);
 
     m_smatrix.fill(1);
 // function to initialise energy, magnetization, and populate spin-matrix
@@ -119,12 +120,48 @@ void solver::init_output(){
       ofile << setw(15) << "Number of accepted configs"<< endl;
   ofile.close();
 }
+
+void solver::find_PE(int N_bars, int stabile_indx){
+  double sum =0.;
+  int N =  m_mcs-stabile_indx;
+  vec E_stabil=vec(N);
+  for(int i = 0; i < N; i++){
+    sum += m_E_vals[stabile_indx +i];
+    E_stabil[i]= m_E_vals[stabile_indx+i];
+  }
+  double avg = sum/((double) N);
+  vec bars = linspace(E_stabil.min(),E_stabil.max(),N_bars);
+  cout<<avg<<endl;
+  vec counter;
+  counter = vec(N_bars);
+  for(int j=stabile_indx; j<m_mcs; j++){
+    int k=1;
+    while(k>0){
+    for(int i =0; i<N_bars-1; i++){
+      //cout << m_E_vals[j]<< " "<< bars[i]<<" "<< bars[i+1]<<endl;
+      if(m_E_vals[j]>=bars[i] && m_E_vals[j]<=bars[i+1]){
+      counter[i]++;
+      k=0;
+    }
+    }
+    }
+  }
+  ofstream ofile;
+  ofile.open("PE.txt");
+  ofile << setiosflags(ios::showpoint | ios::uppercase);
+  for(int i=0;i<N_bars; i++){
+    ofile << setw(15) << setprecision(8) << counter[i];
+    ofile << setw(15) << setprecision(8) << bars[i]<<endl;
+  }
+  ofile.close();
+}
 void solver::output(){
 // Borrowed most of this. Will probably make changes to the output structure, maybe.
   ofstream ofile;
   ofile.open("MonteCarloRun.txt", fstream::app);
   double norma = 1/((double) (m_cycles));  // divided by total number of cycles
   double Etotal_average = m_average[0]*norma;
+  m_E_vals[m_cycles]= Etotal_average/m_tot_spins;
   double E2total_average = m_average[1]*norma;
   double Mtotal_average = m_average[2]*norma;
   double M2total_average = m_average[3]*norma;

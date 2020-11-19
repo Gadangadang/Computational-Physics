@@ -25,6 +25,7 @@ class solver
     int m_counter;
     mt19937_64 generator;
     uniform_real_distribution<double> dis;
+    vec m_E_vals;
 
 
 
@@ -40,7 +41,7 @@ class solver
     double ran1();
     void init_output();
     void output();
-
+    void find_PE(int N_bars, int stabil_indx);
 
 
 
