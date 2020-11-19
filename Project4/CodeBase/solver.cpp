@@ -119,6 +119,46 @@ void solver::init_output(){
       ofile << setw(15) << "Number of accepted configs"<< endl;
   ofile.close();
 }
+
+double TC_calc(double &Tc_L, double Li){
+
+  double TC_inf = Tc_L - pow(Li,-1);
+  return TC_inf;
+}
+
+void find_tc_with_read(double &Tc_L){
+
+  char *itemp = nullptr; char *mcc = nullptr; char *eav = nullptr;
+  char *eva = nullptr; char *mav = nullptr; char *mva = nullptr;
+  char *mab = nullptr; char *nac = nullptr;
+  double *inittemp, *mc_cycles, *Eaverage, *Evariance;
+  double *Maverage, *Mvariance, *Mabs;
+  const char* vals = "MonteCarloRun.txt";
+  FILE *fp_init = fopen(vals, "r"); //Open file to read, specified by "r".
+
+  inittemp = new double[m_mcs];
+  mc_cycles = new double[m_mcs];
+  Eaverage = new double[m_mcs];
+  Evariance = new double[m_mcs];
+  Maverage = new double[m_mcs];
+  Mvariance = new double[m_mcs];
+  Mabs = new double[m_mcs];
+  noaccon = new double[m_mcs];
+  double tol = 1e-4;
+
+
+  for(int i = 0; i<m_mcs; i++){
+    if(i == 0){
+      fscanf(fp_init,"%s %s %s %s %s %s %s %s", &itemp, &mcc, &eav, &eva,&mav, &mva, &mab, &nac);
+    }
+    fscanf(fp_init,"%lf %lf %lf %lf %lf %lf %lf %lf", &inittemp[i], &mc_cycles[i], &Eaverage[i], &Evariance[i],&Maverage[i], &Mvariance[i], &Mabs[i], &noaccon[i]);
+  }
+    if (fabs(Maverage[i]) < tol){
+      Tc_L = inittemp[i];
+      break;
+    }
+}
+
 void solver::output(){
 // Borrowed most of this. Will probably make changes to the output structure, maybe.
   ofstream ofile;

@@ -1,0 +1,54 @@
+#include <iostream>
+#include "armadillo"
+#include "solver.hpp"
+#include <new>
+#include <cstdio>
+#include <cstdlib>
+#include <fstream>
+#include <iomanip>
+#include <string>
+#include "time.h"
+#include <stdio.h>
+#include <tuple>
+#include <cmath>
+// polluting the namespaces
+using namespace arma;
+using namespace std;
+
+
+int main(int argc, char* argv[])
+{
+   solver Mcint1;
+   Mcint1.init_output();
+   clock_t start, finish;
+   start = clock();
+   double L1 = 20.; double L2 = 40.; double L3 = 60.; double L4 = 80.;
+   double T = 1;
+   int mcs_max = 2e4;
+   int param_1 = 1.;
+   double Tc_L;
+
+   Mcint1.Initialize(L, mcs_max,T,param_1);
+   Mcint1.MonteCarloV1();
+   finish = clock();
+   double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
+   cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
+
+   find_tc_with_read(double &Tc_L);
+   double Tc_Linf = TC_calc(Tc_L, L1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+return 0;
+}

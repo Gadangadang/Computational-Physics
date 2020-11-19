@@ -40,6 +40,8 @@ class solver
     double ran1();
     void init_output();
     void output();
+    double TC_calc(double &Tc_L, double Li);
+    void find_tc_with_read(double &Tc_L);
 
 
 
