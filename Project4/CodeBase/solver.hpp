@@ -36,6 +36,7 @@ class solver
     //Functions
     void Metropolis();
     void MonteCarloV1();
+    void MonteCarloV2();
     double up_down(double a);
     int periodic(int i, int limit, int add);
     double ran1();

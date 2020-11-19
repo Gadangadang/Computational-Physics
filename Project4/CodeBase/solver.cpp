@@ -106,6 +106,21 @@ void solver::MonteCarloV1(){
     }
 }// end function MonteCarloV1
 
+void solver::MonteCarloV2(){
+
+    // Monte Carlo cycles
+    for (int cycles = 1; cycles <= m_mcs; cycles++){
+        m_counter =0;
+        Metropolis();
+    // update expectation values
+        m_average(0) += m_E; m_average(1) += m_E*m_E;
+        m_average(2) += m_M; m_average(3) += m_M*m_M; m_average(4) += fabs(m_M);
+        m_cycles = cycles;
+
+    }
+    output();
+}// end function MonteCarloV1
+
 void solver::init_output(){
   ofstream ofile;
       ofile.open("MonteCarloRun.txt");
