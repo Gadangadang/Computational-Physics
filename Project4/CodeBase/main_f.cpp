@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iomanip>
 #include <string>
+#include <omp.h>
 #include "time.h"
 #include <stdio.h>
 #include <tuple>
@@ -33,12 +34,31 @@ int main(int argc, char* argv[])
    double t_step = atof(argv[5]);
    int param = 0;
    solver Mcint1;
-   clock_t start, finish;
-   start = clock();
+
+
+   // Parallel thread region
+
+   omp_set_num_threads(4);
+   double wtime = omp_get_wtime ( );
+   #pragma omp parallel for
    for (double i_temp = init_temp; i_temp <= final_temp; i_temp += t_step){
    Mcint1.Initialize(spins, mcs, i_temp, param);
    Mcint1.MonteCarloV1();
    }
+
+   double finish = omp_get_wtime() - wtime; ;
+   cout << setprecision(10) << "Time used  for computing (Multithread) = " << finish  << " Seconds"<<endl;
+
+   
+   // single thread region
+   clock_t start, finish;
+   start = clock();
+
+   for (double i_temp = init_temp; i_temp <= final_temp; i_temp += t_step){
+   Mcint1.Initialize(spins, mcs, i_temp, param);
+   Mcint1.MonteCarloV1();
+   }
+
    finish = clock();
    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
    cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
