@@ -1,16 +1,13 @@
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
 import numpy as np
-data = open('PE.txt', 'r')
+data = open('E.txt', 'r')
 counter=[]
 Energy= []
 
 for line in data:
     x1 = float(line.split()[0])
-    x2 = float(line.split()[1])
-    counter.append(x1)
-    Energy.append(x2)
-x =zip(counter,Energy)
+    Energy.append(x1)
 num_bins = len(Energy)
-plt.bar(Energy,counter,width=abs(Energy[1]-Energy[2]))
+n, bins, patches = plt.hist(Energy, 800, density=True, facecolor='g')
 plt.show()

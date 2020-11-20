@@ -23,14 +23,15 @@ int main(int argc, char* argv[])
    clock_t start, finish;
    start = clock();
    double L = 20.;
-   double T = 4.4;
+   double T = 2.4;
    int mcs_max = 1e5;
-   int param_1 = 1.;
+   int param_1 = 0.;
    Mcint1.Initialize(L, mcs_max,T,param_1);
    Mcint1.MonteCarloV1();
    finish = clock();
    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
    cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
-   Mcint1.find_PE(20, 40000);
+   //Mcint1.find_PE(20, 80000);
+   Mcint1.print_E_av(7e4);
 return 0;
 }

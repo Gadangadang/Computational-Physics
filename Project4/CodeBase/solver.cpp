@@ -93,12 +93,12 @@ void solver::Metropolis(){
 
 
 void solver::MonteCarloV1(){
-
+        m_counter =0;
     // Monte Carlo cycles
     for (int cycles = 1; cycles <= m_mcs; cycles++){
-        m_counter =0;
         Metropolis();
     // update expectation values
+        m_E_vals[cycles] = m_E;
         m_average(0) += m_E; m_average(1) += m_E*m_E;
         m_average(2) += m_M; m_average(3) += m_M*m_M; m_average(4) += fabs(m_M);
         m_cycles = cycles;
@@ -130,15 +130,14 @@ void solver::find_PE(int N_bars, int stabile_indx){
     E_stabil[i]= m_E_vals[stabile_indx+i];
   }
   double avg = sum/((double) N);
+  cout << avg<< endl;
   vec bars = linspace(E_stabil.min(),E_stabil.max(),N_bars);
-  cout<<avg<<endl;
   vec counter;
-  counter = vec(N_bars);
+  counter = vec(N_bars).fill(0.);
   for(int j=stabile_indx; j<m_mcs; j++){
     int k=1;
     while(k>0){
     for(int i =0; i<N_bars-1; i++){
-      //cout << m_E_vals[j]<< " "<< bars[i]<<" "<< bars[i+1]<<endl;
       if(m_E_vals[j]>=bars[i] && m_E_vals[j]<=bars[i+1]){
       counter[i]++;
       k=0;
@@ -146,6 +145,7 @@ void solver::find_PE(int N_bars, int stabile_indx){
     }
     }
   }
+  for(int i =0; i<N_bars;i++){cout<<counter[i]<<endl;}
   ofstream ofile;
   ofile.open("PE.txt");
   ofile << setiosflags(ios::showpoint | ios::uppercase);
@@ -155,13 +155,21 @@ void solver::find_PE(int N_bars, int stabile_indx){
   }
   ofile.close();
 }
+void solver::print_E_av(int stabile_indx){
+  ofstream ofile;
+  ofile.open("E.txt");
+  ofile << setiosflags(ios::showpoint | ios::uppercase);
+  for(int i=stabile_indx+1;i<m_mcs; i++){
+    ofile << setw(15) << setprecision(8) << m_E_vals[i]<<endl;
+  }
+  ofile.close();
+}
 void solver::output(){
 // Borrowed most of this. Will probably make changes to the output structure, maybe.
   ofstream ofile;
   ofile.open("MonteCarloRun.txt", fstream::app);
   double norma = 1/((double) (m_cycles));  // divided by total number of cycles
   double Etotal_average = m_average[0]*norma;
-  m_E_vals[m_cycles]= Etotal_average/m_tot_spins;
   double E2total_average = m_average[1]*norma;
   double Mtotal_average = m_average[2]*norma;
   double M2total_average = m_average[3]*norma;

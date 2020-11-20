@@ -42,7 +42,7 @@ class solver
     void init_output();
     void output();
     void find_PE(int N_bars, int stabil_indx);
-
+    void print_E_av(int stabile_indx);
 
 
 
