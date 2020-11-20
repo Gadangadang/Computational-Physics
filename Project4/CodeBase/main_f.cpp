@@ -36,14 +36,21 @@ int main(int argc, char* argv[])
 
    int iter = int( (final_temp - init_temp) / t_step );
    string name[4] = {"MCL40.txt", "MCL60.txt", "MCL80.txt", "MCL100.txt"};
+   solver Mcint1;
+   Mcint1.init_output("MCL40.txt");
+   Mcint1.init_output("MCL60.txt");
+   Mcint1.init_output("MCL80.txt");
+   Mcint1.init_output("MCL100.txt");
+
    int p = 0;
    // Parallel thread region
 
    omp_set_num_threads(100); // this number needs to be optimized for individual pc's !
    // thread count analysis
    double wtime = omp_get_wtime();
-   #pragma omp parallel for
+  // #pragma omp parallel for
    for(int L = 40; L < 101; L += 20){
+      #pragma omp parallel for
       for (int i = 0; i <= iter; i++){
       solver Mcint1;
       string filename = name[p];
