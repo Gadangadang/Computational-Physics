@@ -85,8 +85,9 @@ void solver::Metropolis(){
 
 
 
-void solver::MonteCarloV1(){
+void solver::MonteCarloV1(string filename){
         m_counter =0;
+        m_filename = filename;
     // Monte Carlo cycles
     for (int cycles = 1; cycles <= m_mcs; cycles++){
         Metropolis();
@@ -100,7 +101,6 @@ void solver::MonteCarloV1(){
 }// end function MonteCarloV1
 
 void solver::MonteCarloV2(){
-
     // Monte Carlo cycles
     for (int cycles = 1; cycles <= m_mcs; cycles++){
         m_counter =0;
@@ -116,7 +116,7 @@ void solver::MonteCarloV2(){
 
 void solver::init_output(){
   ofstream ofile;
-      ofile.open("MonteCarloRun.txt");
+      ofile.open(m_filename);
       ofile << setiosflags(ios::showpoint | ios::uppercase);
       ofile << setw(15) << "Inital Temp";
       ofile << setw(15) << "MC_cycles";
@@ -175,7 +175,7 @@ void solver::print_E_av(int stabile_indx){
 void solver::output(){
 // Borrowed most of this. Will probably make changes to the output structure, maybe.
   ofstream ofile;
-  ofile.open("MonteCarloRun.txt", fstream::app);
+  ofile.open(m_filename, fstream::app);
   double norma = 1/((double) (m_cycles));  // divided by total number of cycles
   double Etotal_average = m_average[0]*norma;
   double E2total_average = m_average[1]*norma;
