@@ -40,7 +40,7 @@ class solver
     //Functions
     void Metropolis();
     void MonteCarloV1();
-    void MonteCarloV2();
+    void MonteCarloV2(string filename);
     double up_down(double a);
     int periodic(int i, int limit, int add);
     double ran1();

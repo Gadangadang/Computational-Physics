@@ -97,8 +97,9 @@ void solver::MonteCarloV1(){
     }
 }// end function MonteCarloV1
 
-void solver::MonteCarloV2(){
+void solver::MonteCarloV2(string filename){
     // Monte Carlo cycles
+    m_filename = filename;
     for (int cycles = 1; cycles <= m_mcs; cycles++){
         m_counter =0;
         Metropolis();
@@ -172,8 +173,8 @@ void solver::tcoutput(string filename,double T){
   double Evariance = (E2total_average- Etotal_average*Etotal_average)/m_tot_spins;
   double Mvariance = (M2total_average - Mtotal_average*Mtotal_average)/m_tot_spins;
 
-  double cv = Evariance/(kb*T*T);
-  double xi = Mvariance/(kb*T*T);
+  double cv = Evariance/(T*T);
+  double xi = Mvariance/(T*T);
   ofile << setiosflags(ios::showpoint | ios::uppercase);
   ofile << setw(15) << setprecision(8) << cv;
   ofile << setw(15) << setprecision(8) << xi;
