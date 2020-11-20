@@ -54,10 +54,9 @@ int main(int argc, char* argv[])
       for (int i = 0; i <= iter; i++){
       solver Mcint1;
       string filename = name[p];
-      Mcint1.init_output(filename);
       double i_temp = (double) init_temp + i*t_step;
       Mcint1.Initialize(L, mcs, i_temp, param);
-      Mcint1.MonteCarloV2();
+      Mcint1.MonteCarloV2(filename);
       }
       p++;
    }

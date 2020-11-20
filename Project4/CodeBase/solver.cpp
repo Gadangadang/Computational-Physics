@@ -124,7 +124,7 @@ void solver::init_output(string filename){
       ofile << setw(15) << "M average";
       ofile << setw(15) << "M variance";
       ofile << setw(15) << "M abs total";
-      ofile << setw(15) << "Number of accepted configs"<< endl;
+      ofile << setw(15) << "Number of accepted configs" << endl;
   ofile.close();
 }
 
@@ -172,12 +172,15 @@ void solver::tcoutput(string filename,double T){
   double M2total_average = m_average[3]*norma;
   double Evariance = (E2total_average- Etotal_average*Etotal_average)/m_tot_spins;
   double Mvariance = (M2total_average - Mtotal_average*Mtotal_average)/m_tot_spins;
+  double Mabstotal_average = m_average[4]*norma;
 
   double cv = Evariance/(T*T);
   double xi = Mvariance/(T*T);
   ofile << setiosflags(ios::showpoint | ios::uppercase);
   ofile << setw(15) << setprecision(8) << cv;
   ofile << setw(15) << setprecision(8) << xi;
-  ofile << setw(15) << setprecision(8) << T << endl;
+  ofile << setw(15) << setprecision(8) << T;
+  ofile << setw(15) << setprecision(8) << Etotal_average;
+  ofile << setw(15) << setprecision(8) << Mabstotal_average << endl;
   ofile.close();
 }
