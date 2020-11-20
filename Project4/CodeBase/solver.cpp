@@ -112,7 +112,7 @@ void solver::MonteCarloV2(string filename){
         m_cycles = cycles;
 
     }
-    output();
+    tcoutput(m_filename,m_init_temp);
 }// end function MonteCarloV1
 
 void solver::init_output(){
@@ -197,3 +197,23 @@ void solver::output(){
   ofile << setw(15) << setprecision(8) << m_counter<<endl;
   ofile.close();
 }// end output function
+
+void solver::tcoutput(string filename,double T){
+  ofstream ofile;
+  ofile.open(filename, fstream::app);
+  double norma = 1/((double) (m_cycles));  // divided by total number of cycles
+  double Etotal_average = m_average[0]*norma;
+  double E2total_average = m_average[1]*norma;
+  double Mtotal_average = m_average[2]*norma;
+  double M2total_average = m_average[3]*norma;
+  double Evariance = (E2total_average- Etotal_average*Etotal_average)/m_tot_spins;
+  double Mvariance = (M2total_average - Mtotal_average*Mtotal_average)/m_tot_spins;
+
+  double cv = Evariance/(kb*T*T);
+  double xi = Mvariance/(kb*T*T);
+  ofile << setiosflags(ios::showpoint | ios::uppercase);
+  ofile << setw(15) << setprecision(8) << cv;
+  ofile << setw(15) << setprecision(8) << xi;
+  ofile << setw(15) << setprecision(8) << T << endl;
+  ofile.close();
+}

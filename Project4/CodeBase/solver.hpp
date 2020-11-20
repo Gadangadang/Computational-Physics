@@ -29,6 +29,7 @@ class solver
     mt19937_64 generator;
     uniform_real_distribution<double> dis;
     vec m_E_vals;
+    double kb = 1.380649e-23;
 
 
 
@@ -39,7 +40,7 @@ class solver
     //Functions
     void Metropolis();
     void MonteCarloV1(string filename);
-    void MonteCarloV2();
+    void MonteCarloV2(string filename);
     double up_down(double a);
     int periodic(int i, int limit, int add);
     double ran1();
@@ -47,6 +48,7 @@ class solver
     void output();
     void find_PE(int N_bars, int stabil_indx);
     void print_E_av(int stabile_indx);
+    void tcoutput(string filename,double T);
 
 
 
