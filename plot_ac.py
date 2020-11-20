@@ -29,7 +29,28 @@ for line in data:
         M_variance.append(x6)
         M_abs_tot.append(x7)
         counter.append(x8)
-# Should probably amend this..
+
+for line in data1:
+        x1 = float(line.split()[0])
+        x2 = float(line.split()[1])
+        x3 = float(line.split()[2])
+        x4 = float(line.split()[3])
+        x5 = float(line.split()[4])
+        x6 = float(line.split()[5])
+        x7 = float(line.split()[6])
+        x8 = float(line.split()[7])
+        I_temp.append(x1)
+        Mcs_l.append(x2)
+        E_average.append(x3)
+        E_variance.append(x4)
+        M_average.append(x5)
+        M_variance.append(x6)
+        M_abs_tot.append(x7)
+        counter.append(x8)
+
+
+
+
 plt.subplot(1,2,1)
 plt.plot(Mcs_l,E_average)
 plt.xlabel("Time[MonteCarlo cycles]")

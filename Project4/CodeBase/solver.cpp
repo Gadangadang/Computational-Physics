@@ -83,11 +83,8 @@ void solver::Metropolis(){
 }// End of the Metropolis function.
 }
 
-
-
-void solver::MonteCarloV1(string filename){
+void solver::MonteCarloV1(){
         m_counter =0;
-        m_filename = filename;
     // Monte Carlo cycles
     for (int cycles = 1; cycles <= m_mcs; cycles++){
         Metropolis();
@@ -100,9 +97,8 @@ void solver::MonteCarloV1(string filename){
     }
 }// end function MonteCarloV1
 
-void solver::MonteCarloV2(string filename){
+void solver::MonteCarloV2(){
     // Monte Carlo cycles
-        m_filename = filename;
     for (int cycles = 1; cycles <= m_mcs; cycles++){
         m_counter =0;
         Metropolis();
@@ -115,9 +111,10 @@ void solver::MonteCarloV2(string filename){
     tcoutput(m_filename,m_init_temp);
 }// end function MonteCarloV1
 
-void solver::init_output(){
+void solver::init_output(string filename){
   ofstream ofile;
-      ofile.open(m_filename);
+      m_filename = filename;
+      ofile.open(m_filename, ofstream::out | ofstream::trunc);
       ofile << setiosflags(ios::showpoint | ios::uppercase);
       ofile << setw(15) << "Inital Temp";
       ofile << setw(15) << "MC_cycles";

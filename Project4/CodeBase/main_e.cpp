@@ -19,7 +19,6 @@ using namespace std;
 int main(int argc, char* argv[])
 {
    solver Mcint1;
-   Mcint1.init_output();
    clock_t start, finish;
    start = clock();
    double L = 20.;
@@ -28,7 +27,8 @@ int main(int argc, char* argv[])
    int param_1 = 0.;
    Mcint1.Initialize(L, mcs_max,T,param_1);
    string filename = "MonteCarloRun.txt";
-   Mcint1.MonteCarloV1(filename);
+   Mcint1.init_output(filename);
+   Mcint1.MonteCarloV1();
    finish = clock();
    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
    cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
