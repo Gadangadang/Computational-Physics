@@ -29,16 +29,17 @@ int main(int argc, char* argv[])
    double t_step = 0.05;
    int param = 0;
 
-   string name = ["MCL40.txt","MCL60.txt","MCL80.txt","MCL100.txt"];
+   string name[4] = {"MCL40.txt", "MCL60.txt", "MCL80.txt", "MCL100.txt"};
    int i = 0;
 
    omp_set_num_threads(100); // this number needs to be optimized for individual pc's !
-
+   int iter = int( (final_temp - init_temp) / t_step );
    double start = omp_get_wtime();
    #pragma omp parallel for
 
    for(int L = 40; L < 101; L += 20){
-     for(double i_temp = init_temp; i_temp <= final_temp; i_temp += t_step){
+     for(int i = 0; i <= iter; i++){
+       double i_temp = (double) init_temp + i*t_step;
        solver Mcint1;
        Mcint1.init_output();
        Mcint1.Initialize(L, mcs, i_temp, param);
