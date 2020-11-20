@@ -31,7 +31,6 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
     m_w = vec(17);
     m_average = vec(5);
     m_E_vals = vec(m_mcs);
-
     m_smatrix.fill(1);
 // function to initialise energy, magnetization, and populate spin-matrix
     for(int y =0; y < m_spins; y++) {
@@ -54,12 +53,6 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
 // setup array for possible energy changes
     for( int de =-8; de <= 8; de++) m_w[de+8] = 0;
     for( int de =-8; de <= 8; de+=4) m_w[de+8] = exp(-de/init_temp);
-
-
-
-// initialise array for expectation values
-    //for( int i = 0; i < 5; i++) m_average[i] = 0.;
-
 }// end function initialise
 
 double solver::ran1(){ // can I even call double(long) to specify long storage of type double?;
