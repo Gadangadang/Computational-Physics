@@ -29,6 +29,7 @@ class solver
     mt19937_64 generator;
     uniform_real_distribution<double> dis;
     vec m_E_vals;
+    double kb = 1.380649e-23;
 
 
 
@@ -46,6 +47,7 @@ class solver
     void init_output();
     void output();
     void print_E_av(int stabile_indx,string filename);
+    void tcoutput(string filename,double T);
 
 
 

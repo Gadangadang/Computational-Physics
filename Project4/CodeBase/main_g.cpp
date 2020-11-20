@@ -25,31 +25,33 @@ int main(int argc, char* argv[])
    clock_t start, finish;
 
 
-   double L1 = 20.; double L2 = 40.; double L3 = 60.; double L4 = 80.;
+   double L1 = 40.; double L2 = 60.; double L3 = 80.; double L4 = 100.;
 
-   int spins = L1;
 
    int mcs = 1e5;
    double init_temp = 1;
    double final_temp = 4.4;
    double t_step = 0.05;
    int param = 0;
-   double Tc_L;
-   int size = (int) (final_temp - init_temp)/t_step;
 
 
+   start = clock();
    for (double i_temp = init_temp; i_temp <= final_temp; i_temp += t_step){
-     start = clock();
-     Mcint1.Initialize(spins, mcs, i_temp, param,size);
-     string filename = "MonteCarloRun.txt";
+
+     Mcint1.Initialize(L1, mcs, i_temp, param);
+     string filename = "MCL40.txt";
      Mcint1.MonteCarloV2(filename);
-
-     finish = clock();
-     double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
-     cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
-
    }
+   finish = clock();
+   double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
+   cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
 
+
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2df9d6ea2a81e45549d824a4782dc8517ebf8491
 
 
 
