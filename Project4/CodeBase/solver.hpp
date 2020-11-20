@@ -19,6 +19,7 @@ class solver
     int m_cycles;
     int m_mcs;
     vec m_w;
+    int m_size;
     vec m_average;
     double m_init_temp;
     double m_init_temp_sq;
@@ -32,10 +33,11 @@ class solver
 
     public:
     //Initializer
-    void Initialize(int n_spins, int mcs, double init_temp, int param_1);
+    void Initialize(int n_spins, int mcs, double init_temp, int param_1, int size);
     //Functions
     void Metropolis();
     void MonteCarloV1();
+    void MonteCarloV2();
     double up_down(double a);
     int periodic(int i, int limit, int add);
     double ran1();

@@ -18,7 +18,7 @@ using namespace arma;
 using namespace std;
 
 
-void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
+void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1, int size){
 // Initialize internal Class variables
     m_smatrix = zeros<mat>(n_spins, n_spins);
     m_spins = n_spins;
@@ -27,6 +27,7 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
     m_M = 0;
     m_E = 0;
     m_init_temp = init_temp;
+    m_size = size;
     // long m_part = -1; // what does this do ? Example sets this to -1, calls it random??
     m_w = vec(17);
     m_average = vec(5);
@@ -104,6 +105,21 @@ void solver::MonteCarloV1(){
         m_cycles = cycles;
         output();
     }
+}// end function MonteCarloV1
+
+void solver::MonteCarloV2(){
+
+    // Monte Carlo cycles
+    for (int cycles = 1; cycles <= m_mcs; cycles++){
+        m_counter =0;
+        Metropolis();
+    // update expectation values
+        m_average(0) += m_E; m_average(1) += m_E*m_E;
+        m_average(2) += m_M; m_average(3) += m_M*m_M; m_average(4) += fabs(m_M);
+        m_cycles = cycles;
+
+    }
+    output();
 }// end function MonteCarloV1
 
 void solver::init_output(){
