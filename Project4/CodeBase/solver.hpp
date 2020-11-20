@@ -33,7 +33,7 @@ class solver
 
     public:
     //Initializer
-    void Initialize(int n_spins, int mcs, double init_temp, int param_1, int size);
+    void Initialize(int n_spins, int mcs, double init_temp, int param_1);
     //Functions
     void Metropolis();
     void MonteCarloV1();

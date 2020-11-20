@@ -18,7 +18,7 @@ using namespace arma;
 using namespace std;
 
 
-void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1, int size){
+void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
 // Initialize internal Class variables
     m_smatrix = zeros<mat>(n_spins, n_spins);
     m_spins = n_spins;
@@ -27,7 +27,6 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1, int
     m_M = 0;
     m_E = 0;
     m_init_temp = init_temp;
-    m_size = size;
     // long m_part = -1; // what does this do ? Example sets this to -1, calls it random??
     m_w = vec(17);
     m_average = vec(5);

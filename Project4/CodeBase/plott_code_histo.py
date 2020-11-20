@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-from mpl_toolkits import mplot3d
 import numpy as np
 data = open('E.txt', 'r')
 counter=[]
@@ -10,4 +9,6 @@ for line in data:
     Energy.append(x1)
 num_bins = len(Energy)
 n, bins, patches = plt.hist(Energy, 800, density=True, facecolor='g')
+plt.xlabel("Energy[J/k]")
+plt.ylabel("P(E)")
 plt.show()
