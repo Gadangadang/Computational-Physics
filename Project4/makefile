@@ -11,7 +11,7 @@ execute:
 	#CodeBase/./main_c.x 100000 10 1.0 2.5 0.05
 	#CodeBase/./main_d.x
 	#CodeBase/./main_e.x
-	CodeBase/./main_f.x 10000 40 2.0 2.5 0.05
+	CodeBase/./main_f.x 10000 40 2.0 2.3 0.05
 	#CodeBase/./main_f.x 10000 40 2.0 2.5 0.05
 	#Codebase/./main_g.x
 	#python3 CodeBase/Plotte_code_MB.py
