@@ -48,7 +48,6 @@ int main(int argc, char* argv[])
    Mcint1.init_output();
    double i_temp = (double) init_temp + i*t_step;
    Mcint1.Initialize(spins, mcs, i_temp, param);
-   cout << omp_get_num_threads() << endl;
    string filename = "MonteCarloRun.txt";
    Mcint1.MonteCarloV2(filename);
    }
@@ -56,22 +55,19 @@ int main(int argc, char* argv[])
    double wtime2 = omp_get_wtime() - wtime; ;
    cout << setprecision(10) << "Time used  for computing (Multithread) = " << wtime2  << " Seconds"<<endl;
 
-   /*
    // single thread region
    solver Mcint1;
    Mcint1.init_output();
    double wtime3 = omp_get_wtime();
    for (int i = 0; i <= iter; i++){
    double i_temp = (double) init_temp + i*t_step;
-   cout << i_temp << endl;
-   Mcint1.Initialize(spins, mcs, i_temp, param, 0);
+   Mcint1.Initialize(spins, mcs, i_temp, param);
    string filename = "MonteCarloRun.txt";
    Mcint1.MonteCarloV2(filename);
    }
 
    double wtime4 = omp_get_wtime() - wtime3;
    cout << setprecision(10) << "Time used  for computing (single thread) = " << wtime4  << " Seconds"<<endl;
-   */
 
 return 0;
 }
