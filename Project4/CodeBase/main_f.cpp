@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
 
    // Parallel thread region
 
-   omp_set_num_threads(100);
+   omp_set_num_threads(100); // this number needs to be optimized for individual pc's !
    // thread count analysis
    double wtime = omp_get_wtime();
    #pragma omp parallel for
@@ -47,15 +47,16 @@ int main(int argc, char* argv[])
    solver Mcint1;
    Mcint1.init_output();
    double i_temp = (double) init_temp + i*t_step;
-   Mcint1.Initialize(spins, mcs, i_temp, param, 0);
+   Mcint1.Initialize(spins, mcs, i_temp, param);
    cout << omp_get_num_threads() << endl;
-   Mcint1.MonteCarloV2();
+   string filename = "MonteCarloRun.txt";
+   Mcint1.MonteCarloV2(filename);
    }
 
    double wtime2 = omp_get_wtime() - wtime; ;
    cout << setprecision(10) << "Time used  for computing (Multithread) = " << wtime2  << " Seconds"<<endl;
 
-
+   /*
    // single thread region
    solver Mcint1;
    double wtime3 = omp_get_wtime();
@@ -70,6 +71,7 @@ int main(int argc, char* argv[])
 
    double wtime4 = omp_get_wtime() - wtime3;
    cout << setprecision(10) << "Time used  for computing (single thread) = " << wtime4  << " Seconds"<<endl;
+   */
 
 return 0;
 }

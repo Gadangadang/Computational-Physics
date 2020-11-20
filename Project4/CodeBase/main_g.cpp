@@ -50,10 +50,6 @@ int main(int argc, char* argv[])
 
    }
 
-   Mcint1.find_tc_with_read(Tc_L);
-   double Tc_Linf = Mcint1.TC_calc(Tc_L, L1);
-   cout << "Tc for L = infty is " << Tc_Linf << endl;
-
 
 
 
