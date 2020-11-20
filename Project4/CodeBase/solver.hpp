@@ -38,12 +38,12 @@ class solver
     void Initialize(int n_spins, int mcs, double init_temp, int param_1);
     //Functions
     void Metropolis();
-    void MonteCarloV1(string filename);
-    void MonteCarloV2(string filename);
+    void MonteCarloV1();
+    void MonteCarloV2();
     double up_down(double a);
     int periodic(int i, int limit, int add);
     double ran1();
-    void init_output();
+    void init_output(string filename);
     void output();
     void print_E_av(int stabile_indx,string filename);
 

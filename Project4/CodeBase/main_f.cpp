@@ -58,14 +58,14 @@ int main(int argc, char* argv[])
 
    // single thread region
    solver Mcint1;
-   Mcint1.init_output();
    double wtime3 = omp_get_wtime();
    for (int i = 0; i <= iter; i++){
    double i_temp = (double) init_temp + i*t_step;
    cout << i_temp << endl;
    Mcint1.Initialize(spins, mcs, i_temp, param, 0);
    string filename = "MonteCarloRun.txt";
-   Mcint1.MonteCarloV2(filename);
+   Mcint1.init_output(filename);
+   Mcint1.MonteCarloV2();
    }
 
    double wtime4 = omp_get_wtime() - wtime3;

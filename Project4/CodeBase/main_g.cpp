@@ -20,7 +20,6 @@ int main(int argc, char* argv[])
 {
    solver Mcint1;
 
-   Mcint1.init_output();
 
    clock_t start, finish;
 
@@ -42,6 +41,7 @@ int main(int argc, char* argv[])
      start = clock();
      Mcint1.Initialize(spins, mcs, i_temp, param,size);
      string filename = "MonteCarloRun.txt";
+     Mcint1.init_output(filename);
      Mcint1.MonteCarloV2(filename);
 
      finish = clock();
