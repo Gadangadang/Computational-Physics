@@ -42,6 +42,7 @@ class solver
     void MonteCarloV2();
     double up_down(double a);
     int periodic(int i, int limit, int add);
+    void print_variance(int stabile_indx);
     double ran1();
     void init_output(string filename);
     void output();

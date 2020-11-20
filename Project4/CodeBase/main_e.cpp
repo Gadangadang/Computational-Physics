@@ -34,6 +34,8 @@ int main(int argc, char* argv[])
    cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
    //Mcint1.find_PE(20, 80000);
    string filename2 = "E.txt";
-   Mcint1.print_E_av(7e4,filename2);
+   int stabile_indx = 7e4;
+   Mcint1.print_E_av(stabile_indx,filename2);
+   Mcint1.print_variance(stabile_indx);
 return 0;
 }
