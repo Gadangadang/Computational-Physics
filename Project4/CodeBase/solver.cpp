@@ -31,7 +31,6 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
     m_w = vec(17);
     m_average = vec(5);
     m_E_vals = vec(m_mcs);
-
     m_smatrix.fill(1);
 // function to initialise energy, magnetization, and populate spin-matrix
     for(int y =0; y < m_spins; y++) {
@@ -54,12 +53,6 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
 // setup array for possible energy changes
     for( int de =-8; de <= 8; de++) m_w[de+8] = 0;
     for( int de =-8; de <= 8; de+=4) m_w[de+8] = exp(-de/init_temp);
-
-
-
-// initialise array for expectation values
-    //for( int i = 0; i < 5; i++) m_average[i] = 0.;
-
 }// end function initialise
 
 double solver::ran1(){ // can I even call double(long) to specify long storage of type double?;
@@ -92,8 +85,9 @@ void solver::Metropolis(){
 
 
 
-void solver::MonteCarloV1(){
+void solver::MonteCarloV1(string filename){
         m_counter =0;
+        m_filename = filename;
     // Monte Carlo cycles
     for (int cycles = 1; cycles <= m_mcs; cycles++){
         Metropolis();
@@ -106,9 +100,9 @@ void solver::MonteCarloV1(){
     }
 }// end function MonteCarloV1
 
-void solver::MonteCarloV2(){
-
+void solver::MonteCarloV2(string filename){
     // Monte Carlo cycles
+        m_filename = filename;
     for (int cycles = 1; cycles <= m_mcs; cycles++){
         m_counter =0;
         Metropolis();
@@ -123,7 +117,7 @@ void solver::MonteCarloV2(){
 
 void solver::init_output(){
   ofstream ofile;
-      ofile.open("MonteCarloRun.txt");
+      ofile.open(m_filename);
       ofile << setiosflags(ios::showpoint | ios::uppercase);
       ofile << setw(15) << "Inital Temp";
       ofile << setw(15) << "MC_cycles";
@@ -136,43 +130,9 @@ void solver::init_output(){
   ofile.close();
 }
 
-void solver::find_PE(int N_bars, int stabile_indx){
-  double sum =0.;
-  int N =  m_mcs-stabile_indx;
-  vec E_stabil=vec(N);
-  for(int i = 0; i < N; i++){
-    sum += m_E_vals[stabile_indx +i];
-    E_stabil[i]= m_E_vals[stabile_indx+i];
-  }
-  double avg = sum/((double) N);
-  cout << avg<< endl;
-  vec bars = linspace(E_stabil.min(),E_stabil.max(),N_bars);
-  vec counter;
-  counter = vec(N_bars).fill(0.);
-  for(int j=stabile_indx; j<m_mcs; j++){
-    int k=1;
-    while(k>0){
-    for(int i =0; i<N_bars-1; i++){
-      if(m_E_vals[j]>=bars[i] && m_E_vals[j]<=bars[i+1]){
-      counter[i]++;
-      k=0;
-    }
-    }
-    }
-  }
-  for(int i =0; i<N_bars;i++){cout<<counter[i]<<endl;}
+void solver::print_E_av(int stabile_indx, string filename){
   ofstream ofile;
-  ofile.open("PE.txt");
-  ofile << setiosflags(ios::showpoint | ios::uppercase);
-  for(int i=0;i<N_bars; i++){
-    ofile << setw(15) << setprecision(8) << counter[i];
-    ofile << setw(15) << setprecision(8) << bars[i]<<endl;
-  }
-  ofile.close();
-}
-void solver::print_E_av(int stabile_indx){
-  ofstream ofile;
-  ofile.open("E.txt");
+  ofile.open(filename);
   ofile << setiosflags(ios::showpoint | ios::uppercase);
   for(int i=stabile_indx+1;i<m_mcs; i++){
     ofile << setw(15) << setprecision(8) << m_E_vals[i]<<endl;
@@ -182,7 +142,7 @@ void solver::print_E_av(int stabile_indx){
 void solver::output(){
 // Borrowed most of this. Will probably make changes to the output structure, maybe.
   ofstream ofile;
-  ofile.open("MonteCarloRun.txt", fstream::app);
+  ofile.open(m_filename, fstream::app);
   double norma = 1/((double) (m_cycles));  // divided by total number of cycles
   double Etotal_average = m_average[0]*norma;
   double E2total_average = m_average[1]*norma;

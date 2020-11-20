@@ -3,6 +3,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include "armadillo"
+#include <string>
 
 using namespace arma;
 using namespace std;
@@ -24,6 +25,7 @@ class solver
     double m_init_temp;
     double m_init_temp_sq;
     int m_counter;
+    string m_filename;
     mt19937_64 generator;
     uniform_real_distribution<double> dis;
     vec m_E_vals;
@@ -36,15 +38,14 @@ class solver
     void Initialize(int n_spins, int mcs, double init_temp, int param_1);
     //Functions
     void Metropolis();
-    void MonteCarloV1();
-    void MonteCarloV2();
+    void MonteCarloV1(string filename);
+    void MonteCarloV2(string filename);
     double up_down(double a);
     int periodic(int i, int limit, int add);
     double ran1();
     void init_output();
     void output();
-    void find_PE(int N_bars, int stabil_indx);
-    void print_E_av(int stabile_indx);
+    void print_E_av(int stabile_indx,string filename);
 
 
 

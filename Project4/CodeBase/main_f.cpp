@@ -49,7 +49,8 @@ int main(int argc, char* argv[])
    double i_temp = (double) init_temp + i*t_step;
    Mcint1.Initialize(spins, mcs, i_temp, param);
    cout << omp_get_num_threads() << endl;
-   Mcint1.MonteCarloV2();
+   string filename = "MonteCarloRun.txt";
+   Mcint1.MonteCarloV2(filename);
    }
 
    double wtime2 = omp_get_wtime() - wtime; ;
@@ -64,7 +65,8 @@ int main(int argc, char* argv[])
    double i_temp = (double) init_temp + i*t_step;
    cout << i_temp << endl;
    Mcint1.Initialize(spins, mcs, i_temp, param, 0);
-   Mcint1.MonteCarloV2();
+   string filename = "MonteCarloRun.txt";
+   Mcint1.MonteCarloV2(filename);
    }
 
    double wtime4 = omp_get_wtime() - wtime3;
