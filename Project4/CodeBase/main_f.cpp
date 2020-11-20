@@ -35,39 +35,43 @@ int main(int argc, char* argv[])
    int param = 0;
 
    int iter = int( (final_temp - init_temp) / t_step );
-
-
+   string name[4] = {"MCL40.txt", "MCL60.txt", "MCL80.txt", "MCL100.txt"};
+   int p = 0;
    // Parallel thread region
 
    omp_set_num_threads(100); // this number needs to be optimized for individual pc's !
    // thread count analysis
    double wtime = omp_get_wtime();
    #pragma omp parallel for
-   for (int i = 0; i <= iter; i++){
-   solver Mcint1;
-   Mcint1.init_output();
-   double i_temp = (double) init_temp + i*t_step;
-   Mcint1.Initialize(spins, mcs, i_temp, param);
-   string filename = "MonteCarloRun.txt";
-   Mcint1.MonteCarloV2(filename);
+   for(int L = 40; L < 101; L += 20){
+      for (int i = 0; i <= iter; i++){
+      solver Mcint1;
+      string filename = name[p];
+      Mcint1.init_output(filename);
+      double i_temp = (double) init_temp + i*t_step;
+      Mcint1.Initialize(L, mcs, i_temp, param);
+      Mcint1.MonteCarloV2();
+      }
+      p++;
    }
-
    double wtime2 = omp_get_wtime() - wtime; ;
    cout << setprecision(10) << "Time used  for computing (Multithread) = " << wtime2  << " Seconds"<<endl;
 
+   /*
    // single thread region
    solver Mcint1;
-   Mcint1.init_output();
    double wtime3 = omp_get_wtime();
    for (int i = 0; i <= iter; i++){
    double i_temp = (double) init_temp + i*t_step;
    Mcint1.Initialize(spins, mcs, i_temp, param);
    string filename = "MonteCarloRun.txt";
-   Mcint1.MonteCarloV2(filename);
+   Mcint1.init_output(filename);
+   Mcint1.MonteCarloV2();
    }
 
    double wtime4 = omp_get_wtime() - wtime3;
    cout << setprecision(10) << "Time used  for computing (single thread) = " << wtime4  << " Seconds"<<endl;
+   */
 
 return 0;
 }
