@@ -97,8 +97,9 @@ void solver::MonteCarloV1(){
     }
 }// end function MonteCarloV1
 
-void solver::MonteCarloV2(){
+void solver::MonteCarloV2(string filename){
     // Monte Carlo cycles
+    m_filename = filename;
     for (int cycles = 1; cycles <= m_mcs; cycles++){
         m_counter =0;
         Metropolis();
