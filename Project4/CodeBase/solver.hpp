@@ -39,14 +39,13 @@ class solver
     //Functions
     void Metropolis();
     void MonteCarloV1(string filename);
-    void MonteCarloV2();
+    void MonteCarloV2(string filename);
     double up_down(double a);
     int periodic(int i, int limit, int add);
     double ran1();
     void init_output();
     void output();
-    void find_PE(int N_bars, int stabil_indx);
-    void print_E_av(int stabile_indx);
+    void print_E_av(int stabile_indx,string filename);
 
 
 

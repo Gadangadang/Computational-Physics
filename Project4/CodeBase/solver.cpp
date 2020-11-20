@@ -130,43 +130,9 @@ void solver::init_output(){
   ofile.close();
 }
 
-void solver::find_PE(int N_bars, int stabile_indx){
-  double sum =0.;
-  int N =  m_mcs-stabile_indx;
-  vec E_stabil=vec(N);
-  for(int i = 0; i < N; i++){
-    sum += m_E_vals[stabile_indx +i];
-    E_stabil[i]= m_E_vals[stabile_indx+i];
-  }
-  double avg = sum/((double) N);
-  cout << avg<< endl;
-  vec bars = linspace(E_stabil.min(),E_stabil.max(),N_bars);
-  vec counter;
-  counter = vec(N_bars).fill(0.);
-  for(int j=stabile_indx; j<m_mcs; j++){
-    int k=1;
-    while(k>0){
-    for(int i =0; i<N_bars-1; i++){
-      if(m_E_vals[j]>=bars[i] && m_E_vals[j]<=bars[i+1]){
-      counter[i]++;
-      k=0;
-    }
-    }
-    }
-  }
-  for(int i =0; i<N_bars;i++){cout<<counter[i]<<endl;}
+void solver::print_E_av(int stabile_indx, string filename){
   ofstream ofile;
-  ofile.open("PE.txt");
-  ofile << setiosflags(ios::showpoint | ios::uppercase);
-  for(int i=0;i<N_bars; i++){
-    ofile << setw(15) << setprecision(8) << counter[i];
-    ofile << setw(15) << setprecision(8) << bars[i]<<endl;
-  }
-  ofile.close();
-}
-void solver::print_E_av(int stabile_indx){
-  ofstream ofile;
-  ofile.open("E.txt");
+  ofile.open(filename);
   ofile << setiosflags(ios::showpoint | ios::uppercase);
   for(int i=stabile_indx+1;i<m_mcs; i++){
     ofile << setw(15) << setprecision(8) << m_E_vals[i]<<endl;

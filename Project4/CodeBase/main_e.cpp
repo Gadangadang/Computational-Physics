@@ -33,6 +33,7 @@ int main(int argc, char* argv[])
    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
    cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
    //Mcint1.find_PE(20, 80000);
-   Mcint1.print_E_av(7e4);
+   string filename2 = "E.txt";
+   Mcint1.print_E_av(7e4,filename2);
 return 0;
 }
