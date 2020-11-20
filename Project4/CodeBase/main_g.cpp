@@ -24,13 +24,13 @@ int main(int argc, char* argv[])
 
 
    int mcs = 1e5;
-   double init_temp = 1;
-   double final_temp = 4.4;
-   double t_step = 0.05;
+   double init_temp = 2;
+   double final_temp = 2.3;
+   double t_step = 0.001;
    int param = 0;
 
    string name[4] = {"MCL40.txt", "MCL60.txt", "MCL80.txt", "MCL100.txt"};
-   int i = 0;
+   int p = 0;
 
    omp_set_num_threads(100); // this number needs to be optimized for individual pc's !
    int iter = int( (final_temp - init_temp) / t_step );
@@ -43,14 +43,16 @@ int main(int argc, char* argv[])
        solver Mcint1;
        Mcint1.init_output();
        Mcint1.Initialize(L, mcs, i_temp, param);
-       string filename = name[i];
+       string filename = name[p];
        Mcint1.MonteCarloV2(filename);
+
      }
-     i+=1;
+     cout << "L = " << L << endl;
+     p+=1;
 
      double finish = omp_get_wtime();
      double timeused = (double) (finish - start);
-     cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
+     cout << setprecision(10) << "Time used  for computing (Multithread) = " << timeused  << " Seconds"<<endl;
    }
 
 
