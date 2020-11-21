@@ -109,7 +109,7 @@ void solver::MonteCarloV2(string filename){
         m_cycles = cycles;
 
     }
-    tcoutput(m_filename,m_init_temp);
+    tcoutput(m_filename);
 }// end function MonteCarloV1
 
 void solver::init_output(string filename){
@@ -117,13 +117,15 @@ void solver::init_output(string filename){
       m_filename = filename;
       ofile.open(m_filename, ofstream::out | ofstream::trunc);
       ofile << setiosflags(ios::showpoint | ios::uppercase);
-      ofile << setw(15) << "Inital Temp";
+      ofile << setw(15) << "Temperature";
       ofile << setw(15) << "MC_cycles";
       ofile << setw(15) << "E average";
       ofile << setw(15) << "E variance";
       ofile << setw(15) << "M average";
       ofile << setw(15) << "M variance";
       ofile << setw(15) << "M abs total";
+      ofile << setw(15) << "Specific heat Capacity";
+      ofile << setw(15) << "Susceptibility";
       ofile << setw(15) << "Number of accepted configs" << endl;
   ofile.close();
 }
@@ -162,7 +164,7 @@ void solver::output(){
   ofile.close();
 }// end output function
 
-void solver::tcoutput(string filename,double T){
+void solver::tcoutput(string filename){
   ofstream ofile;
   ofile.open(filename, fstream::app);
   double norma = 1/((double) (m_cycles));  // divided by total number of cycles
@@ -174,13 +176,18 @@ void solver::tcoutput(string filename,double T){
   double Mvariance = (M2total_average - Mtotal_average*Mtotal_average)/m_tot_spins;
   double Mabstotal_average = m_average[4]*norma;
 
-  double cv = Evariance/(T*T);
-  double xi = Mvariance/(T*T);
+  double cv = Evariance/(m_init_temp*m_init_temp);
+  double xi = Mvariance/(m_init_temp*m_init_temp);
   ofile << setiosflags(ios::showpoint | ios::uppercase);
-  ofile << setw(15) << setprecision(8) << cv;
-  ofile << setw(15) << setprecision(8) << xi;
-  ofile << setw(15) << setprecision(8) << T;
-  ofile << setw(15) << setprecision(8) << Etotal_average;
-  ofile << setw(15) << setprecision(8) << Mabstotal_average << endl;
+    ofile << setw(15);
+    ofile << setw(15);
+    ofile << setw(15) << setprecision(8) << Etotal_average;
+    ofile << setw(15);
+    ofile << setw(15);
+    ofile << setw(15);
+    ofile << setw(15) << setprecision(8) << Mabstotal_average;
+    ofile << setw(15) << setprecision(8) << cv;
+    ofile << setw(15) << setprecision(8) << xi;
+    ofile << setw(15);
   ofile.close();
 }

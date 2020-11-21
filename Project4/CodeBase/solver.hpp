@@ -47,7 +47,7 @@ class solver
     void init_output(string filename);
     void output();
     void print_E_av(int stabile_indx,string filename);
-    void tcoutput(string filename,double T);
+    void tcoutput(string filename);
 
 
 
