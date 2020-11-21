@@ -21,8 +21,8 @@ int main(int argc, char* argv[])
 {
 
    int mcs = 1e5;
-   double init_temp = 2;
-   double final_temp = 2.3;
+   double init_temp = 2.1;
+   double final_temp = 2.4;
    double t_step = 0.001;
    int param = 0;
 
@@ -33,10 +33,10 @@ int main(int argc, char* argv[])
    int iter = int( (final_temp - init_temp) / t_step );
    double start = omp_get_wtime();
 
-   #pragma omp parallel for
+
    for(int L = 40; L < 101; L += 20){
       int k = 0;
-
+     #pragma omp parallel for
      for(int i = 0; i <= iter; i++){
        double i_temp = (double) init_temp + i*t_step;
        solver Mcint1;
