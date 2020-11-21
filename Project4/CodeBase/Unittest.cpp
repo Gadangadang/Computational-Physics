@@ -23,6 +23,7 @@ SECTION("Check if the spins ar randomly ordered:"){
   for(int i = 0; i <L_2*L_2; i++){sum_2 += Mcint1.m_smatrix[i];}
   double sum_L_20 = sum_2/((double)L_2*L_2);
   REQUIRE(fabs(sum_L_20) < fabs(sum_L_10));
+  REQUIRE(0.0001<fabs(sum_L_20));
 }
 SECTION("Check if the Variance increases with the temperature:"){
   int mcs =1e5; double T_1 =1; double T_2 = 2.4; double param_1 = 0.;  int L =20;
