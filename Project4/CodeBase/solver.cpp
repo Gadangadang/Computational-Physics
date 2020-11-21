@@ -124,8 +124,8 @@ void solver::init_output(string filename){
       ofile << setw(15) << "M average";
       ofile << setw(15) << "M variance";
       ofile << setw(15) << "M abs total";
-      ofile << setw(15) << "Specific heat Capacity";
-      ofile << setw(15) << "Susceptibility";
+      ofile << setw(15) << "Specific heat Capacity" << setw(15);
+      ofile << setw(15) << "Susceptibility" << setw(15);
       ofile << setw(15) << "Number of accepted configs" << endl;
   ofile.close();
 }
@@ -160,7 +160,7 @@ void solver::output(){
   ofile << setw(15) << setprecision(8) << Mtotal_average/m_tot_spins;
   ofile << setw(15) << setprecision(8) << Mvariance/m_init_temp;
   ofile << setw(15) << setprecision(8) << Mabstotal_average/m_tot_spins;
-  ofile << setw(15) << setprecision(8) << m_counter<<endl;
+  ofile << setw(15) << setprecision(8) << m_counter << endl;
   ofile.close();
 }// end output function
 
@@ -179,8 +179,8 @@ void solver::tcoutput(string filename){
   double cv = Evariance/(m_init_temp*m_init_temp);
   double xi = Mvariance/(m_init_temp*m_init_temp);
   ofile << setiosflags(ios::showpoint | ios::uppercase);
-    ofile << setw(15);
-    ofile << setw(15);
+    ofile << setw(15) << setprecision(8) << m_init_temp;
+    ofile << setw(15) << setw(15);
     ofile << setw(15) << setprecision(8) << Etotal_average;
     ofile << setw(15);
     ofile << setw(15);
@@ -188,6 +188,6 @@ void solver::tcoutput(string filename){
     ofile << setw(15) << setprecision(8) << Mabstotal_average;
     ofile << setw(15) << setprecision(8) << cv;
     ofile << setw(15) << setprecision(8) << xi;
-    ofile << setw(15);
+    ofile << setw(15) << endl;
   ofile.close();
 }
