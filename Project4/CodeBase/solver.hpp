@@ -12,7 +12,6 @@ class solver
 {
     private:
     // Attributes
-    mat m_smatrix;
     double m_M;
     double m_E;
     int m_spins;
@@ -35,6 +34,8 @@ class solver
 
     public:
     //Initializer
+    mat m_smatrix;
+    double m_variance;
     void Initialize(int n_spins, int mcs, double init_temp, int param_1);
     //Functions
     void Metropolis();
@@ -42,7 +43,7 @@ class solver
     void MonteCarloV2();
     double up_down(double a);
     int periodic(int i, int limit, int add);
-    void print_variance(int stabile_indx);
+    void calc_variance(int stabile_indx);
     double ran1();
     void init_output(string filename);
     void output();

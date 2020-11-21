@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main()
 #include "catch.hpp"
 //#include "classtuff.cpp"
-#include "solving.hpp"
+#include "solver.hpp"
 #include "object.hpp"
 #include "armadillo"
 #include <cstdio>

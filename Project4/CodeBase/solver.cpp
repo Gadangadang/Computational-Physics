@@ -136,18 +136,16 @@ void solver::print_E_av(int stabile_indx, string filename){
   }
   ofile.close();
 }
-void solver::print_variance(int stabile_indx){
+void solver::calc_variance(int stabile_indx){
   double N = 1/ ((double)m_mcs-stabile_indx-1);
   double E_avg = 0;
   for(int i=stabile_indx+1;i<m_mcs; i++){
     E_avg += m_E_vals[i];
   }
   E_avg *=N;
-  double variance  = 0;
-  for(int i=stabile_indx+1;i<m_mcs; i++){variance += (E_avg-m_E_vals[i])*(E_avg-m_E_vals[i]);}
-  variance *= N;
-  cout<< setprecision(4)<< "The variance of the energy is"<<variance << endl;
-
+  m_variance  = 0;
+  for(int i=stabile_indx+1;i<m_mcs; i++){m_variance += (E_avg-m_E_vals[i])*(E_avg-m_E_vals[i]);}
+  m_variance *= N;
 }
 void solver::output(){
 // Borrowed most of this. Will probably make changes to the output structure, maybe.

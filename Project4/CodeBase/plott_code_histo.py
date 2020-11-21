@@ -8,7 +8,7 @@ for line in data:
     x1 = float(line.split()[0])
     Energy.append(x1)
 num_bins = len(Energy)
-n, bins, patches = plt.hist(Energy, 800, density=True, facecolor='b')
+n, bins, patches = plt.hist(Energy, 300, density=True, facecolor='b')
 plt.xlabel("Energy[J/k]")
 plt.ylabel("P(E)")
 plt.show()
