@@ -26,38 +26,29 @@ int main(int argc, char* argv[])
 
 // This section wont be filled until the whole class is finished.
 // Will probably be very small. Solver will be general, and also the scope of questions is limited.
-   int mcs = atoi(argv[1]);
-   int spins = atoi(argv[2]);
-   double init_temp = atof(argv[3]);
-   double final_temp = atof(argv[4]);
-   double t_step = atof(argv[5]);
-    ofstream ofile;
-        ofile.open("MonteCarloRun.txt");
-        ofile << setiosflags(ios::showpoint | ios::uppercase);
-        ofile << setw(15) << "Inital Temp";
-        ofile << setw(15) << "E average";
-        ofile << setw(15) << "E variance";
-        ofile << setw(15) << "M average";
-        ofile << setw(15) << "M variance";
-        ofile << setw(15) << "M abs total" << endl;
-    ofile.close();
-
+   int mcs = 1e5;
+   int L = 2;
+   double param_1 = 0.;
    solver Mcint1;
    clock_t start, finish;
    start = clock();
-   //for (double i_temp = init_temp; i_temp <= final_temp; i_temp += t_step){
-   //Mcint1.Initialize(spins, mcs, i_temp);
-   //Mcint1.MonteCarloV1();
-   //}
-   double T = 2.4;
-   int param_1=1;
-   Mcint1.Initialize(2, mcs,T, param_1,0);
+   double T = 1;
+   Mcint1.Initialize(L, mcs,T,param_1);
    string filename = "MonteCarloRun.txt";
    Mcint1.init_output(filename);
-   Mcint1.MonteCarloV1();
+   Mcint1.MonteCarloV2();
    finish = clock();
    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
    cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
+   double Z = 12 + 2*exp(8/((double)T)) + 2*exp(-8/((double)T));
+   double E_mean = (-16*exp(8/((double)T)) + 16*exp(-8/((double)T)))/((double) Z);
+   double M_mean =  (8*exp(8/((double)T))+16)/((double)Z);
+   double EE_mean = (2*(8*8)*exp(8/((double)T)) + 2*(8*8)*exp(-8/((double)T)))/((double) Z);
+   double c_v = (EE_mean-E_mean*E_mean)/((double)T*T);
+   double
+   cout <<E_mean<<endl;
+   cout <<M_mean<<endl;
+   cout <<c_v<<endl;
 
 return 0;
 }

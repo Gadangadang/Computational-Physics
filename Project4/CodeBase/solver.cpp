@@ -27,6 +27,7 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
     m_M = 0;
     m_E = 0;
     m_init_temp = init_temp;
+    m_init_temp_sq = init_temp * init_temp;
     // long m_part = -1; // what does this do ? Example sets this to -1, calls it random??
     m_w = vec(17);
     m_average = vec(5);
@@ -158,16 +159,16 @@ void solver::output(){
   double M2total_average = m_average[3]*norma;
   double Mabstotal_average = m_average[4]*norma;
   // all expectation values are per spin, divide by 1/n_spins/n_spins
-  double Evariance = (E2total_average- Etotal_average*Etotal_average)/m_tot_spins;
+  double Evariance = (E2total_average- Etotal_average*Etotal_average);
   double Mvariance = (M2total_average - Mtotal_average*Mtotal_average)/m_tot_spins;
   ofile << setiosflags(ios::showpoint | ios::uppercase);
   ofile << setw(15) << setprecision(8) << m_init_temp;
   ofile << setw(15) << setprecision(8) << m_cycles;
-  ofile << setw(15) << setprecision(8) << Etotal_average/m_tot_spins;
+  ofile << setw(15) << setprecision(8) << Etotal_average;
   ofile << setw(15) << setprecision(8) << Evariance/m_init_temp_sq;
   ofile << setw(15) << setprecision(8) << Mtotal_average/m_tot_spins;
   ofile << setw(15) << setprecision(8) << Mvariance/m_init_temp;
-  ofile << setw(15) << setprecision(8) << Mabstotal_average/m_tot_spins;
+  ofile << setw(15) << setprecision(8) << Mabstotal_average;
   ofile << setw(15) << setprecision(8) << m_counter<<endl;
   ofile.close();
 }// end output function
