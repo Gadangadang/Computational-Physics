@@ -160,7 +160,7 @@ void solver::output(){
   double Mabstotal_average = m_average[4]*norma;
   // all expectation values are per spin, divide by 1/n_spins/n_spins
   double Evariance = (E2total_average- Etotal_average*Etotal_average);
-  double Mvariance = (M2total_average - Mtotal_average*Mtotal_average)/m_tot_spins;
+  double Mvariance = (M2total_average - Mabstotal_average*Mabstotal_average);
   ofile << setiosflags(ios::showpoint | ios::uppercase);
   ofile << setw(15) << setprecision(8) << m_init_temp;
   ofile << setw(15) << setprecision(8) << m_cycles;

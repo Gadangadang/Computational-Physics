@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
 
 // This section wont be filled until the whole class is finished.
 // Will probably be very small. Solver will be general, and also the scope of questions is limited.
-   int mcs = 1e5;
+   int mcs = 8e7;
    int L = 2;
    double param_1 = 0.;
    solver Mcint1;
@@ -44,11 +44,13 @@ int main(int argc, char* argv[])
    double E_mean = (-16*exp(8/((double)T)) + 16*exp(-8/((double)T)))/((double) Z);
    double M_mean =  (8*exp(8/((double)T))+16)/((double)Z);
    double EE_mean = (2*(8*8)*exp(8/((double)T)) + 2*(8*8)*exp(-8/((double)T)))/((double) Z);
+   double MM_mean = (2*(4*4)*exp(8/((double)T))+8*(2*2))/((double)Z);
    double c_v = (EE_mean-E_mean*E_mean)/((double)T*T);
-   double
+   double X = (MM_mean-M_mean*M_mean)/((double)T);
    cout <<E_mean<<endl;
    cout <<M_mean<<endl;
    cout <<c_v<<endl;
+   cout <<X<<endl;
 
 return 0;
 }
