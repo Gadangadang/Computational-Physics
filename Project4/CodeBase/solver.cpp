@@ -92,7 +92,7 @@ void solver::MonteCarloV1(){
     // update expectation values
         m_E_vals[cycles] = m_E;
         m_average(0) += m_E; m_average(1) += m_E*m_E;
-        m_average(2) += m_M; m_average(3) += m_M*m_M; m_average(4) += fabs(m_M);
+        m_average(2) += m_M*m_M; m_average(3) += fabs(m_M);
         m_cycles = cycles;
         output();
     }
@@ -130,20 +130,21 @@ void solver::print_E_av(int stabile_indx, string filename){
   ofstream ofile;
   ofile.open(filename);
   ofile << setiosflags(ios::showpoint | ios::uppercase);
-  for(int i=stabile_indx+1;i<m_mcs; i++){
+  for(int i=stabile_indx;i<m_mcs; i++){
     ofile << setw(15) << setprecision(8) << m_E_vals[i]<<endl;
   }
   ofile.close();
 }
 void solver::calc_variance(int stabile_indx){
-  double N = 1/ ((double)m_mcs-stabile_indx-1);
+  double N = 1/ ((double)m_mcs-stabile_indx);
+  cout <<N<<endl;
   double E_avg = 0;
-  for(int i=stabile_indx+1;i<m_mcs; i++){
+  for(int i=stabile_indx;i<m_mcs; i++){
     E_avg += m_E_vals[i];
   }
   E_avg *=N;
   m_variance  = 0;
-  for(int i=stabile_indx+1;i<m_mcs; i++){m_variance += (E_avg-m_E_vals[i])*(E_avg-m_E_vals[i]);}
+  for(int i=stabile_indx;i<m_mcs; i++){m_variance += (E_avg-m_E_vals[i])*(E_avg-m_E_vals[i]);}
   m_variance *= N;
 }
 void solver::output(){

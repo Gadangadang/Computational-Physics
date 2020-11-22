@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
    clock_t start, finish;
    start = clock();
    double L = 20.;
-   double T = 1;
+   double T = 2.4;
    int mcs_max = 1e5;
    int param_1 = 0.;
    Mcint1.Initialize(L, mcs_max,T,param_1);
@@ -36,6 +36,7 @@ int main(int argc, char* argv[])
    int stabile_indx = 7e4;
    Mcint1.print_E_av(stabile_indx,filename2);
    Mcint1.calc_variance(stabile_indx);
-   cout<< setprecision(4)<< "The variance of the energy is"<<Mcint1.m_variance << endl;
+   cout<< setprecision(4)<< "The variance of the energy is "<<Mcint1.m_variance << endl;
+   cout<< setprecision(4)<< "The standard deviation of the energy is "<<sqrt(Mcint1.m_variance)<< endl;
 return 0;
 }
