@@ -48,11 +48,11 @@ execute:
 #### Instructions for running code
 a makefile comment is a '#' character. to run the makefile open a terminal and type 'make all' to execute.
 
-To run task c):
+### To run task c):
   - uncomment the main_c line under the 'compile' section
   - uncomment the main_c line under the 'execute' section
 
-Expected result for c):
+### Expected result for c):
   - Terminal statement with time used to run computation
   - Terminal statement with the mean value for energy, maked with E
   - Terminal statement with the mean value for magnetization, marked with M
@@ -60,12 +60,12 @@ Expected result for c):
   - Terminal statement with susceptibility, marked as X
 
 
-To run task d):
+### To run task d):
   - uncomment the main_d line under the 'compile' section
   - uncomment the main_d line under the 'execute' section
   - uncomment the plot_ac line under the 'execute' section
 
-Expected result for d):
+### Expected result for d):
   - Terminal statement with time used to run computation
   - Plot showing mean magnetization as function of Monte Carlo cylces for random and ordered configuration at a given temperature T = 1. 
   - Plot showing mean energy as function of Monte Carlo cylces for random and ordered configuration at a given temperature T = 1. 
@@ -76,7 +76,7 @@ Expected result for d):
   - Plot showing accepted configurations as function of Monte Carlo cylces for random and ordered configuration at a given temperature T = 2. 
 
 
-To run task e):
+### To run task e):
   - uncomment the main_e line under the 'compile' section
   - uncomment the main_e line under the 'execute' section
   - uncomment the plot_code_histo line under the 'execute' section
@@ -87,12 +87,12 @@ Expected result for e):
   - Terminal statement with standard deviation of energy
   - Plot showing a histogram of probability as function of energy
 
-To run task f and g):
+### To run task f and g):
   - uncomment the main_f line under the 'compile' section
   - uncomment the main_f.x line under the 'execute' section
   - uncumment the tcfind.py line under the 'execute' section
 
-Expected result for f and g):
+### Expected result for f and g):
   - Plot showing the heat capacity as function of temperature for L = 40 with a univariate spline interpolation
   - Plot showing the heat capacity as function of temperature for L = 60 with a univariate spline interpolation
   - Plot showing the heat capacity as function of temperature for L = 80 with a univariate spline interpolation
