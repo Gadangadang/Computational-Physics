@@ -20,12 +20,6 @@ int main(int argc, char* argv[])
 {
 // Borrowing the initial code from the lecturenote2015.pdf, page 437.
 // Available at: https://github.com/CompPhysics/ComputationalPhysics/tree/master/doc/Lectures
-// input needs the following: spins, mcs, initial_temp, final_temp, t_step
-
-// Will need to create an input handling structure to feed Class initialization.
-
-// This section wont be filled until the whole class is finished.
-// Will probably be very small. Solver will be general, and also the scope of questions is limited.
    int mcs = 8e7;
    int L = 2;
    double param_1 = 0.;
@@ -40,6 +34,7 @@ int main(int argc, char* argv[])
    finish = clock();
    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
    cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
+   //Calculation and printing of analytical expressions for comparing.
    double Z = 12 + 2*exp(8/((double)T)) + 2*exp(-8/((double)T));
    double E_mean = (-16*exp(8/((double)T)) + 16*exp(-8/((double)T)))/((double) Z);
    double M_mean =  (8*exp(8/((double)T))+16)/((double)Z);
