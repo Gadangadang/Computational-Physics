@@ -12,6 +12,5 @@ execute:
 	#CodeBase/./main_e.x
 	#CodeBase/./main_f.x 10000 40 2.0 2.5 0.05
 	#CodeBase/./unit.x
-	#python3 CodeBase/Plotte_code_MB.py
 	python3 CodeBase/plot_ac.py
 	#python3 CodeBase/plott_code_histo.py
