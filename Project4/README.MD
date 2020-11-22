@@ -124,8 +124,9 @@ int main(int argc, char* argv[]){
 ```
 
 #### General example for parallelized code. 
-Note that the number of threads possible for a given computer differs with the onboard CPU, check this before running the parallelized code:
+Note that the number of threads possible for a given computer differs with the onboard CPU, check this before running the parallelized code. Also remember to include the OpenMP library, as shown below:
 ```
+#include <omp.h>
 int main(int argc, char* argv[])
 {
 
