@@ -33,9 +33,12 @@ class solver
 
 
     public:
-    //Initializer
+    //Values under are chosen to be public for testing purposes.
     mat m_smatrix;
     double m_variance;
+    double m_Etotal_average;
+    double m_Mabstotal_average;
+
     void Initialize(int n_spins, int mcs, double init_temp, int param_1);
     //Functions
     void Metropolis();

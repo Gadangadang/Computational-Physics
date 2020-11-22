@@ -38,5 +38,18 @@ SECTION("Check if the Variance increases with the temperature:"){
   double variance_2 = Mcint1.m_variance;
   REQUIRE(fabs(variance_1) < fabs(variance_2));
 }
+SECTION("Check if numerical values for mean energy and magnetization match analytical up to a certain thershold"){
+  int mcs = 2e6;int L = 2;double param_1 = 0.;double T = 1;
+  Mcint1.Initialize(L, mcs,T,param_1);
+  string filename = "test.txt";
+  Mcint1.init_output(filename);
+  Mcint1.MonteCarloV2();
+  //Calculation and printing of analytical expressions for comparing.
+  double Z = 12 + 2*exp(8/((double)T)) + 2*exp(-8/((double)T));
+  double E_mean = (-16*exp(8/((double)T)) + 16*exp(-8/((double)T)))/((double) Z);
+  double M_mean =  (8*exp(8/((double)T))+16)/((double)Z);
+  REQUIRE(fabs(E_mean-Mcint1.m_Etotal_average)<fabs(E_mean)/((double)1000.));
+  REQUIRE(fabs(M_mean-Mcint1.m_Mabstotal_average)<fabs(M_mean)/((double)1000.));
+}
 
 }
