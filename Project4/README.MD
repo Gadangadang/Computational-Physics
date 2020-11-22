@@ -8,10 +8,24 @@ Due to the nature of the solution there are different mains for different tasks.
 ### Makefile setup
 The contents of the makefile look like this:
 ```
+all: compile execute
+
 compile:
-  	
+	#g++ -std=c++17 -O3 -flto -Wall -o CodeBase/main_c.x CodeBase/main_c.cpp CodeBase/solver.cpp   -larmadillo -llapack -lblas
+	#g++ -std=c++17 -O3 -flto -Wall -o CodeBase/main_d.x CodeBase/main_d.cpp CodeBase/solver.cpp   -larmadillo -llapack -lblas
+	#g++ -std=c++17 -O3 -flto -Wall -o CodeBase/main_e.x CodeBase/main_e.cpp CodeBase/solver.cpp   -larmadillo -llapack -lblas
+	#g++ -std=c++17 -O3 -fopenmp -Wall -o CodeBase/main_f.x CodeBase/main_f.cpp CodeBase/solver.cpp   -larmadillo -llapack -lblas
+	g++ -std=c++17 -O3 -fopenmp -flto -Wall -o CodeBase/main_g.x CodeBase/main_g.cpp CodeBase/solver.cpp   -larmadillo -llapack -lblas
+	# Mac computers needs this instead: -Xpreprocessor -fopenmp -lomp
 execute:
-	
+	#CodeBase/./main_c.x 100000 10 1.0 2.5 0.05
+	#CodeBase/./main_d.x
+	#CodeBase/./main_e.x
+	#CodeBase/./main_f.x 10000 40 2.0 2.5 0.05
+	Codebase/./main_g.x
+	#python3 CodeBase/Plotte_code_MB.py
+	#python3 CodeBase/plott_code_histo.py
+	#python3 Codebase/tcfind.py
 ```
 ### Instructions for running code
 a makefile comment is a '#' character. to run the makefile open a terminal and type 'make all' to execute.
@@ -54,10 +68,18 @@ Expected result for f):
 
 
 To run task g):
-
+  - uncomment the main_f line under the 'compile' section
+  - uncomment the main_f.x line under the 'execute' section
+  - uncumment the tcfind.py line under the 'execute' section
 
 Expected result for g):
-  
+  - Plot showing the heat capacity as function of temperature for L = 40 with a univariate spline interpolation
+  - Plot showing the heat capacity as function of temperature for L = 60 with a univariate spline interpolation
+  - Plot showing the heat capacity as function of temperature for L = 80 with a univariate spline interpolation
+  - Plot showing the heat capacity as function of temperature for L = 100 with a univariate spline interpolation
+  - Plot showing the univariate spline interpolation functions for all four L grids as function of temperature
+  - Terminal statement with residue for the four interpolation functions
+  - Critical temperature for $L = \infty$
 
 
 #### Example Use
