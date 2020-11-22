@@ -32,7 +32,6 @@ int main(int argc, char* argv[])
    finish = clock();
    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
    cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
-   //Mcint1.find_PE(20, 80000);
    string filename2 = "E.txt";
    int stabile_indx = 7e4;
    Mcint1.print_E_av(stabile_indx,filename2);
