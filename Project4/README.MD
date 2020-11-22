@@ -79,7 +79,7 @@ Expected result for g):
   - Plot showing the heat capacity as function of temperature for L = 100 with a univariate spline interpolation
   - Plot showing the univariate spline interpolation functions for all four L grids as function of temperature
   - Terminal statement with residue for the four interpolation functions
-  - Critical temperature for $L = \infty$
+  - Critical temperature for L = &infin;
 
 
 #### Example Use
