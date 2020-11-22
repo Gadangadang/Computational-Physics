@@ -98,8 +98,9 @@ void solver::MonteCarloV1(){
     }
 }// end function MonteCarloV1
 
-void solver::MonteCarloV2(){
+void solver::MonteCarloV2(string filename){
     // Monte Carlo cycles
+    m_filename = filename;
     for (int cycles = 1; cycles <= m_mcs; cycles++){
         m_counter =0;
         Metropolis();
@@ -108,7 +109,7 @@ void solver::MonteCarloV2(){
         m_average(2) += m_M*m_M; m_average(3) += fabs(m_M);
         m_cycles = cycles;
     }
-    output();
+    tcoutput(m_filename);
 }// end function MonteCarloV1
 
 void solver::init_output(string filename){
@@ -116,13 +117,15 @@ void solver::init_output(string filename){
       m_filename = filename;
       ofile.open(m_filename, ofstream::out | ofstream::trunc);
       ofile << setiosflags(ios::showpoint | ios::uppercase);
-      ofile << setw(15) << "Inital Temp";
-      ofile << setw(15) << "MC_cycles";
-      ofile << setw(15) << "E average";
-      ofile << setw(15) << "E variance";
-      ofile << setw(15) << "M variance";
-      ofile << setw(15) << "M abs total";
-      ofile << setw(15) << "Accepted flips"<< endl;
+      ofile << setw(20) << "Temperature";
+      ofile << setw(20) << "MC_cycles";
+      ofile << setw(20) << "E average";
+      ofile << setw(20) << "E variance";
+      ofile << setw(20) << "M variance";
+      ofile << setw(20) << "M abs total";
+      ofile << setw(20) << "Specific heat Cv";
+      ofile << setw(20) << "Susceptibility";
+      ofile << setw(20) << "Accepted configs" << endl;
   ofile.close();
 }
 
@@ -159,12 +162,40 @@ void solver::output(){
   double Evariance = (E2total_average- m_Etotal_average*m_Etotal_average);
   double Mvariance = (M2total_average - m_Mabstotal_average*m_Mabstotal_average);
   ofile << setiosflags(ios::showpoint | ios::uppercase);
-  ofile << setw(15) << setprecision(8) << m_init_temp;
-  ofile << setw(15) << setprecision(8) << m_cycles;
-  ofile << setw(15) << setprecision(8) << m_Etotal_average;
-  ofile << setw(15) << setprecision(8) << Evariance/m_init_temp_sq;
-  ofile << setw(15) << setprecision(8) << Mvariance/m_init_temp;
-  ofile << setw(15) << setprecision(8) << m_Mabstotal_average;
-  ofile << setw(15) << setprecision(8) << m_counter<<endl;
+  ofile << setw(20) << setprecision(8) << m_init_temp;
+  ofile << setw(20) << setprecision(8) << m_cycles;
+  ofile << setw(20) << setprecision(8) << m_Etotal_average;
+  ofile << setw(20) << setprecision(8) << Evariance/m_init_temp_sq;
+  ofile << setw(20) << setprecision(8) << Mvariance/m_init_temp;
+  ofile << setw(20) << setprecision(8) << m_Mabstotal_average;
+  ofile << setw(20) << " ";
+  ofile << setw(20) << " ";
+  ofile << setw(20) << setprecision(8) << m_counter<<endl;
   ofile.close();
 }// end output function
+
+void solver::tcoutput(string filename){
+  ofstream ofile;
+  ofile.open(filename, fstream::app);
+  double norma = 1/((double) (m_cycles));  // divided by total number of cycles
+  double Etotal_average = m_average[0]*norma;
+  double E2total_average = m_average[1]*norma;
+  double Mtotal_average = m_average[2]*norma;
+  double M2total_average = m_average[3]*norma;
+  double Evariance = (E2total_average- Etotal_average*Etotal_average)/m_tot_spins;
+  double Mvariance = (M2total_average - Mtotal_average*Mtotal_average)/m_tot_spins;
+  double Mabstotal_average = m_average[4]*norma;
+
+  double cv = Evariance/(m_init_temp*m_init_temp);
+  double xi = Mvariance/(m_init_temp*m_init_temp);
+  ofile << setiosflags(ios::showpoint | ios::uppercase);
+    ofile << setw(20) << setprecision(8) << m_init_temp;
+    ofile << setw(20) << " ";
+    ofile << setw(20) << setprecision(8) << Etotal_average;
+    ofile << setw(20) << " ";
+    ofile << setw(20) << " ";
+    ofile << setw(20) << setprecision(8) << Mabstotal_average;
+    ofile << setw(20) << setprecision(8) << cv;
+    ofile << setw(20) << setprecision(8) << xi << endl;
+  ofile.close();
+}
