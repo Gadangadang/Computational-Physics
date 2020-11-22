@@ -5,6 +5,23 @@ Here are the instructions for operating the numerical machinery.
 ## preamble:
 Due to the nature of the solution there are different mains for different tasks. This is because our solver class is very general, and therefore requires specialized input for different solutions. Therefore, all code is inside the 'CodeBase' folder and you will execute the different aspects by editing and running the makefile. Its intended to run only one main_X at a time. We have not tested with multiple mains, but it should work.
 
+To run main_f.x, you will need to have OpenMP installed. More information on OpenMP can be found at https://openmp.llvm.org/ and https://www.openmp.org/. 
+For unix operating systems this can be done using homebrew:
+```
+brew install libomp
+```
+When compiling with OpenMp, iOS differs from other unix based operating systems, as well as Windows. 
+
+For Windows/Linux:
+```
+g++ -fopenmp -o test.cpp
+```
+
+For iOS:
+```
+g++ -Xpreprocessor -fopenmp -lomp -o test.cpp
+```
+
 ### Makefile setup
 The contents of the makefile look like this:
 ```
@@ -15,14 +32,13 @@ compile:
 	#g++ -std=c++17 -O3 -flto -Wall -o CodeBase/main_d.x CodeBase/main_d.cpp CodeBase/solver.cpp   -larmadillo -llapack -lblas
 	#g++ -std=c++17 -O3 -flto -Wall -o CodeBase/main_e.x CodeBase/main_e.cpp CodeBase/solver.cpp   -larmadillo -llapack -lblas
 	#g++ -std=c++17 -O3 -fopenmp -Wall -o CodeBase/main_f.x CodeBase/main_f.cpp CodeBase/solver.cpp   -larmadillo -llapack -lblas
-	g++ -std=c++17 -O3 -fopenmp -flto -Wall -o CodeBase/main_g.x CodeBase/main_g.cpp CodeBase/solver.cpp   -larmadillo -llapack -lblas
 	# Mac computers needs this instead: -Xpreprocessor -fopenmp -lomp
 execute:
 	#CodeBase/./main_c.x 100000 10 1.0 2.5 0.05
 	#CodeBase/./main_d.x
 	#CodeBase/./main_e.x
 	#CodeBase/./main_f.x 10000 40 2.0 2.5 0.05
-	Codebase/./main_g.x
+	
 	#python3 CodeBase/Plotte_code_MB.py
 	#python3 CodeBase/plott_code_histo.py
 	#python3 Codebase/tcfind.py
@@ -31,10 +47,7 @@ execute:
 a makefile comment is a '#' character. to run the makefile open a terminal and type 'make all' to execute.
 
 To run task a):
-  - uncomment the main_a line under the 'compile' section
-  - uncomment the main_a.x line under the 'execute' section
-  - uncomment the Plotte_code.py line under the 'execute' section
-  - uncomment the Plotte_code_MB.py line under the 'execute' section
+  
 
 Expected result for a):
  
