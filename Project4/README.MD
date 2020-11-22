@@ -109,6 +109,7 @@ Expected result for e):
 
 
 #### General example for unparallelized code:
+Here you have to define the temperature, the step size and the number of Monte Carlo cycles. These should be omptimized to your computer, as an increase in Monte Carlo cycles will increase computation time, especially when using a laptop.
 ```
 int main(int argc, char* argv[]){
    solver Mcint1;
@@ -137,7 +138,7 @@ int main(int argc, char* argv[]){
 ```
 
 #### General example for parallelized code. 
-Note that the number of threads possible for a given computer differs with the onboard CPU, check this before running the parallelized code. Also remember to include the OpenMP library, as shown below:
+Note that the number of threads possible for a given computer differs with the onboard CPU, check this before running the parallelized code. Here you have to define the temperature domain, the step size and the number of Monte Carlo cycles. These should be omptimized to your computer, as an increase in Monte Carlo cycles and a decrease in step size will significantly increase the computation time, especially when using a laptop. In the for loop, you choose the different spin numbers, and how many different lattices you wish to look at. Also remember to include the OpenMP library, as shown below:
 ```
 #include <omp.h>
 int main(int argc, char* argv[])
