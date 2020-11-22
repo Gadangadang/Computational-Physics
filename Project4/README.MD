@@ -6,11 +6,12 @@ Here are the instructions for operating the numerical machinery.
 Due to the nature of the solution there are different mains for different tasks. This is because our solver class is very general, and therefore requires specialized input for different solutions. Therefore, all code is inside the 'CodeBase' folder and you will execute the different aspects by editing and running the makefile. Its intended to run only one main_X at a time. We have not tested with multiple mains, but it should work.
 
 To run main_f.x, you will need to have OpenMP installed. More information on OpenMP can be found at https://openmp.llvm.org/ and https://www.openmp.org/. 
+
 For unix operating systems this can be done using homebrew:
 ```
 brew install libomp
 ```
-When compiling with OpenMp, iOS differs from other unix based operating systems, as well as Windows. 
+When compiling with OpenMP, iOS differs from other unix based operating systems, as well as Windows. 
 
 For Windows/Linux:
 ```
@@ -32,49 +33,48 @@ compile:
 	#g++ -std=c++17 -O3 -flto -Wall -o CodeBase/main_d.x CodeBase/main_d.cpp CodeBase/solver.cpp   -larmadillo -llapack -lblas
 	#g++ -std=c++17 -O3 -flto -Wall -o CodeBase/main_e.x CodeBase/main_e.cpp CodeBase/solver.cpp   -larmadillo -llapack -lblas
 	#g++ -std=c++17 -O3 -fopenmp -Wall -o CodeBase/main_f.x CodeBase/main_f.cpp CodeBase/solver.cpp   -larmadillo -llapack -lblas
+	#g++ -std=c++17 -O2 -flto -Wall -o CodeBase/unit.x CodeBase/Unittest.cpp CodeBase/solver.cpp -larmadillo -llapack -lblas
 	# Mac computers needs this instead: -Xpreprocessor -fopenmp -lomp
 execute:
-	#CodeBase/./main_c.x 100000 10 1.0 2.5 0.05
+	#CodeBase/./main_c.x
 	#CodeBase/./main_d.x
 	#CodeBase/./main_e.x
-	#CodeBase/./main_f.x 10000 40 2.0 2.5 0.05
-	
-	#python3 CodeBase/Plotte_code_MB.py
+	#CodeBase/./main_f.x
+	#CodeBase/./unit.x
+	#python3 CodeBase/plot_ac.py
 	#python3 CodeBase/plott_code_histo.py
 	#python3 Codebase/tcfind.py
 ```
 ### Instructions for running code
 a makefile comment is a '#' character. to run the makefile open a terminal and type 'make all' to execute.
 
-To run task a):
-  
-
-Expected result for a):
- 
-
-
 To run task c):
-  
+  - uncomment the main_c line under the 'compile' section
+  - uncomment the main_c line under the 'execute' section
 
 Expected result for c):
- 
+  - 
 
 
 To run task d):
- 
+  - uncomment the main_d line under the 'compile' section
+  - uncomment the main_d line under the 'execute' section
 
 Expected result for d):
 
 
 
 To run task e):
+  - uncomment the main_e line under the 'compile' section
+  - uncomment the main_e line under the 'execute' section
  
 Expected result for e):
   
 
 
 To run task f):
- 
+  - uncomment the main_f line under the 'compile' section
+  - uncomment the main_f line under the 'execute' section
 
 Expected result for f):
 
