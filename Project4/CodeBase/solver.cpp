@@ -140,7 +140,7 @@ void solver::print_E_av(int stabile_indx, string filename){
 }
 void solver::calc_variance(int stabile_indx){
   double N = 1/ ((double)m_mcs-stabile_indx);
-  cout <<N<<endl;
+  //cout <<N<<endl;
   double E_avg = 0;
   for(int i=stabile_indx;i<m_mcs; i++){
     E_avg += m_E_vals[i];

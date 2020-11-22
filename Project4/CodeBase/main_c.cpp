@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
    Mcint1.Initialize(L, mcs,T,param_1);
    string filename = "MonteCarloRun.txt";
    Mcint1.init_output(filename);
-   Mcint1.MonteCarloV2();
+   Mcint1.MonteCarloV2(filename);
    finish = clock();
    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
    cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
@@ -42,10 +42,10 @@ int main(int argc, char* argv[])
    double MM_mean = (2*(4*4)*exp(8/((double)T))+8*(2*2))/((double)Z);
    double c_v = (EE_mean-E_mean*E_mean)/((double)T*T);
    double X = (MM_mean-M_mean*M_mean)/((double)T);
-   cout <<E_mean<<endl;
-   cout <<M_mean<<endl;
-   cout <<c_v<<endl;
-   cout <<X<<endl;
+   cout << "Mean value of E = " << E_mean<<endl;
+   cout << "Mean value of M = " <<M_mean<<endl;
+   cout << "C_v = " <<c_v<<endl;
+   cout << "X = "<< X<<endl;
 
 return 0;
 }
