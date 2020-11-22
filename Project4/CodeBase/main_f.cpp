@@ -20,7 +20,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 
-   int mcs = 1e4;
+   int mcs = 1e3;
    double init_temp = 2.1;
    double final_temp = 2.4;
    double t_step = 0.001;

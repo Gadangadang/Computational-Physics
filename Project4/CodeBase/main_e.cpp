@@ -32,8 +32,11 @@ int main(int argc, char* argv[])
    finish = clock();
    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
    cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
-   //Mcint1.find_PE(20, 80000);
    string filename2 = "E.txt";
-   Mcint1.print_E_av(7e4,filename2);
+   int stabile_indx = 7e4;
+   Mcint1.print_E_av(stabile_indx,filename2);
+   Mcint1.calc_variance(stabile_indx);
+   cout<< setprecision(4)<< "The variance of the energy is "<<Mcint1.m_variance << endl;
+   cout<< setprecision(4)<< "The standard deviation of the energy is "<<sqrt(Mcint1.m_variance)<< endl;
 return 0;
 }
