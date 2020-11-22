@@ -23,11 +23,10 @@ for name in files:
         x5 = float(line.split()[4])
         x6 = float(line.split()[5])
         x7 = float(line.split()[6])
-        x8 = float(line.split()[7])
         Mcs_l.append(x2)
         E_average.append(x3)
-        M_abs_tot.append(x7)
-        counter.append(x8)
+        M_abs_tot.append(x6)
+        counter.append(x7)
     if i<2:
         ax1.plot(Mcs_l,counter)
         ax2.plot(Mcs_l,E_average)

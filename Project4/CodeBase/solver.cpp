@@ -105,7 +105,7 @@ void solver::MonteCarloV2(){
         Metropolis();
     // update expectation values
         m_average(0) += m_E; m_average(1) += m_E*m_E;
-        m_average(2) += m_M; m_average(3) += m_M*m_M; m_average(4) += fabs(m_M);
+        m_average(2) += m_M*m_M; m_average(3) += fabs(m_M);
         m_cycles = cycles;
 
     }
@@ -121,10 +121,9 @@ void solver::init_output(string filename){
       ofile << setw(15) << "MC_cycles";
       ofile << setw(15) << "E average";
       ofile << setw(15) << "E variance";
-      ofile << setw(15) << "M average";
       ofile << setw(15) << "M variance";
       ofile << setw(15) << "M abs total";
-      ofile << setw(15) << "Number of accepted configs"<< endl;
+      ofile << setw(15) << "Accepted configs"<< endl;
   ofile.close();
 }
 
@@ -155,9 +154,8 @@ void solver::output(){
   double norma = 1/((double) (m_cycles));  // divided by total number of cycles
   double Etotal_average = m_average[0]*norma;
   double E2total_average = m_average[1]*norma;
-  double Mtotal_average = m_average[2]*norma;
-  double M2total_average = m_average[3]*norma;
-  double Mabstotal_average = m_average[4]*norma;
+  double M2total_average = m_average[2]*norma;
+  double Mabstotal_average = m_average[3]*norma;
   // all expectation values are per spin, divide by 1/n_spins/n_spins
   double Evariance = (E2total_average- Etotal_average*Etotal_average);
   double Mvariance = (M2total_average - Mabstotal_average*Mabstotal_average);
@@ -166,7 +164,6 @@ void solver::output(){
   ofile << setw(15) << setprecision(8) << m_cycles;
   ofile << setw(15) << setprecision(8) << Etotal_average;
   ofile << setw(15) << setprecision(8) << Evariance/m_init_temp_sq;
-  ofile << setw(15) << setprecision(8) << Mtotal_average/m_tot_spins;
   ofile << setw(15) << setprecision(8) << Mvariance/m_init_temp;
   ofile << setw(15) << setprecision(8) << Mabstotal_average;
   ofile << setw(15) << setprecision(8) << m_counter<<endl;
