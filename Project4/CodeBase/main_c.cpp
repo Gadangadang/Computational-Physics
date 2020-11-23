@@ -1,6 +1,6 @@
 #include <iostream>
 #include "armadillo"
-#include "solver.hpp"
+#include "Ising.hpp"
 #include <new>
 #include <cstdio>
 #include <cstdlib>
@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
    int mcs = 1e8;
    int L = 2;
    double param_1 = 0.;
-   solver Mcint1;
+   Ising Mcint1;
    clock_t start, finish;
    start = clock();
    double T = 1;

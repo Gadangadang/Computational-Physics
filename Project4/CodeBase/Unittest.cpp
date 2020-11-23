@@ -4,12 +4,12 @@
 #include "armadillo"
 #include <cstdio>
 #include <math.h>
-#include "solver.hpp"
+#include "Ising.hpp"
 
 using namespace arma ;
 
 TEST_CASE( "Check for errors in code" ) {
-  solver Mcint1;
+  Ising Mcint1;
 SECTION("Check if the spins ar randomly ordered:"){
   //Checks if the spins are randomly ordered by checking if the avarage spin
   //converges towards 0.
