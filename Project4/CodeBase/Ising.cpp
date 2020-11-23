@@ -1,5 +1,5 @@
 #include "armadillo"
-#include "solver.hpp"
+#include "Ising.hpp"
 #include <iostream>
 #include <new>
 #include <cstdio>
@@ -18,7 +18,7 @@ using namespace arma;
 using namespace std;
 
 
-void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
+void Ising::Initialize(int n_spins, int mcs, double init_temp, int param_1){
 // Initialize internal Class variables
     m_smatrix = zeros<mat>(n_spins, n_spins);
     m_spins = n_spins;
@@ -56,16 +56,16 @@ void solver::Initialize(int n_spins, int mcs, double init_temp, int param_1){
     for( int de =-8; de <= 8; de+=4) m_w[de+8] = exp(-de/init_temp);
 }// end function initialise
 
-double solver::ran1(){ // can I even call double(long) to specify long storage of type double?;
+double Ising::ran1(){ // can I even call double(long) to specify long storage of type double?;
     double Rnum = dis(generator);
     return Rnum;
 }
 
-int solver::periodic(int i, int limit, int add){
+int Ising::periodic(int i, int limit, int add){
     //  Algorithm to keep the iteration within the lattice by detecting the boundary.
     return (i+limit+add) % (limit);
 }
-void solver::Metropolis(){
+void Ising::Metropolis(){
 
 // loop over all spins
             for(int spin =0; spin < m_tot_spins; spin++){
@@ -84,7 +84,7 @@ void solver::Metropolis(){
 }// End of the Metropolis function.
 }
 
-void solver::MonteCarloV1(){
+void Ising::MonteCarloV1(){
         m_counter =0;
     // Monte Carlo cycles
     for (int cycles = 1; cycles <= m_mcs; cycles++){
@@ -98,7 +98,7 @@ void solver::MonteCarloV1(){
     }
 }// end function MonteCarloV1
 
-void solver::MonteCarloV2(string filename){
+void Ising::MonteCarloV2(string filename){
     // Monte Carlo cycles
     m_filename = filename;
     for (int cycles = 1; cycles <= m_mcs; cycles++){
@@ -112,7 +112,7 @@ void solver::MonteCarloV2(string filename){
     tcoutput(m_filename);
 }// end function MonteCarloV1
 
-void solver::init_output(string filename){
+void Ising::init_output(string filename){
   ofstream ofile;
       m_filename = filename;
       ofile.open(m_filename, ofstream::out | ofstream::trunc);
@@ -129,7 +129,7 @@ void solver::init_output(string filename){
   ofile.close();
 }
 
-void solver::print_E_av(int stabile_indx, string filename){
+void Ising::print_E_av(int stabile_indx, string filename){
   ofstream ofile;
   ofile.open(filename);
   ofile << setiosflags(ios::showpoint | ios::uppercase);
@@ -138,7 +138,7 @@ void solver::print_E_av(int stabile_indx, string filename){
   }
   ofile.close();
 }
-void solver::calc_variance(int stabile_indx){
+void Ising::calc_variance(int stabile_indx){
   double N = 1/ ((double)m_mcs-stabile_indx);
   //cout <<N<<endl;
   double E_avg = 0;
@@ -150,7 +150,7 @@ void solver::calc_variance(int stabile_indx){
   for(int i=stabile_indx;i<m_mcs; i++){m_variance += (E_avg-m_E_vals[i])*(E_avg-m_E_vals[i]);}
   m_variance *= N;
 }
-void solver::output(){
+void Ising::output(){
 // Borrowed most of this. Will probably make changes to the output structure, maybe.
   ofstream ofile;
   ofile.open(m_filename, fstream::app);
@@ -174,7 +174,7 @@ void solver::output(){
   ofile.close();
 }// end output function
 
-void solver::tcoutput(string filename){
+void Ising::tcoutput(string filename){
   ofstream ofile;
   ofile.open(filename, fstream::app);
   double norma = 1/((double) (m_cycles));  // divided by total number of cycles

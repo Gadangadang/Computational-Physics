@@ -8,7 +8,7 @@
 using namespace arma;
 using namespace std;
 
-class solver
+class Ising
 {
     private:
     // Attributes
@@ -58,4 +58,4 @@ class solver
 
 };
 
-#endif // SOLVER_MCINT
+#endif // ISING_MCINT
