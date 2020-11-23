@@ -7,11 +7,7 @@ Due to the nature of the solution there are different mains for different tasks.
 
 To run main_f.x, you will need to have OpenMP installed. More information on OpenMP can be found at https://openmp.llvm.org/ and https://www.openmp.org/. 
 
-For Mac OS this can be done using homebrew:
-```
-brew install libomp
-```
-When compiling with OpenMP, iOS differs from other unix based operating systems, as well as Windows. 
+When compiling with OpenMP, iOS differs from other unix based operating systems, as well as Windows. You will need to add or change the following flags in the Makefile to accomodate your operating system:
 
 For Windows/Linux:
 ```
@@ -41,16 +37,18 @@ execute:
 	#CodeBase/./main_e.x
 	#CodeBase/./main_f.x
 	#CodeBase/./unit.x
-	#python3 CodeBase/plot_ac.py
-	#python3 CodeBase/plott_code_histo.py
-	#python3 Codebase/tcfind.py
+	#python3 CodeBase/EMC_visual.py
+	#python3 CodeBase/E_histogram.py
+	#python3 Codebase/T_critical.py
 ```
 #### Instructions for running code
-a makefile comment is a '#' character. to run the makefile open a terminal and type 'make all' to execute.
+a makefile comment is a '#' character. To configure the Makefile you uncomment the files you would like to run. Do this under bot the 'Compile' and 'Execution' sections. For example to run our implementation of c):
 
-### To run task c):
-  - uncomment the main_c line under the 'compile' section
-  - uncomment the main_c line under the 'execute' section
+  - uncomment the line containing main_c under the 'compile' section
+  - uncomment the line containing main_c.x under the 'execute' section
+  
+to run the makefile open a terminal and go to the 'Project4' folder. Type 'make all' and execute.
+
 
 ### Expected result for c):
   - Terminal statement with time used to run computation
@@ -58,12 +56,6 @@ a makefile comment is a '#' character. to run the makefile open a terminal and t
   - Terminal statement with the mean value for magnetization, marked with M
   - Terminal statement with heat capacity, marked as C_v
   - Terminal statement with susceptibility, marked as X
-
-
-### To run task d):
-  - uncomment the main_d line under the 'compile' section
-  - uncomment the main_d line under the 'execute' section
-  - uncomment the plot_ac line under the 'execute' section
 
 ### Expected result for d):
   - Terminal statement with time used to run computation
@@ -74,23 +66,12 @@ a makefile comment is a '#' character. to run the makefile open a terminal and t
   - Plot showing mean magnetization as function of Monte Carlo cylces for random and ordered configuration at a given temperature T = 2. 
   - Plot showing mean energy as function of Monte Carlo cylces for random and ordered configuration at a given temperature T = 2. 
   - Plot showing accepted configurations as function of Monte Carlo cylces for random and ordered configuration at a given temperature T = 2. 
-
-
-### To run task e):
-  - uncomment the main_e line under the 'compile' section
-  - uncomment the main_e line under the 'execute' section
-  - uncomment the plot_code_histo line under the 'execute' section
  
 Expected result for e):
   - Terminal statement with time used to run computation
   - Terminal statement with variance of energy
   - Terminal statement with standard deviation of energy
   - Plot showing a histogram of probability as function of energy
-
-### To run task f and g):
-  - uncomment the main_f line under the 'compile' section
-  - uncomment the main_f.x line under the 'execute' section
-  - uncumment the tcfind.py line under the 'execute' section
 
 ### Expected result for f and g):
   - Plot showing the heat capacity as function of temperature for L = 40 with a univariate spline interpolation
@@ -108,47 +89,20 @@ Expected result for e):
   - Plot showing the susceptibility as function of temperature for L = 100 
 
 
-#### General example for unparallelized code:
-Here you have to define the temperature, the step size and the number of Monte Carlo cycles. These should be omptimized to your computer, as an increase in Monte Carlo cycles will increase computation time, especially when using a laptop.
-```
-int main(int argc, char* argv[]){
-   solver Mcint1;
-   
-   clock_t start, finish;
-   start = clock();
-   
-   double L = 20.;
-   double T = 2.4;
-   int mcs_max = 1e5;
-   int param_1 = 0.;
-   
-   Mcint1.Initialize(L, mcs_max,T,param_1);
-   string filename = "MonteCarloRun.txt";
-   Mcint1.init_output(filename);
-   Mcint1.MonteCarloV1();
-   
-   finish = clock();
-   double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
-   cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
 
-   return 0;
-   
-}
-
-```
-
-#### General example for parallelized code. 
-Note that the number of threads possible for a given computer differs with the onboard CPU, check this before running the parallelized code. Here you have to define the temperature domain, the step size and the number of Monte Carlo cycles. These should be omptimized to your computer, as an increase in Monte Carlo cycles and a decrease in step size will significantly increase the computation time, especially when using a laptop. In the for loop, you choose the different spin numbers, and how many different lattices you wish to look at. Also remember to include the OpenMP library, as shown below:
+#### General example of the code. 
+Note that the number of threads possible for a given computer differs with the onboard CPU and you should check different 'omp_set_numthreads()' numbers before ruuning large computations. In brief testing we found there to be as much as 5% difference in computation time. You also have to define the temperature domain, the step size and the number of Monte Carlo cycles. These should be omptimized to your computer, as an increase in Monte Carlo cycles and/or a decrease in temperature step size will significantly increase the computation time. In the for loop, you choose the different spin numbers, and how many different lattices you wish to look at. Also remember to include the OpenMP library, as shown below:
 ```
 #include <omp.h>
 int main(int argc, char* argv[])
 {
-
-   int mcs = 1e3;
-   double init_temp = 2.1;
-   double final_temp = 2.4;
-   double t_step = 0.001;
-   int param = 0;
+   // Computational variables.
+   
+   int mcs = 1e3; // Number of Monte Carlo simulations
+   double init_temp = 2.1; // start temperature
+   double final_temp = 2.4; // last temperature
+   double t_step = 0.001; // step size for iterating 
+   int param = 0; // ordered lattice structure (all pointing up) = 1, or = 0 for random ordering.
 
    string name[4] = {"MCL40.txt", "MCL60.txt", "MCL80.txt", "MCL100.txt"};
    int p = 0;
