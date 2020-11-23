@@ -18,8 +18,6 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-// Borrowing the initial code from the lecturenote2015.pdf, page 437.
-// Available at: https://github.com/CompPhysics/ComputationalPhysics/tree/master/doc/Lectures
    int mcs = 1e8;
    int L = 2;
    double param_1 = 0.;

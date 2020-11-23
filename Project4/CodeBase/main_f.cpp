@@ -20,11 +20,11 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 
-   int mcs = 1e3;
-   double init_temp = 2.1;
-   double final_temp = 2.4;
-   double t_step = 0.001;
-   int param = 0;
+   int mcs = 1e3; // Number of Monte Carlo simulations
+   double init_temp = 2.1; // start temperature
+   double final_temp = 2.4; // last temperature
+   double t_step = 0.001; // step size for iterating 
+   int param = 0; // ordered lattice structure (all pointing up) = 1, or = 0 for random ordering.
 
    string name[4] = {"MCL40.txt", "MCL60.txt", "MCL80.txt", "MCL100.txt"};
    int p = 0;
