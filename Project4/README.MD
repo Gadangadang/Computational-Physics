@@ -7,7 +7,7 @@ Due to the nature of the solution there are different mains for different tasks.
 
 To run main_f.x, you will need to have OpenMP installed. More information on OpenMP can be found at https://openmp.llvm.org/ and https://www.openmp.org/. 
 
-For unix operating systems this can be done using homebrew:
+For Mac OS this can be done using homebrew:
 ```
 brew install libomp
 ```
@@ -45,57 +45,71 @@ execute:
 	#python3 CodeBase/plott_code_histo.py
 	#python3 Codebase/tcfind.py
 ```
-### Instructions for running code
+#### Instructions for running code
 a makefile comment is a '#' character. to run the makefile open a terminal and type 'make all' to execute.
 
-To run task c):
+### To run task c):
   - uncomment the main_c line under the 'compile' section
   - uncomment the main_c line under the 'execute' section
 
-Expected result for c):
-  - 
+### Expected result for c):
+  - Terminal statement with time used to run computation
+  - Terminal statement with the mean value for energy, maked with E
+  - Terminal statement with the mean value for magnetization, marked with M
+  - Terminal statement with heat capacity, marked as C_v
+  - Terminal statement with susceptibility, marked as X
 
 
-To run task d):
+### To run task d):
   - uncomment the main_d line under the 'compile' section
   - uncomment the main_d line under the 'execute' section
+  - uncomment the plot_ac line under the 'execute' section
 
-Expected result for d):
+### Expected result for d):
+  - Terminal statement with time used to run computation
+  - Plot showing mean magnetization as function of Monte Carlo cylces for random and ordered configuration at a given temperature T = 1. 
+  - Plot showing mean energy as function of Monte Carlo cylces for random and ordered configuration at a given temperature T = 1. 
+  - Plot showing accepted configurations as function of Monte Carlo cylces for random and ordered configuration at a given temperature T = 1. 
+  
+  - Plot showing mean magnetization as function of Monte Carlo cylces for random and ordered configuration at a given temperature T = 2. 
+  - Plot showing mean energy as function of Monte Carlo cylces for random and ordered configuration at a given temperature T = 2. 
+  - Plot showing accepted configurations as function of Monte Carlo cylces for random and ordered configuration at a given temperature T = 2. 
 
 
-
-To run task e):
+### To run task e):
   - uncomment the main_e line under the 'compile' section
   - uncomment the main_e line under the 'execute' section
+  - uncomment the plot_code_histo line under the 'execute' section
  
 Expected result for e):
-  
+  - Terminal statement with time used to run computation
+  - Terminal statement with variance of energy
+  - Terminal statement with standard deviation of energy
+  - Plot showing a histogram of probability as function of energy
 
-
-To run task f):
-  - uncomment the main_f line under the 'compile' section
-  - uncomment the main_f line under the 'execute' section
-
-Expected result for f):
-
-
-
-To run task g):
+### To run task f and g):
   - uncomment the main_f line under the 'compile' section
   - uncomment the main_f.x line under the 'execute' section
   - uncumment the tcfind.py line under the 'execute' section
 
-Expected result for g):
+### Expected result for f and g):
   - Plot showing the heat capacity as function of temperature for L = 40 with a univariate spline interpolation
   - Plot showing the heat capacity as function of temperature for L = 60 with a univariate spline interpolation
   - Plot showing the heat capacity as function of temperature for L = 80 with a univariate spline interpolation
   - Plot showing the heat capacity as function of temperature for L = 100 with a univariate spline interpolation
   - Plot showing the univariate spline interpolation functions for all four L grids as function of temperature
+  
   - Terminal statement with residue for the four interpolation functions
   - Critical temperature for L = &infin;
+  
+  - Plot showing the susceptibility as function of temperature for L = 40 
+  - Plot showing the susceptibility as function of temperature for L = 60 
+  - Plot showing the susceptibility as function of temperature for L = 80 
+  - Plot showing the susceptibility as function of temperature for L = 100 
 
 
 #### General example for unparallelized code:
+Here you have to define the temperature, the step size and the number of Monte Carlo cycles. These should be omptimized to your computer, as an increase in Monte Carlo cycles will increase computation time, especially when using a laptop.
 ```
 int main(int argc, char* argv[]){
    solver Mcint1;
@@ -124,7 +138,7 @@ int main(int argc, char* argv[]){
 ```
 
 #### General example for parallelized code. 
-Note that the number of threads possible for a given computer differs with the onboard CPU, check this before running the parallelized code. Also remember to include the OpenMP library, as shown below:
+Note that the number of threads possible for a given computer differs with the onboard CPU, check this before running the parallelized code. Here you have to define the temperature domain, the step size and the number of Monte Carlo cycles. These should be omptimized to your computer, as an increase in Monte Carlo cycles and a decrease in step size will significantly increase the computation time, especially when using a laptop. In the for loop, you choose the different spin numbers, and how many different lattices you wish to look at. Also remember to include the OpenMP library, as shown below:
 ```
 #include <omp.h>
 int main(int argc, char* argv[])
