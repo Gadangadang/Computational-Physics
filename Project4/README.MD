@@ -7,7 +7,7 @@ Due to the nature of the solution there are different mains for different tasks.
 
 To run main_f.x, you will need to have OpenMP installed. More information on OpenMP can be found at https://openmp.llvm.org/ and https://www.openmp.org/. 
 
-For unix operating systems this can be done using homebrew:
+For Mac OS this can be done using homebrew:
 ```
 brew install libomp
 ```
