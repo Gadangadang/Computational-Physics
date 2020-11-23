@@ -42,7 +42,7 @@ execute:
 	#python3 Codebase/T_critical.py
 ```
 #### Instructions for running code
-a makefile comment is a '#' character. To configure the Makefile you uncomment the files you would like to run. Do this under bot the 'Compile' and 'Execution' sections. For example to run our implementation of c):
+a makefile comment is a '#' character. To configure the Makefile you uncomment the files you would like to run. Do this under both the 'Compile' and 'Execution' sections. For example to run our implementation of c):
 
   - uncomment the line containing main_c under the 'compile' section
   - uncomment the line containing main_c.x under the 'execute' section
