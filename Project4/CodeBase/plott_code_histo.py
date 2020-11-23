@@ -9,6 +9,7 @@ for line in data:
     Energy.append(x1)
 num_bins = len(Energy)
 n, bins, patches = plt.hist(Energy, 300, density=True, facecolor='b')
-plt.xlabel("Energy[J/k]")
+plt.title("P(E) after the steady state situation is reached.")
+plt.xlabel("E/J")
 plt.ylabel("P(E)")
 plt.show()
