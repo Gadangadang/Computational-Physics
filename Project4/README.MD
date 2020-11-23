@@ -117,7 +117,7 @@ int main(int argc, char* argv[])
      #pragma omp parallel for
      for(int i = 0; i <= iter; i++){
        double i_temp = (double) init_temp + i*t_step;
-       solver Mcint1;
+       Ising Mcint1;
        string filename = name[p];
 
        Mcint1.Initialize(L, mcs, i_temp, param);
