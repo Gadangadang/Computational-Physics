@@ -91,7 +91,7 @@ Expected result for e):
 
 
 #### General example of the code. 
-Note that the number of threads possible for a given computer differs with the onboard CPU and you should check different 'omp_set_numthreads()' numbers before ruuning large computations. In brief testing we found there to be as much as 5% difference in computation time. You also have to define the temperature domain, the step size and the number of Monte Carlo cycles. These should be omptimized to your computer, as an increase in Monte Carlo cycles and/or a decrease in temperature step size will significantly increase the computation time. In the for loop, you choose the different spin numbers, and how many different lattices you wish to look at. Also remember to include the OpenMP library, as shown below:
+Note that the number of threads possible for a given computer differs with the onboard CPU and you should check different 'omp_set_numthreads()' numbers before running large computations. In brief testing we found there to be as much as 5% difference in computation time. You also have to define the temperature domain, the step size and the number of Monte Carlo cycles. These should be omptimized to your computer, as an increase in Monte Carlo cycles and/or a decrease in temperature step size will significantly increase the computation time. In the for loop, you choose the different spin numbers, and how many different lattices you wish to look at. Also remember to include the OpenMP library, as shown below:
 ```
 #include <omp.h>
 int main(int argc, char* argv[])
