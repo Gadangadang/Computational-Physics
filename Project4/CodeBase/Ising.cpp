@@ -35,20 +35,20 @@ void Ising::Initialize(int n_spins, int mcs, double init_temp, int param_1){
     m_smatrix.fill(1);
 // function to initialise energy, magnetization, and populate spin-matrix
     for(int y =0; y < m_spins; y++) {
-    for (int x= 0; x < m_spins; x++){
-    if(param_1==0){
-      if(ran1()<0.5){m_smatrix(y,x) *=-1;}
-    }
-    m_M += (double) m_smatrix(y, x);
-    }
+      for (int x= 0; x < m_spins; x++){
+        if(param_1==0){
+          if(ran1()<0.5){m_smatrix(y,x) *=-1;}
+        }
+        m_M += (double) m_smatrix(y, x);
+      }
     }
 
 // setup initial energy
     for(int y =0; y < m_spins; y++) {
-    for (int x= 0; x < m_spins; x++){
-    // kan bytte om denne til å ligge på linje 37 ??
-    m_E -= (double) m_smatrix(y, x)*(m_smatrix(periodic(y,m_spins,-1), x) + m_smatrix(y, periodic(x,m_spins,-1)));
-    }
+      for (int x= 0; x < m_spins; x++){
+        // kan bytte om denne til å ligge på linje 37 ??
+        m_E -= (double) m_smatrix(y, x)*(m_smatrix(periodic(y,m_spins,-1), x) + m_smatrix(y, periodic(x,m_spins,-1)));
+      }
     }
 
 // setup array for possible energy changes
