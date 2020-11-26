@@ -44,19 +44,19 @@ double Finance::p_dist(double delta_m){
 }
 void Finance::Metropolis(){
 // loop over all spins
-          
+
   int i = (int) (ran1()*(double)m_agents);
   int j = (int) (ran1()*(double)m_agents);
   double eps = ran1();
   double delta_m = -m_avec(i)+eps*(double)(m_avec(i)+m_avec(j));
   double tax = delta_m/10;
   if ( ran1() < p_dist(delta_m)){
-    m_avec(i) += delta_m - tax;
+    m_avec(i) += delta_m ; //- tax;
     m_avec(j) -= delta_m ;
     m_counter ++;}
-  if (m_avec(i) < max(m_avec)/10){
-    m_avec(i) += tax;
-  }
+  //if (m_avec(i) < max(m_avec)/10){
+    //m_avec(i) += tax;
+  //}
 
 //}// End of the Metropolis function.
 }

@@ -14,7 +14,7 @@ plt.axvspan(np.max(Mon)*0.95 , np.max(Mon), facecolor='gold', alpha=0.5, label="
 n, bins, patches = plt.hist(Mon, 200, facecolor='b')
 #plt.axhspan(0, np.max(np.asarray(n)), facecolor='0.2', alpha=0.5) #Y coordinate
 
-plt.title("True beauty of capitalisme")
+plt.title("True beauty of capitalism")
 plt.xlabel("Money $$$")
 plt.ylabel("Peepz :D")
 plt.legend()
