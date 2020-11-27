@@ -22,6 +22,7 @@ class Finance
     double m_variance;
     double m_savings;
     double m_norm;
+    double m_alpha;
     int m_counter;
     string m_filename;
     mt19937_64 generator;
@@ -30,7 +31,7 @@ class Finance
     public:
     //Values under are chosen to be public for testing purposes.
 
-    void Initialize(int mcs, int agents, double m_0, string filename, double tax_or_no, double tax, double savings);
+    void Initialize(int mcs, int agents, double m_0, string filename, double tax_or_no, double tax, double savings, double alpha);
     //Functions
     void print_omega(string filename);
     void Metropolis();
@@ -39,7 +40,7 @@ class Finance
     void print_avg_dist();
     void print_vec(string filename);
     double ran1();
-    double p_dist(double delta_m);
+    double p_dist(int i, int j);
     void calc_avg_dist();
 };
 

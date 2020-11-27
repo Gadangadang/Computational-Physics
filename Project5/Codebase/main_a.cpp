@@ -23,13 +23,14 @@ int main(int argc, char* argv[])
    double tax_or_no = 0;
    double min_tax = 0;
    double savings = 0;
+   double alpha = 0;
    string filename = "V_vis.txt";
    string filename2 = "Mon_vis.txt";
    string filename3 = "Omega.txt";
    Finance Fc;
    clock_t start, finish;
    start = clock();
-   Fc.Initialize(mcs, L,m_0,filename,tax_or_no,min_tax,savings);
+   Fc.Initialize(mcs, L,m_0,filename,tax_or_no,min_tax,savings,alpha);
    Fc.MonteCarlo();
    Fc.print_vec(filename2);
    Fc.print_omega(filename3);

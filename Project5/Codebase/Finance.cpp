@@ -18,12 +18,13 @@ using namespace arma;
 using namespace std;
 
 
-void Finance::Initialize(int mcs, int agents, double m_0, string filename, double tax_or_no, double tax,double savings){
+void Finance::Initialize(int mcs, int agents, double m_0, string filename, double tax_or_no, double tax,double savings, double alpha){
 // Initialize internal Class variables
     m_agents = agents;
     m_avec = vec(agents);
     m_norm = 1/((double)m_agents);
     m_m_0 = m_0;
+    m_alpha = alpha;
     m_savings = savings;
     m_mcs = mcs;
     m_tax = tax/((double)100);
@@ -42,8 +43,8 @@ double Finance::ran1(){ // can I even call double(long) to specify long storage 
     double Rnum = dis(generator);
     return Rnum;
 }
-double Finance::p_dist(double delta_m){
-  return 1000*exp(m_beta*delta_m);
+double Finance::p_dist(int i, int j){
+  return pow(fabs(m_avec(i)-m_avec(j)),m_alpha);
 }
 void Finance::Metropolis(){
 // loop over all spins
@@ -51,7 +52,7 @@ void Finance::Metropolis(){
   int j = (int) (ran1()*(double)m_agents);
   double eps = ran1();
   double delta_m = (1-m_savings)*(eps*(double)m_avec(j)-(1-eps)*(double)m_avec(i));
-  if ( ran1() < p_dist(delta_m)){
+  if ( ran1() < p_dist(i,j)){
     double tax = ss(i,delta_m);
     m_avec(i) += delta_m -tax; //- tax;
     m_avec(j) -= delta_m ;
@@ -92,7 +93,7 @@ void Finance::print_omega(string filename){
   ofstream ofile;
   ofile.open(filename);
   for(int i=0;i<m_agents; i++){
-    ofile << setw(20) << setprecision(8) << log(p_dist(-m_avec(i)))<<endl;}
+    ofile << setw(20) << setprecision(8) << log(m_beta*exp(m_beta*m_avec(i)))<<endl;}
   ofile.close();
 }
 void Finance::calc_avg_dist(){
