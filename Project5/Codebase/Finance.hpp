@@ -17,7 +17,10 @@ class Finance
     double m_m_0;
     int m_mcs;
     double m_beta;
+    double m_tax;
+    double m_tax_or_no;
     double m_variance;
+    double m_savings;
     double m_norm;
     int m_counter;
     string m_filename;
@@ -27,15 +30,17 @@ class Finance
     public:
     //Values under are chosen to be public for testing purposes.
 
-    void Initialize(int mcs, int agents, double m_0, string filename);
+    void Initialize(int mcs, int agents, double m_0, string filename, double tax_or_no, double tax, double savings);
     //Functions
+    void print_omega(string filename);
     void Metropolis();
+    double ss(int i, double delta_m);
     void MonteCarlo();
-    void calc_variance();
+    void print_avg_dist();
     void print_vec(string filename);
     double ran1();
     double p_dist(double delta_m);
-    void print_variance();
+    void calc_avg_dist();
 };
 
 #endif // ISING_MCINT
