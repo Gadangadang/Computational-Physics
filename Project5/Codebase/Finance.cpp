@@ -18,7 +18,9 @@ using namespace arma;
 using namespace std;
 
 
-void Finance::Initialize(int mcs, int agents, double m_0, string filename, double tax_or_no, double tax,double savings, double alpha){
+void Finance::Initialize(int mcs, int agents, double m_0,
+                         string filename, double tax_or_no,
+                         double tax,double savings, double alpha){
 // Initialize internal Class variables
     m_agents = agents;
     m_avec = vec(agents);
@@ -44,7 +46,7 @@ double Finance::ran1(){ // can I even call double(long) to specify long storage 
     return Rnum;
 }
 double Finance::p_dist(int i, int j){
-  return pow(fabs(m_avec(i)-m_avec(j)),m_alpha);
+  return pow(fabs(m_avec(i)-m_avec(j)),-m_alpha);
 }
 void Finance::Metropolis(){
 // loop over all spins
