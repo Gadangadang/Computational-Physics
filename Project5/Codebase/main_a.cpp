@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
    Finance Fc;
    clock_t start, finish;
    start = clock();
-   Fc.Initialize(mcs, L,m_0,filename,tax_or_no,min_tax,savings,alpha);
+   Fc.Initialize(mcs, L,m_0,filename,tax_or_no,min_tax,savings,alpha,0);
    Fc.MonteCarlo();
    Fc.print_vec(filename2);
    Fc.print_omega(filename3);

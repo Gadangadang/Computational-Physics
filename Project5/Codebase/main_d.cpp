@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
    double savings025 = 0;
    clock_t start, finish;
    start = clock();
-   Fc.Initialize(mcs, L,m_0,filename2,tax_or_no,min_tax,savings025,alpha);
+   Fc.Initialize(mcs, L,m_0,filename2,tax_or_no,min_tax,savings025,alpha,0);
    Fc.MonteCarlo();
    Fc.print_vec(filename1);
    Fc.print_omega(filename3);

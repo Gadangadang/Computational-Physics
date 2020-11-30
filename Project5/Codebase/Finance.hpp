@@ -24,15 +24,18 @@ class Finance
     double m_norm;
     double m_alpha;
     int m_counter;
+    double m_gamma;
     string m_filename;
     mt19937_64 generator;
     uniform_real_distribution<double> dis;
-    mat cij = <zeros>
+    mat m_cij;
 
     public:
     //Values under are chosen to be public for testing purposes.
 
-    void Initialize(int mcs, int agents, double m_0, string filename, double tax_or_no, double tax, double savings, double alpha);
+    void Initialize(int mcs, int agents, double m_0, string filename,
+                    double tax_or_no, double tax, double savings,
+                    double alpha, double gamma);
     //Functions
     void print_omega(string filename);
     void Metropolis();
@@ -41,7 +44,7 @@ class Finance
     void print_avg_dist();
     void print_vec(string filename);
     double ran1();
-    double p_dist(int i, int j);
+    double p_dist(int i, int j, double m_cij_val);
     void calc_avg_dist();
 };
 
