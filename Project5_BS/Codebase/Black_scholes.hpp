@@ -11,12 +11,16 @@ using namespace std;
 class Black_scholes
 {
     private:
-      mat m_matrix;
+      mat m_Amtrx;
+      mat m_u;
       double m_h;
       double m_dt;
-      vec m_b;
+      vec m_V;
+      int m_N;
+      double m_alpha;
     public:
-      void Initialize(double T,double X, int N)
+      void Initialize(double T,double X, int N);
+      void D1d_explicit();
 };
 
 #endif // ISING_MCINT
