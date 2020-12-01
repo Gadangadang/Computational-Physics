@@ -17,24 +17,36 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-   int mcs = 1.5e5;
+   int mcs = 2.5e5;
    int L = 500;
    double m_0 = 100;
    double tax_or_no = 0;
    double min_tax = 0;
-   double alpha = 0;
-   string filename1 = "Savings025.txt";
-   string filename2 = "Savings05.txt";
-   string filename3 = "Savings09.txt";
+   double alpha, gamma;
+   string filename = "V_vis.txt";
+   string filename1 = "Mon_vis.txt";
+
    Finance Fc;
-   double savings025 = 0.25;double savings05 = 0.5;double savings09 = 0.9;
+   double savings025 = 0;
    clock_t start, finish;
-   start = clock();
-   Fc.Initialize(mcs, L,m_0,filename1,tax_or_no,min_tax,savings025,alpha);Fc.MonteCarlo();Fc.print_vec(filename1);
-   Fc.Initialize(mcs, L,m_0,filename2,tax_or_no,min_tax,savings05,alpha);Fc.MonteCarlo();Fc.print_vec(filename2);
-   Fc.Initialize(mcs, L,m_0,filename3,tax_or_no,min_tax,savings09,alpha);Fc.MonteCarlo();Fc.print_vec(filename3);
-   finish = clock();
-   double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
-   cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
+   double gammaval[5] = {0,1.0,2.0,3.0,4.0};
+   double alphaval[2] = {1,2};
+
+   for(int i = 0; i < 2; i++){
+     alpha = alphaval[i];
+
+     for(int j = 0; j < 5; j++){
+       gamma = gammaval[j];
+
+       start = clock();
+       Fc.Initialize(mcs, L,m_0,filename,tax_or_no,min_tax,savings025,alpha,gamma);
+       Fc.MonteCarlo();Fc.print_vec(filename1);
+
+       finish = clock();
+       double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
+       cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
+     }
+   }
+
 return 0;
 }
