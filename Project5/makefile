@@ -17,3 +17,4 @@ execute:
 	python3 Codebase/hist_e.py
 	#python3 Codebase/Omega.py
 	#python3 Codebase/diff_savings.py
+	python3 Codebase/Alpha_vary.py

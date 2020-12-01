@@ -29,6 +29,7 @@ class Finance
     mt19937_64 generator;
     uniform_real_distribution<double> dis;
     mat m_cij;
+    02fb96a34e69af8d8c19226fb51c0e2a557149a8
 
     public:
     //Values under are chosen to be public for testing purposes.
