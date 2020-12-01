@@ -27,7 +27,7 @@ class Finance
     string m_filename;
     mt19937_64 generator;
     uniform_real_distribution<double> dis;
-    mat cij = <zeros>
+    //mat cij = <zeros>
 
     public:
     //Values under are chosen to be public for testing purposes.

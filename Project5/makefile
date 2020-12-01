@@ -11,7 +11,8 @@ execute:
 	#CodeBase/./main_c.x
 	CodeBase/./main_d.x
 	#CodeBase/./main_e.x
-	python3 Codebase/Variance.py
-	python3 Codebase/histo.py
-	python3 Codebase/Omega.py
+	#python3 Codebase/Variance.py
+	#python3 Codebase/histo.py
+	#python3 Codebase/Omega.py
 	#python3 Codebase/diff_savings.py
+	python3 Codebase/Alpha_vary.py
