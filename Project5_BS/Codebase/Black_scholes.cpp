@@ -30,7 +30,8 @@ void Black_scholes::Initialize(double T,double X, int N,string filename,
   double x_0 = -X/((double)2);
   m_Amtrx(0,0)=2+2*m_alpha;m_Amtrx(0,1)=-m_alpha;m_Amtrx(m_N-1,m_N-1)=2+2*m_alpha;
   m_Amtrx(m_N-1,m_N-2) = -m_alpha; m_Amtrx(m_N-2,m_N-1) = -m_alpha;
-  m_utilde(0)=m_utilde(m_N-1)=m_uPrev(0)=m_uPrev(m_N-1)=0;
+  m_utilde(0)=m_uPrev(0)=0;
+  m_utilde(m_N-1)=m_uPrev(m_N-1) =m_S(m_N-1)=E*exp(-x_0); 
   for(int i= 1;i<m_N-1;i++){
     m_Amtrx(i,i) = 2+2*m_alpha;
     m_Amtrx(i,i-1)=-m_alpha;
