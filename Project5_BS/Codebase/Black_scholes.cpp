@@ -58,7 +58,8 @@ void Black_scholes::Crank_Nic(){
   for(int y = 0; y < m_N; y++){
     t += m_dt;
     calc_utilde();
-    cout << t << endl;
+    cout << "\r";
+    cout << "Calculated to t ="<<t <<", out of T="<<m_T<< flush;
     vec u_j = solve(m_Amtrx,m_utilde);
     m_uPrev = u_j;
     if(y%(m_N/10)==0){
