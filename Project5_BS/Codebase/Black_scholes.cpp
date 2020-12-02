@@ -68,6 +68,7 @@ void Black_scholes::Crank_Nic(){
     }
 
   }
+  cout << " "<< endl;
 }
 vec Black_scholes::transform_u_V(vec u,double t){
   vec V = vec(m_N);
