@@ -74,7 +74,7 @@ void Black_scholes::init_print(){
   ofstream ofile;
   ofile.open(m_filename);
   for(int i=0;i<m_N-1;i++){
-  ofile << setw(20) << setprecision(8) << m_S(i);
+  ofile << setw(20) << setprecision(8) << m_S(i) << " ";
   }
   ofile << setw(20) << setprecision(8) << m_S(m_N-1)<<endl;
   ofile.close();
@@ -82,9 +82,9 @@ void Black_scholes::init_print(){
 void Black_scholes::print_vals(vec u,double t){
   ofstream ofile;
   ofile.open(m_filename, fstream::app);
-  ofile << setw(20) << setprecision(8) << t;
+  ofile << setw(20) << setprecision(8) << t << " ";
   for(int i=0;i<m_N-1; i++){
-    ofile << setw(20) << setprecision(8) << u(i);
+    ofile << setw(20) << setprecision(8) << u(i) << " ";
   }
   ofile << setw(20) << setprecision(8) << u(m_N-1)<<endl;
   ofile.close();
