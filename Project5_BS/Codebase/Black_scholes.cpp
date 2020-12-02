@@ -36,6 +36,7 @@ void Black_scholes::Initialize(double T,double X, int N,string filename,
     m_Amtrx(i,i+1)=-m_alpha;
     m_x(i) = x_0 + i*m_h;
     m_S(i) = E*exp(m_x(i));
+    m_uPrev(i)= sin(M_PI*m_x(i)/X);
   }
 }
 //void Black_scholes::D1d_explicit(){
