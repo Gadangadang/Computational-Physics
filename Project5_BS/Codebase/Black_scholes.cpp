@@ -65,8 +65,10 @@ void Black_scholes::Crank_Nic(){
       vec V = transform_u_V(u_j,t);
       print_vals(V,t);
     }
-
   }
+  vec V = transform_u_V(m_uPrev,t);
+  print_vals(V,t);
+
 }
 vec Black_scholes::transform_u_V(vec u,double t){
   vec V = vec(m_N);
