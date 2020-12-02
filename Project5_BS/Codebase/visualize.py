@@ -43,7 +43,7 @@ def d1(S_t,ti):
     global sigma
     global E
 
-    return 1/(sigma*np.sqrt(np.max(t)-ti)) * ( np.log(S_t/E) + (r + sigma**2/2)*(np.max(t)-ti))  )
+    return 1/(sigma*np.sqrt(np.max(t)-ti)) * ( np.log(S_t/E) + (r + sigma**2/2)*(np.max(t)-ti))  
 
 def d2(S_t, ti):
     return d1(S_t, ti) -sigma*np.sqrt(ti)
@@ -53,11 +53,11 @@ def N(d):
 
 def Vana(S_t,ti):
     return N( d1(S_t, ti) )*S_t - N(d2(S_t,ti))*E*np.exp(r*ti)
-
+"""
 for i in range(len(t)):
     plt.plot(S,Vana(),label="V(S,t={})".format(t[i]))
 
 plt.legend()
 plt.xlabel("Price of underlying asset")
 plt.ylabel("Value of option")
-plt.show()
+plt.show()"""
