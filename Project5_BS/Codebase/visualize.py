@@ -29,7 +29,7 @@ S = np.asarray(S)
 t = np.asarray(t)
 
 for i in range(len(t)):
-    plt.plot(S,V[:,i],label="V(S,{})".format(t[i]))
+    plt.plot(S,V[:,i],label="V(S,t={})".format(t[i]))
 
 plt.legend()
 plt.xlabel("Price of underlying asset")
