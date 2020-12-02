@@ -5,3 +5,4 @@ compile:
 
 execute:
 	CodeBase/./main_b.x
+	python3 Codebase/visualize.py

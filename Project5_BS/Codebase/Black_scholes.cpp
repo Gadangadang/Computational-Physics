@@ -28,9 +28,10 @@ void Black_scholes::Initialize(double T,double X, int N,string filename,
   m_b = 2*m_a+r;
   m_x = vec(m_N);
   double x_0 = -X/((double)2);
-  m_Amtrx(0,0)=2+2*m_alpha;m_Amtrx(0,1)=-m_alpha;m_Amtrx(N-1,N-1)=2+2*m_alpha;
-  m_Amtrx(N-1,N-2) = -m_alpha; m_Amtrx(N-2,N-1) = -m_alpha;
-  for(int i= 1;i<N-1;i++){
+  m_Amtrx(0,0)=2+2*m_alpha;m_Amtrx(0,1)=-m_alpha;m_Amtrx(m_N-1,m_N-1)=2+2*m_alpha;
+  m_Amtrx(m_N-1,m_N-2) = -m_alpha; m_Amtrx(m_N-2,m_N-1) = -m_alpha;
+  m_utilde(0)=m_utilde(m_N-1)=m_uPrev(0)=m_uPrev(m_N-1)=0;
+  for(int i= 1;i<m_N-1;i++){
     m_Amtrx(i,i) = 2+2*m_alpha;
     m_Amtrx(i,i-1)=-m_alpha;
     m_Amtrx(i,i+1)=-m_alpha;
@@ -46,13 +47,13 @@ void Black_scholes::Initialize(double T,double X, int N,string filename,
 //  }
 //}
 void Black_scholes::calc_utilde(){
-  for(int i=1;i<m_N; i++){
+  for(int i=1;i<m_N-1; i++){
     m_utilde(i) = m_alpha*m_uPrev(i-1) + (1.0-2*m_alpha)*m_uPrev(i) + m_alpha*m_uPrev(i+1);
   }
 }
 void Black_scholes::Crank_Nic(){
   init_print();
-  for(int t=0;t<m_T;t+=m_dt){
+  for(int t=m_dt;t<m_T;t+=m_dt){
     calc_utilde();
     vec u_j = solve(m_Amtrx,m_utilde);
     m_uPrev = u_j;
@@ -64,8 +65,8 @@ void Black_scholes::Crank_Nic(){
 }
 vec Black_scholes::transform_u_V(vec u,double t){
   vec V = vec(m_N);
-  for(int i =0;i<m_N;i++){
-    V = u(i)*exp(-(m_a*m_x(i)+m_b*t));
+  for(int i =1;i<m_N-1;i++){
+    V(i) = u(i)*exp(-(m_a*m_x(i)+m_b*t));
   }
   return V;
 }
