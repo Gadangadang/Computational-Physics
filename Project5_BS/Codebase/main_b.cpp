@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
    Black_scholes SC;
    clock_t start, finish;
    start = clock();
-   double T = 1; double X=1; int N=1e3;
+   double T = 1; double X=1; int N=5e2;
    string filename="u.txt";double r = 0.04; double D=0.12; double sigma=0.4; double E=50;
    SC.Initialize(T,X,N,filename,r,D,sigma,E);
    //SC.D1d_explicit();
