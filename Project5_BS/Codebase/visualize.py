@@ -7,20 +7,17 @@ V = []
 S = []
 t = []
 
-for line in data:
-    for element in line.split():
-        S.append(float(element))
-    break
+for val in data.readline().split():
+    S.append(float(val))
+
 
 for line in data:
     t.append(float(line.split()[0]))
     rest_list = []
-    i = 0
-    for element in line.split():
-        if i == 0:
-            pass
-        else:
-            rest_list.append(float(element))
+
+    for element in line.split()[1:]:
+        rest_list.append(float(element))
+
 
     V.append(rest_list)
 
@@ -29,7 +26,7 @@ S = np.asarray(S)
 t = np.asarray(t)
 
 for i in range(len(t)):
-    plt.plot(S,V[:,i],label="V(S,t={})".format(t[i]))
+    plt.plot(S[1:-1],V[i,1:-1],label="V(S,t={})".format(t[i]))
 
 plt.legend()
 plt.xlabel("Price of underlying asset")
