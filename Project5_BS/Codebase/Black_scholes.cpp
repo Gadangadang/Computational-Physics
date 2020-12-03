@@ -13,10 +13,12 @@
 #include <tuple>
 #include <cmath>
 #include <stdlib.h>
+#include <algorithm>
 
 // polluting the namespaces
 using namespace arma;
 using namespace std;
+
 
 void Black_scholes::Initialize(double T,double X, int N,string filename,
                                 double r, double D, double sigma, double E){

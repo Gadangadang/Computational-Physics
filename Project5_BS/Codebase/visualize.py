@@ -2,6 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import special
 
+sigma = 0.4
+E = 50
+r = 0.04
+T = 1
+
+
 data = open("u.txt","r")
 
 V = []
@@ -27,7 +33,7 @@ S = np.asarray(S)
 t = np.asarray(t)
 
 for i in range(len(t)):
-    plt.plot(S,V[i,:],label="V(S,t={})".format(t[i]))
+    plt.plot(S,V[i,:],label="V(S,t={:.2f})".format(T-t[i]))
 
 plt.legend()
 plt.xlabel("Price of underlying asset")
@@ -35,9 +41,6 @@ plt.ylabel("Value of option")
 plt.show()
 
 
-sigma = 0.4
-E = 50
-r = 0.04
 
 def d1(S_t,ti):
     global t
@@ -56,7 +59,7 @@ def Vana(S_t,ti):
     return N( d1(S_t, ti) )*S_t - N(d2(S_t,ti))*E*np.exp(-r*ti)
 
 for i in range(len(t)-1):
-    plt.plot(S[1:-1],Vana(S[1:-1],1-t[i]),label="V(S,t={})".format(t[i]))
+    plt.plot(S[1:-1],Vana(S[1:-1],T-t[i]),label="V(S,t={:.2f})".format(T-t[i]))
 
 plt.legend()
 plt.xlabel("Price of underlying asset")
