@@ -12,10 +12,12 @@
 #include <tuple>
 #include <cmath>
 #include <stdlib.h>
+#include <algorithm>
 
 // polluting the namespaces
 using namespace arma;
 using namespace std;
+
 
 void Black_scholes::Initialize(double T,double X, int N,string filename,
                                 double r, double D, double sigma, double E){
@@ -40,7 +42,7 @@ void Black_scholes::Initialize(double T,double X, int N,string filename,
     m_Amtrx(i,i+1)=-m_alpha;
     m_x(i) = x_0 + i*m_h;
     m_S(i) = E*exp(m_x(i));
-    m_uPrev(i)= exp(m_x(i)*m_a)*max(0,exp(m_x(i))-1);
+    m_uPrev(i)= exp(m_x(i)*m_a)*std::max(0.,exp(m_x(i))-1.);
   }
 }
 //void Black_scholes::D1d_explicit(){
