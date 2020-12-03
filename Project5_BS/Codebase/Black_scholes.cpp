@@ -61,23 +61,52 @@ void Black_scholes::Crank_Nic(){
   double t = 0;
   for(int y = 0; y < m_N; y++){
     calc_utilde();
-    cout << "\r";
-    cout << "Calculated:"<<100*t/m_T <<"%"<<flush;
-    vec u_j = solve(m_Amtrx,m_utilde);
-    m_uPrev = u_j;
+    vec u = Tridiag();
+
     if(y%(m_N/10)==0){
-      vec V = transform_u_V(u_j,t);
+      vec V = transform_u_V(u,t);
       print_vals(V,t);
     }
+
     t += m_dt;
+    cout << "\r";
+    cout << "Calculated:"<<100*t/m_T <<"%"<<flush;
   }
-  vec V = transform_u_V(m_uPrev,t);
-  print_vals(V,t);
+
   cout << "\r";
   cout << "Calculated:"<<100*t/m_T <<"%"<<flush;
   cout << " "<<endl;
-
 }
+
+vec Black_scholes::Tridiag(){
+
+  vec d(m_N-2); d.fill(1.+2.*m_alpha);
+  vec b(m_N-3); b.fill(-m_alpha);
+  vec u = m_utilde;
+  //Forward eliminate:
+  for(int i = 1; i < m_N-2; i++){
+    //Normalize row
+
+    b(i-1) /= d(i-1);
+    u(i) /= d(i-1);
+    d(i-1) = 1;
+    //Eliminate
+    u(i+1) += u(i)*m_alpha;
+    d(i) += b(i-1)*m_alpha;
+  }
+
+  u(m_N-2) /= d(m_N-3);
+  d(m_N-3) = 1;
+
+  //Backward eliminate
+  for(int i = m_N-2; i > 1; i--){
+
+    u(i-1) -= u(i)*b(i-2);
+  }
+  return u;
+}
+
+
 vec Black_scholes::transform_u_V(vec u,double t){
   vec V = vec(m_N);
   for(int i =0;i<m_N;i++){

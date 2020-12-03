@@ -33,6 +33,7 @@ class Black_scholes
       void init_print();
       void Crank_Nic();
       vec transform_u_V(vec u,double t);
+      vec Tridiag();
 };
 
 #endif // ISING_MCINT
