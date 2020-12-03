@@ -16,6 +16,7 @@ class Black_scholes
       double m_dt;
       int m_N;
       double m_alpha;
+      double m_alpha2;
       string m_filename;
       double m_T;
       vec m_S;
@@ -24,11 +25,13 @@ class Black_scholes
       vec m_x ;
       vec m_utilde;
       vec m_uPrev;
+      double m_E;
+      double m_r;
     public:
       void Initialize(double T,double X, int N,string filename,
                       double r, double D, double sigma, double E);
       void D1d_explicit();
-      void calc_utilde();
+      void calc_utilde(double t);
       void print_vals(vec u, double t);
       void init_print();
       void Crank_Nic();
