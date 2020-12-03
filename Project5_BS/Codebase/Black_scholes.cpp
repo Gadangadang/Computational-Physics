@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <iomanip>
+#include <algorithm>
 #include <string>
 #include "time.h"
 #include <stdio.h>
@@ -22,27 +23,29 @@ void Black_scholes::Initialize(double T,double X, int N,string filename,
   m_Amtrx = zeros<mat>(N, N);
   m_filename = filename;
   m_S =vec(N);m_utilde=vec(N);m_uPrev = vec(N);
-  m_h = X/((double)N+2);m_dt = T/((double)N);
+  m_h = X/((double)N);m_dt = T/((double)N);
   m_N = N;m_T =T;m_alpha = m_dt/((double)m_h*m_h);
   m_a = (r-D)*2/((double)sigma*sigma);
   m_b = 2*m_a+r;
   m_x = vec(m_N);
   double x_0 = -X/((double)2);
   m_x(0)=x_0;
-  m_Amtrx(0,0)=2+2*m_alpha;m_Amtrx(0,1)=-m_alpha;m_Amtrx(m_N-1,m_N-1)=2+2*m_alpha;
-  m_Amtrx(m_N-1,m_N-2) = -m_alpha; m_Amtrx(m_N-2,m_N-1) = -m_alpha;
+  m_Amtrx(0,0)=m_Amtrx(m_N-1,m_N-1)=2+2*m_alpha;
+  m_Amtrx(m_N-1,m_N-2) = m_Amtrx(0,1)=m_Amtrx(m_N-2,m_N-1) = -m_alpha;
   m_utilde(0)=m_uPrev(0)=0;
   m_utilde(m_N-1)=m_uPrev(m_N-1) =m_S(m_N-1)=E*exp(-x_0);m_x(m_N-1)=-x_0;
   m_S(0) = E*exp(x_0);
+
   for(int i= 1;i<m_N-1;i++){
     m_Amtrx(i,i) = 2+2*m_alpha;
     m_Amtrx(i,i-1)=-m_alpha;
     m_Amtrx(i,i+1)=-m_alpha;
     m_x(i) = x_0 + i*m_h;
     m_S(i) = E*exp(m_x(i));
-    m_uPrev(i)= exp(m_x(i)*m_a)*max(0,exp(m_x(i))-1);
+    m_uPrev(i)= exp(m_x(i)*m_a)*E*std::max(0.,exp(m_x(i))-1.);
   }
 }
+
 //void Black_scholes::D1d_explicit(){
 //  for(int i=1;i<m_N-1;i++){
 //    for(int i=1;i<m_N-1;i++)
@@ -57,8 +60,11 @@ void Black_scholes::calc_utilde(){
 void Black_scholes::Crank_Nic(){
   init_print();
   double t = 0;
+  vec V_0 = transform_u_V(m_uPrev,t);
+  print_vals(V_0,t);
   for(int y = 0; y < m_N; y++){
     calc_utilde();
+    t += m_dt;
     cout << "\r";
     cout << "Calculated:"<<100*t/m_T <<"%"<<flush;
     vec u_j = solve(m_Amtrx,m_utilde);
@@ -67,7 +73,6 @@ void Black_scholes::Crank_Nic(){
       vec V = transform_u_V(u_j,t);
       print_vals(V,t);
     }
-    t += m_dt;
   }
   vec V = transform_u_V(m_uPrev,t);
   print_vals(V,t);
