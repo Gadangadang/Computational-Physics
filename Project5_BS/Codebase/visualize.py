@@ -5,7 +5,7 @@ from scipy import special, stats
 sigma = 0.4
 E = 50
 r = 0.04
-T = 1
+
 
 
 data = open("u.txt","r")
@@ -31,6 +31,7 @@ for line in data:
 V = np.asarray(V)
 S = np.asarray(S)
 t = np.asarray(t)
+T = np.max(t)
 
 for i in range(len(t)):
     plt.plot(S,V[i,:],label="V(S,t={:.2f})".format(T-t[i]))
@@ -66,12 +67,13 @@ plt.xlabel("Price of underlying asset")
 plt.ylabel("Value of option")
 plt.show()
 
-start = int(np.where(np.abs(S-30) < 0.01)[0][0])
-end = int(np.where(np.abs(S-150) < 0.01)[0][0])
+start = int(np.where(np.abs(S-30) < 0.1)[0][0])
+end = int(np.where(np.abs(S-150) < 0.1)[0][0])
 
 for i in range(1,len(t)):
     plt.plot(S[start:end],np.abs(V[i,start:end]-Vana(S[start:end],T-t[i])),label="|V_num - V_an|, t = {:.2f}".format(T-t[i]))
 plt.legend()
 plt.xlabel("Price of underlying asset")
-plt.ylabel("Value of option")
+plt.ylabel("Value difference for option ")
+plt.title("Value difference for analytical and numerical calculation of option")
 plt.show()
