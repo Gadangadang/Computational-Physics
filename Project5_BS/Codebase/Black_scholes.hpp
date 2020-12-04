@@ -11,7 +11,6 @@ using namespace std;
 class Black_scholes
 {
     private:
-      mat m_Amtrx;
       double m_h;
       double m_dt;
       int m_N;
