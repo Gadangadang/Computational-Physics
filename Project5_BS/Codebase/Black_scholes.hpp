@@ -23,6 +23,8 @@ class Black_scholes
       double m_a;
       double m_b;
       vec m_x ;
+      double m_sigma2;
+      double m_D;
       vec m_utilde;
       vec m_uPrev;
       double m_E;
