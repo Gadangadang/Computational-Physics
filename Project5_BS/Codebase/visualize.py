@@ -5,7 +5,7 @@ from scipy import special, stats
 sigma = 0.4
 E = 50
 r = 0.04
-T = 1
+
 
 
 data = open("u.txt","r")
@@ -31,6 +31,7 @@ for line in data:
 V = np.asarray(V)
 S = np.asarray(S)
 t = np.asarray(t)
+T = np.max(t)
 
 for i in range(len(t)):
     plt.plot(S,V[i,:],label="V(S,t={:.2f})".format(T-t[i]))
@@ -66,12 +67,67 @@ plt.xlabel("Price of underlying asset")
 plt.ylabel("Value of option")
 plt.show()
 
-start = int(np.where(np.abs(S-30) < 0.01)[0][0])
-end = int(np.where(np.abs(S-150) < 0.01)[0][0])
+start = int(np.where(np.abs(S-30) < 0.1)[0][0])
+end = int(np.where(np.abs(S-150) < 0.1)[0][0])
 
 for i in range(1,len(t)):
     plt.plot(S[start:end],np.abs(V[i,start:end]-Vana(S[start:end],T-t[i])),label="|V_num - V_an|, t = {:.2f}".format(T-t[i]))
 plt.legend()
 plt.xlabel("Price of underlying asset")
-plt.ylabel("Value of option")
+plt.ylabel("Value difference for option ")
+plt.title("Value difference for analytical and numerical calculation of option")
+plt.show()
+
+#GREEEEKS
+
+def delta(V,S):
+    dS = S[1]-S[0]
+    dVdS = np.gradient(V, dS)
+    return dVdS
+
+#Usikker på om denne er riktig da
+def gamma(V,S):
+    dS1 = S[1]-S[0]
+    dVdS = np.gradient(V, dS1)
+    dS2 = S[2] - S[1]
+    ddS = dS2-dS1
+    ddVddS = np.gradient(dVdS,ddS)
+    return ddVddS
+"""
+def vega():
+    return
+"""
+#Usikker på denne også, mtp at vi plotter for t slik vi gjør, så ja..
+def theta(V,t):
+    dt = t[1]-t[0]
+    dVdt = np.gradient(V,t)
+    return dVdt
+"""
+def rho():
+    return
+"""
+
+for i in range(1,len(t)):
+    plt.plot(S[1:-1],delta(V[i,1:-1],S[1:-1]),label=r"$\Delta$ for t = {:.2f}".format(T-t[i]))
+plt.legend()
+plt.xlabel("Price of underlying asset")
+plt.ylabel(r"$\Delta$ ")
+plt.title(r"Greek $\Delta$ as function of stock price")
+plt.show()
+
+for i in range(1,len(t)):
+    plt.plot(S[1:-1],gamma(V[i,1:-1],S[1:-1]),label=r"$\gamma$ for t = {:.2f}".format(T-t[i]))
+plt.legend()
+plt.xlabel("Price of underlying asset")
+plt.ylabel(r"$\gamma$ ")
+plt.title(r"Greek $\gamma$ as function of stock price")
+plt.show()
+
+
+for i in range(1,len(t)):
+    plt.plot(S[1:-1],gamma(V[i,1:-1],t[1:-1]),label=r"$\Theta$ for t = {:.2f}".format(T-t[i]))
+plt.legend()
+plt.xlabel("Price of underlying asset")
+plt.ylabel(r"$\Theta$ ")
+plt.title(r"Greek $\Theta$ as function of stock price")
 plt.show()
