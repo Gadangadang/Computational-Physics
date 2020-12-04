@@ -40,17 +40,17 @@ void Black_scholes::Initialize(double T,double X, int N,string filename,
   m_E = E;
   m_D = D;
   m_r = r;
-  double x_0 = -X/((double)2);
+  double x_0 = -1;
 
-  m_x(0)=-1; m_x(m_N-1)=3;
   m_Amtrx(0,0)=m_Amtrx(m_N-1,m_N-1)=2+2*m_alpha;
   m_Amtrx(m_N-1,m_N-2) = m_Amtrx(0,1)=m_Amtrx(m_N-2,m_N-1) = -m_alpha;
 
-  m_utilde(0)=m_uPrev(0)=0;
+  m_x(0)=-1; m_x(m_N-1)=3.;
+  m_utilde(0)=m_uPrev(0)=0.;
 
-  m_S(m_N-1)=E*exp(-x_0); m_S(0) = E*exp(x_0);
+  m_S(m_N-1)=E*exp(3.); m_S(0) = E*exp(-1.);
   m_utilde(m_N-1)=m_uPrev(m_N-1)=(m_S(m_N-1)-m_E)*exp(m_a*m_x(m_N-1));
-
+  cout<<m_S(m_N-1)<<endl;
   for(int i= 1;i<m_N-1;i++){
     m_Amtrx(i,i) = 2+2*m_alpha;
     m_Amtrx(i,i-1)=-m_alpha;
