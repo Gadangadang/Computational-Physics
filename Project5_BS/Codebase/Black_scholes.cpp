@@ -38,12 +38,12 @@ void Black_scholes::Initialize(double T,double X, int N,string filename,
   m_E = E;
   m_D = D;
   m_r = r;
-  double x_0 = -1;
+  double x_0 = -X/((double)2);
 
-  m_x(0)=-1; m_x(m_N-1)=1.;
+  m_x(0)=x_0; m_x(m_N-1)=-x_0;
   m_utilde(0)=m_uPrev(0)=0.;
-  m_S(m_N-1)=E*exp(1.);
-  m_S(0) = E*exp(-1.);
+  m_S(m_N-1)=E*exp(-x_0);
+  m_S(0) = E*exp(x_0);
   m_utilde(m_N-1)=m_uPrev(m_N-1)=(m_S(m_N-1)-m_E)*exp(m_a*m_x(m_N-1));
 
   for(int i= 1;i<m_N-1;i++){
@@ -68,9 +68,9 @@ void Black_scholes::Crank_Nic(){
   double t = 0;
   for(int y = 1; y < m_N+1; y++){
     t += m_dt;
+    m_utilde(m_N-1)=(m_S(m_N-1)*exp(-t*m_D)-m_E*exp(-m_r*t))*exp(m_a*m_x(m_N-1)+m_b*t);
     calc_utilde(t);
     vec u = Tridiag();
-    u(m_N-1)=(m_S(m_N-1)*exp(-t*m_D)-m_E*exp(-m_r*t))*exp(m_a*m_x(m_N-1)+m_b*t);
     m_uPrev = u;
     if(y%(m_N/10)==0){
       vec V = transform_u_V(u,t);
@@ -83,8 +83,8 @@ void Black_scholes::Crank_Nic(){
 }
 
 vec Black_scholes::Tridiag(){
-  vec d(m_N-2); d.fill(2.+2.*m_alpha*m_sigma2);
-  vec b(m_N-3); b.fill(-m_alpha*m_sigma2);
+  vec d(m_N-1); d.fill(2.+2.*m_alpha*m_sigma2);
+  vec b(m_N-2); b.fill(-m_alpha*m_sigma2);
   vec u = m_utilde;
   //Forward eliminate:
   for(int i = 1; i < m_N-2; i++){
@@ -96,10 +96,11 @@ vec Black_scholes::Tridiag(){
     u(i+1) += u(i)*m_alpha*m_sigma2;
     d(i) += b(i-1)*m_alpha*m_sigma2;
   }
+  b(m_N-3) /=d(m_N-3);
   u(m_N-2) /= d(m_N-3);
   d(m_N-3) = 1.;
   //Backward eliminate
-  for(int i = m_N-2; i > 1; i--){
+  for(int i = m_N-1; i > 1; i--){
     u(i-1) -= u(i)*b(i-2);
   }
   return u;
