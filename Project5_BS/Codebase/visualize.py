@@ -68,7 +68,7 @@ plt.ylabel("Value of option")
 plt.show()
 
 start = int(np.where(np.abs(S-30) < 0.1)[0][0])
-end = int(np.where(np.abs(S-150) < 0.1)[0][0])
+end = int(np.where(np.abs(S-(np.max(S)/2 + 15)) < 0.1)[0][0])
 
 for i in range(1,len(t)):
     plt.plot(S[start:end],np.abs(V[i,start:end]-Vana(S[start:end],T-t[i])),label="|V_num - V_an|, t = {:.2f}".format(T-t[i]))
