@@ -35,11 +35,12 @@ t = np.asarray(t)
 T = np.max(t)
 
 for i in range(len(t)):
-    plt.plot(S,V[i,:],label="V(S,t={:.2f})".format(T-t[i]))
+    plt.plot(S,V[i,:],label="V(S,t={:.1f})".format(T-t[i]))
 
 plt.legend()
 plt.xlabel("Price of underlying asset")
 plt.ylabel("Value of option")
+plt.savefig("Num_sol.jpeg")
 plt.show()
 
 
@@ -61,22 +62,24 @@ def Vana(S_t,ti):
     return N( d1(S_t, ti) )*S_t - N(d2(S_t,ti))*E*np.exp(-r*(np.max(t)-ti))
 
 for i in range(1,len(t)):
-    plt.plot(S[1:-1],Vana(S[1:-1],T-t[i]),label="V(S,t={:.2f})".format(T-t[i]))
+    plt.plot(S[1:-1],Vana(S[1:-1],T-t[i]),label="V(S,t={:.1f})".format(T-t[i]))
 
 plt.legend()
 plt.xlabel("Price of underlying asset")
 plt.ylabel("Value of option")
+plt.savefig("Av_sol.jpeg")
 plt.show()
 
 start = int(np.where(np.abs(S-30) < 0.1)[0][0])
 end = int(np.where(np.abs(S-(np.max(S)/2 + 15)) < 0.1)[0][0])
 
 for i in range(1,len(t)):
-    plt.plot(S[start:end],np.abs(V[i,start:end]-Vana(S[start:end],T-t[i])),label="|V_num - V_an|, t = {:.2f}".format(T-t[i]))
+    plt.plot(S[start:end],np.abs(V[i,start:end]-Vana(S[start:end],T-t[i])),label="|V_dif|,t={:.1f}".format(T-t[i]))
 plt.legend()
 plt.xlabel("Price of underlying asset")
 plt.ylabel("Value difference for option ")
 plt.title("Value difference for analytical and numerical calculation of option")
+plt.savefig("Diff_ana_num.jpeg")
 plt.show()
 
 #GREEEEKS
@@ -106,7 +109,7 @@ def rho():
 """
 
 for i in range(1,len(t)):
-    plt.plot(S[1:-1],delta(V[i,1:-1],S[1:-1]),label=r"$\Delta$ for t = {:.2f}".format(T-t[i]))
+    plt.plot(S[1:-1],delta(V[i,1:-1],S[1:-1]),label=r"$\Delta$ for t = {:.1f}".format(T-t[i]))
 plt.legend()
 plt.xlabel("Price of underlying asset")
 plt.ylabel(r"$\Delta$ ")
@@ -114,7 +117,7 @@ plt.title(r"Greek $\Delta$ as function of stock price")
 plt.show()
 
 for i in range(1,len(t)):
-    plt.plot(S[1:-1],gamma(V[i,1:-1],S[1:-1]),label=r"$\gamma$ for t = {:.2f}".format(T-t[i]))
+    plt.plot(S[1:-1],gamma(V[i,1:-1],S[1:-1]),label=r"$\gamma$ for t = {:.1f}".format(T-t[i]))
 plt.legend()
 plt.xlabel("Price of underlying asset")
 plt.ylabel(r"$\gamma$ ")
@@ -123,7 +126,7 @@ plt.show()
 
 
 for i in range(1,len(t)):
-    plt.plot(S[1:-1],theta(V[i,1:-1],t[1:-1]),label=r"$\Theta$ for t = {:.2f}".format(T-t[i]))
+    plt.plot(S[1:-1],theta(V[i,1:-1],t[1:-1]),label=r"$\Theta$ for t = {:.1f}".format(T-t[i]))
 plt.legend()
 plt.xlabel("Price of underlying asset")
 plt.ylabel(r"$\Theta$ ")
