@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import special, stats
+from scipy.interpolate import UnivariateSpline
 
 sigma = 0.4
 E = 50
@@ -81,18 +82,15 @@ plt.show()
 #GREEEEKS
 
 def delta(V,S):
-    dS = S[1]-S[0]
-    dVdS = np.gradient(V, dS)
-    return dVdS
+    V_spl = UnivariateSpline(S,V,s=0,k=4)
+    V_spl_1d = V_spl.derivative(n=1)
+    return V_spl_1d(S)
 
 #Usikker på om denne er riktig da
 def gamma(V,S):
-    dS1 = S[1]-S[0]
-    dVdS = np.gradient(V, dS1)
-    dS2 = S[2] - S[1]
-    ddS = dS2-dS1
-    ddVddS = np.gradient(dVdS,ddS)
-    return ddVddS
+    V_spl = UnivariateSpline(S,V,s=0,k=4)
+    V_spl_2d = V_spl.derivative(n=2)
+    return V_spl_2d(S)
 """
 def vega():
     return
@@ -125,7 +123,7 @@ plt.show()
 
 
 for i in range(1,len(t)):
-    plt.plot(S[1:-1],gamma(V[i,1:-1],t[1:-1]),label=r"$\Theta$ for t = {:.2f}".format(T-t[i]))
+    plt.plot(S[1:-1],theta(V[i,1:-1],t[1:-1]),label=r"$\Theta$ for t = {:.2f}".format(T-t[i]))
 plt.legend()
 plt.xlabel("Price of underlying asset")
 plt.ylabel(r"$\Theta$ ")
