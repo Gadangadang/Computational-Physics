@@ -29,7 +29,7 @@ class Black_scholes
       double m_E;
       double m_r;
     public:
-      void Initialize(double T,double X, int N,string filename,
+      void Initialize(double T,double L, int N,string filename,
                       double r, double D, double sigma, double E);
       void D1d_explicit();
       void calc_utilde(double t);

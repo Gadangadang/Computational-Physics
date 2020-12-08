@@ -20,13 +20,13 @@ using namespace arma;
 using namespace std;
 
 
-void Black_scholes::Initialize(double T,double X, int N,string filename,
+void Black_scholes::Initialize(double T,double L, int N,string filename,
                                 double r, double D, double sigma, double E){
   m_filename = filename;
   m_S =vec(N);
   m_utilde=vec(N);
   m_uPrev = vec(N);
-  m_h = X/((double)N+2);
+  m_h = 2*L/((double)N+2);
   m_dt = T/((double)N);
   m_N = N;
   m_T =T;
@@ -38,26 +38,21 @@ void Black_scholes::Initialize(double T,double X, int N,string filename,
   m_E = E;
   m_D = D;
   m_r = r;
-  double x_0 = -X/((double)2);
 
-  m_x(0)=x_0; m_x(m_N-1)=-x_0;
+  m_x(0)=-L;
+  m_x(m_N-1)=L;
   m_utilde(0)=m_uPrev(0)=0.;
-  m_S(m_N-1)=E*exp(-x_0);
-  m_S(0) = E*exp(x_0);
+  m_S(m_N-1)=E*exp(L);
+  m_S(0) = E*exp(-L);
   m_utilde(m_N-1)=m_uPrev(m_N-1)=(m_S(m_N-1)-m_E)*exp(m_a*m_x(m_N-1));
 
   for(int i= 1;i<m_N-1;i++){
-    m_x(i) = x_0 + (double)i*m_h;
+    m_x(i) = -L + (double)i*m_h;
     m_S(i) = E*exp(m_x(i));
     m_uPrev(i)= exp(m_x(i)*m_a)*E*std::max(0.,exp(m_x(i))-1.);
   }
 }
-//void Black_scholes::D1d_explicit(){
-//  for(int i=1;i<m_N-1;i++){
-//    for(int i=1;i<m_N-1;i++)
-//    m_u(i) = m_alpha*m_u(i-1)+(1-2*m_alpha) * m_u(i) +m_alpha*m_u(i+1);
-//  }
-//}
+
 void Black_scholes::calc_utilde(double t){
   for(int i=1;i<m_N-1; i++){
     m_utilde(i) = m_sigma2*m_alpha*m_uPrev(i-1) + (2.0-m_sigma2*2.*m_alpha)*m_uPrev(i) +m_sigma2*m_alpha*m_uPrev(i+1);
