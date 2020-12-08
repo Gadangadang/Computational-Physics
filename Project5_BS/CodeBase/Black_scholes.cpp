@@ -26,15 +26,14 @@ void Black_scholes::Initialize(double T,double L, int N,string filename,
   m_S =vec(N);
   m_utilde=vec(N);
   m_uPrev = vec(N);
+  m_x = vec(m_N);
   m_h = 2*L/((double)N+2);
   m_dt = T/((double)N);
   m_N = N;
   m_T =T;
   m_alpha = m_dt/((double)m_h*m_h);
   m_a = (r-D)/((double)sigma*sigma)-1/((double)2);
-  m_b = r + m_a*(r-D-0.5*sigma*sigma) - m_a*m_a*sigma*sigma;  //(r+D)/((double)2) +sigma*sigma/((double)8) + (r-D)*(r-D)/((double)2*sigma*sigma);
-  m_x = vec(m_N);
-  m_sigma2 =sigma*sigma/((double)2);
+  m_b = r + m_a*(r-D-0.5*sigma*sigma) - m_a*m_a*sigma*sigma; 
   m_E = E;
   m_D = D;
   m_r = r;
