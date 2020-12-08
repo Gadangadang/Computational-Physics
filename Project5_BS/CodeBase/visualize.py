@@ -112,9 +112,9 @@ def vega():
 
 
 def theta(V, t):
-    dt = t[1] - t[0]
-    dVdt = np.gradient(V, t)
-    return dVdt
+    V_spl = UnivariateSpline(t, V, s=0, k=4)
+    V_spl_1d = V_spl.derivative(n=1)
+    return V_spl_1d(t)
 
 
 """
@@ -140,10 +140,21 @@ plt.ylabel(r"$\gamma$ ")
 plt.title(r"Greek $\gamma$ as function of stock price")
 plt.show()
 
+tgrad = np.linspace(0,np.max(t),len(V))
 
-for i in range(1, len(t)):
-    plt.plot(S[1:-1], theta(V[i, 1:-1], t[1:-1]),
-             label=r"$\Theta$ for t = {:.1f}".format(T - t[i]))
+j = int(0.1*len(S))
+
+dVdt = np.zeros((len(V),len(S)))
+for i in range(len(V)):
+    dVdt[:,i] = theta(V[:, i], tgrad)
+
+print(np.shape(dVdt))
+
+for i in range(len(t)):
+    plt.plot(S, dVdt[i,:],
+                 label=r"$\Theta$ for t = {:.1f}".format(T - t[i]))
+
+
 plt.legend()
 plt.xlabel("Price of underlying asset")
 plt.ylabel(r"$\Theta$ ")
