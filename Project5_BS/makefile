@@ -1,8 +1,10 @@
 all: compile execute
 
 compile:
-	g++ -std=c++17 -O3 -flto -Wall -o CodeBase/main_b.x CodeBase/main_b.cpp CodeBase/Black_scholes.cpp   -larmadillo -llapack -lblas
+	#g++ -std=c++17 -O3 -flto -Wall -o CodeBase/main_b.x CodeBase/main_b.cpp CodeBase/Black_scholes.cpp   -larmadillo -llapack -lblas
+	g++ -std=c++17 -O2 -flto -Wall -o CodeBase/unit.x CodeBase/Unittest.cpp CodeBase/Black_scholes.cpp -larmadillo -llapack -lblas
 
 execute:
-	CodeBase/./main_b.x
-	python3 CodeBase/visualize.py
+	#CodeBase/./main_b.x
+	#python3 CodeBase/visualize.py
+	CodeBase/./unit.x
