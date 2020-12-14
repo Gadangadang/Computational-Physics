@@ -17,23 +17,22 @@ using namespace arma ;
 using namespace std ;
 
 TEST_CASE( "Check for errors in code" ) {
-  Black_scholes SC;
 
-  double T = 1; double X=0.75; int N=1e4;
-  string filename="u.txt";double r = 0.04; double D=0.12; double sigma=0.4; double E=50;
-  SC.Initialize(T,X,N,filename,r,D,sigma,E);
-  //SC.D1d_explicit();
-  SC.Crank_Nic();
 
   SECTION("Check if value of option is negative at any time"){
+    Black_scholes SC;
+
+    double T = 1; double X=0.75; int N=1e4;
+    string filename="u.txt";
+    double r = 0.04; double D=0.12;
+    double sigma=0.4; double E=50;
+    SC.Initialize(T,X,N,filename,r,D,sigma,E);
+    SC.Crank_Nic();
 
     // File pointer
     fstream fin;
-
     // Open an existing file
     fin.open("u.txt", ios::in);
-
-
     // Read the Data from the file
     // as String Vector
     vector<double> S;
@@ -41,9 +40,8 @@ TEST_CASE( "Check for errors in code" ) {
     string line, word, temp;
 
     int count = 0;
+    vector<vector<double> > matrix; //Matrix to hold option value for each time step
 
-
-    vector<vector<double> > matrix;
     while (fin >> temp){
 
       getline(fin, line);
@@ -89,7 +87,7 @@ TEST_CASE( "Check for errors in code" ) {
     int number = 0;
     for (int i = 0; i < 11; i++){
         ok = compare_vec <= matrix[i];
-        number += 1;
+        number += ok;
     }
 
     REQUIRE(number == 11);
