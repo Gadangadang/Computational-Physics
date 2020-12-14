@@ -104,7 +104,38 @@ TEST_CASE( "Check for errors in code" ) {
   SECTION("Tridiag works as expected"){
     REQUIRE(1 == 1);
   }
-  SECTION(""){
+  SECTION("Check that option value increases for increased volatility in early time step"){
+    Black_scholes SC;
+    double Rnum = ((double)rand()) / ((double)RAND_MAX) / 2.0 + 0.1 ;
+
+    double T = 1; double X=0.75; int N=1e4;
+    string filename="u.txt";
+    string filename2 = "u2.txt";
+    double r = 0.04; double D=0.12;
+    double sigma=Rnum; double sigma2 = Rnum*1.5;
+    double E=50;
+    //First volatility
+    SC.Initialize(T,X,N,filename,r,D,sigma,E);
+    SC.Crank_Nic();
+
+    //Second volatility
+    Black_scholes BS;
+    BS.Initialize(T,X,N,filename2,r,D,sigma2,E);
+    BS.Crank_Nic();
+
+
+
+    vector<vector<double> > matrix = readMatrix(filename);
+    vector<vector<double> > matrix2 = readMatrix(filename2);
+    bool ok;
+    for (int i = 0; i < N/10; i++){
+      ok = matrix[10][i] < matrix2[10][i];
+      if(ok == 0){
+        ok = 0;
+        break;
+      }
+    }
+    REQUIRE(ok > 0);
 
   }
 }
