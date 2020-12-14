@@ -71,11 +71,9 @@ vector<vector<double> > readMatrix(string filename){
 }
 
 TEST_CASE( "Check for errors in code" ) {
-
-
-  SECTION("Check if value of option is negative at any time"){
     Black_scholes SC;
 
+  SECTION("Check if value of option is negative at any time"){
     double T = 1; double X=0.75; int N=1e4;
     string filename="u.txt";
     double r = 0.04; double D=0.12;
@@ -101,8 +99,34 @@ TEST_CASE( "Check for errors in code" ) {
     REQUIRE(number == 11);
 
   }
-  SECTION("Tridiag works as expected"){
-    REQUIRE(1 == 1);
+  SECTION("Check if Cranck-Nicholsen is indipendent of step-size"){
+    double T = 1; double X=0.75;
+    double r = 0.04; double D=0.12;
+    double sigma=0.4; double E=50;
+    int N1=1e3;
+    string filename1="N1e3.txt";
+    SC.Initialize(T,X,N1,filename1,r,D,sigma,E);
+    SC.Crank_Nic();
+    vector<vector<double> > matrix1 = readMatrix(filename1);
+
+    int N2=1e4;
+    string filename2 ="N1e4.txt";
+    SC.Initialize(T,X,N2,filename2,r,D,sigma,E);
+    SC.Crank_Nic();
+    vector<vector<double> > matrix2 = readMatrix(filename2);
+    double sum1=0;double sum2=0;
+    int ran_index =10*((int)rand()) / ((int)RAND_MAX);
+    for(int i=0;i<N1;i++){
+      sum1 += matrix1[ran_index][i];
+    }
+    for(int i=0;i<N2;i++){
+      sum2 += matrix2[ran_index][i];
+    }
+    sum1/=(double)N1;
+    sum2/=(double)N2;
+    double tresh = sum2/((double)100);
+    REQUIRE(fabs(sum1-sum2)<tresh);
+
   }
   SECTION(""){
 
