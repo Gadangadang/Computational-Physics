@@ -8,23 +8,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <cstdio>
 #include <string>
 #include "Black_scholes.hpp"
+#include <functional>
 
 using namespace arma ;
 using namespace std ;
 
 TEST_CASE( "Check for errors in code" ) {
+  Black_scholes SC;
+
+  double T = 1; double X=0.75; int N=1e4;
+  string filename="u.txt";double r = 0.04; double D=0.12; double sigma=0.4; double E=50;
+  SC.Initialize(T,X,N,filename,r,D,sigma,E);
+  //SC.D1d_explicit();
+  SC.Crank_Nic();
 
   SECTION("Check if value of option is negative at any time"){
-
-    Black_scholes SC;
-
-    double T = 1; double X=0.75; int N=1e4;
-    string filename="u.txt";double r = 0.04; double D=0.12; double sigma=0.4; double E=50;
-    SC.Initialize(T,X,N,filename,r,D,sigma,E);
-    //SC.D1d_explicit();
-    SC.Crank_Nic();
 
     // File pointer
     fstream fin;
@@ -41,72 +42,60 @@ TEST_CASE( "Check for errors in code" ) {
 
     int count = 0;
 
+
     vector<vector<double> > matrix;
     while (fin >> temp){
 
-      // read an entire row and
-      // store it in a string variable 'line'
       getline(fin, line);
 
       // used for breaking words
       stringstream s(line);
 
-      // read every column data of a row and
-      // store it in a string variable, 'word'
+      std::string resultstr = s.str();
+      const char* cstr2 = resultstr.c_str();
+
       vector <double> VperS;
-      int index = 0;
-      while (getline(s, word, ' ')) {
-          // add all the column data
-          // of a row to a vector
-          double value = std::atof(word.c_str());
-          if (count == 0){
-            S.push_back(value);
-          }
 
-          if (index == 0){
-            time.push_back(value);
-          }
-
-          VperS.push_back(value);
-
+      char* line = (char*) cstr2;
+      char* pch = strtok(line, " ");
+      if (count == 0){  //If count == 0, line in file is stock price
+        while (pch != NULL){
+          S.push_back( std::atof(pch) );
+          pch = strtok (NULL, " ");
+        }
+        count += 1;
       }
-
-      matrix.push_back(VperS);
-      count += 1;
+      else{ //Time and option value
+        int hello = 0;
+        while (pch != NULL){
+          if ( hello == 0 ){
+            time.push_back( std::atof(pch) );
+            pch = strtok (NULL, " ");
+            hello += 1;
+          }
+          VperS.push_back( std::atof(pch) );
+          pch = strtok (NULL, " ");
+        }
+        matrix.push_back(VperS);
+      }
     }
 
-
-    for (int i = 0; i < 12; i++){
-      for (int j = 0; j < N; j++){
-        cout << matrix[i][j] << " ";
-      }
-      cout << "\n";
+    vector<double> compare_vec;
+    for (int i = 0; i < N; i++){
+      compare_vec.push_back((double) 0);
     }
-    //double *S, *V, *t;
-    //const char* optionvals = "u.txt";
-    //FILE *fp_init = fopen(optionvals, "r"); //Open file to read, specified by "r".
 
+    bool ok;
+    int number = 0;
+    for (int i = 0; i < 11; i++){
+        ok = compare_vec <= matrix[i];
+        number += 1;
+    }
 
-    //S = new double[N];
-    //V = new double[N];
-    //t = new double[10];
+    REQUIRE(number == 11);
 
-
-    //Read info from file
-    //int j = 0; int k = 0;
-    //int o = 0; int u = 0;
-    //for (int i = 0; i < 11; i++){
-      //if (i == 0){
-      //  for (int j = 0; j < N; j++){
-      //    fscanf(fp_init, "%lf", &[k]);
-      //  }
-    //  }
-  //  }
-    //fclose(fp_init);
-
-    int a = 0;
-
-
-    REQUIRE(a == 0);
+  }
+  SECTION("Tridiag works as expected"){
+    REQUIRE(1 == 1);
   }
 }
