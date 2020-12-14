@@ -103,6 +103,7 @@ TEST_CASE( "Check for errors in code" ) {
     double T = 1; double X=0.75;
     double r = 0.04; double D=0.12;
     double sigma=0.4; double E=50;
+
     int N1=1e3;
     string filename1="N1e3.txt";
     SC.Initialize(T,X,N1,filename1,r,D,sigma,E);
@@ -113,9 +114,11 @@ TEST_CASE( "Check for errors in code" ) {
     string filename2 ="N1e4.txt";
     SC.Initialize(T,X,N2,filename2,r,D,sigma,E);
     SC.Crank_Nic();
+
     vector<vector<double> > matrix2 = readMatrix(filename2);
     double sum1=0;double sum2=0;
     int ran_index =10*((int)rand()) / ((int)RAND_MAX);
+
     for(int i=0;i<N1;i++){
       sum1 += matrix1[ran_index][i];
     }
@@ -130,6 +133,7 @@ TEST_CASE( "Check for errors in code" ) {
   }
   SECTION("Check that option value increases for increased volatility in early time step"){
     Black_scholes SC;
+    //Find random number between 0.1 and 0.5
     double Rnum = ((double)rand()) / ((double)RAND_MAX) / 2.0 + 0.1 ;
 
     double T = 1; double X=0.75; int N=1e4;
