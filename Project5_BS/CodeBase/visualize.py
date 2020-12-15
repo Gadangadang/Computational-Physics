@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import special, stats
 from scipy.interpolate import UnivariateSpline
+from autograd import elementwise_grad as egrad
 
 sigma = 0.4
 E = 50
@@ -95,32 +96,56 @@ def delta(V, S):
     V_spl_1d = V_spl.derivative(n=1)
     return V_spl_1d(S)
 
-# Usikker på om denne er riktig da
 
 
 def gamma(V, S):
-    V_spl = UnivariateSpline(S, V, s=0, k=4)
-    V_spl_2d = V_spl.derivative(n=2)
-    return V_spl_2d(S)
+    #V_spl = UnivariateSpline(S, V, s=0, k=4)
+    #firstdiv = egrad(egrad(V_spl(S)))(S)
+
+    dvds = np.diff(V)/np.diff(S)
+    ddvdds = np.diff(dvds) / np.diff(np.diff(S))
+    return dvds
 
 
-"""
-def vega():
-    return
-"""
+sdata = open("greeks_s.txt","r")
+
+VS = []
+sig = []
+
+for line in sdata:
+    x1 = line.split()[0]
+    x2 = line.split()[1]
+    VS.append(float(x1))
+    sig.append(float(x2))
+
+VS = np.asarray(VS)
+sig = np.asarray(sig)
+
+def vega(VS,sig):
+    firstdiv = np.diff(VS)/np.diff(sig)
+    return firstdiv
+
 # Usikker på denne også, mtp at vi plotter for t slik vi gjør, så ja..
 
+rdata = open("greeks_r.txt","r")
+VR = []
+rho = []
 
-def theta(V, t):
-    V_spl = UnivariateSpline(t, V, s=0, k=4)
-    V_spl_1d = V_spl.derivative(n=1)
-    return V_spl_1d(t)
+for line in rdata:
+    x1 = line.split()[0]
+    x2 = line.split()[1]
+    VR.append(float(x1))
+    rho.append(float(x2))
+
+VR = np.asarray(VR)
+rho = np.asarray(rho)
 
 
-"""
-def rho():
-    return
-"""
+def rhos(VR,rho):
+    firstdiv = np.diff(VR)/np.diff(rho)
+    return firstdiv
+
+
 
 for i in range(1, len(t)):
     plt.plot(S[1:-1], delta(V[i, 1:-1], S[1:-1]),
@@ -133,7 +158,7 @@ plt.savefig("Results/delta.jpeg")
 plt.show()
 
 for i in range(1, len(t)):
-    plt.plot(S[1:-1], gamma(V[i, 1:-1], S[1:-1]),
+    plt.plot(S[1:-2], gamma(V[i, 1:-1], S[1:-1]),
              label=r"$\gamma$ for t = {:.1f}".format(T - t[i]))
 plt.legend()
 plt.xlabel("Price of underlying asset")
@@ -141,22 +166,40 @@ plt.ylabel(r"$\gamma$ ")
 plt.title(r"Greek $\gamma$ as function of stock price")
 plt.show()
 
-tgrad = np.linspace(0,np.max(t),len(V))
 
-j = int(0.1*len(S))
-
-dVdt = np.zeros((len(V),len(S)))
-for i in range(len(V)):
-    dVdt[:,i] = theta(V[:, i], tgrad)
-
-
-for i in range(len(t)):
-    plt.plot(S, dVdt[i,:],
-                 label=r"$\Theta$ for t = {:.1f}".format(T - t[i]))
-
+# Rho and Vega
+plt.plot(sig[:-1],vega(VS,sig),label=r"vega as function of $\sigma$")
 
 plt.legend()
-plt.xlabel("Price of underlying asset")
-plt.ylabel(r"$\Theta$ ")
-plt.title(r"Greek $\Theta$ as function of stock price")
+plt.xlabel("Volatility")
+plt.ylabel(r"vega ")
+plt.title(r"Greek vega as function of volatility")
+plt.savefig("Results/vega.jpeg")
+plt.show()
+
+plt.plot(rho[:-1],rhos(VR,rho),label=r"$\rho$ as function of r")
+
+plt.legend()
+plt.xlabel("Risk free interest rate")
+plt.ylabel(r"$\rho$ ")
+plt.title(r"Greek $\rho$ as function of risk free interest rate")
+plt.savefig("Results/rho.jpeg")
+plt.show()
+
+# FOOOR TAUUU
+
+vtid = np.zeros(len(t))
+for i in range(len(t)):
+    vtid[i] = V[i,-1]
+
+def theta(vtid, t):
+    dvdt = -np.diff(vtid)/np.diff(t)
+    return dvdt
+
+plt.plot(t[-1],theta(vtid,t),label=r"$\Theta$ as function of time")
+plt.legend()
+plt.xlabel(r"Time $\tau$")
+plt.ylabel(r"$\tau$ ")
+plt.title(r"Greek $\Theta$ as function of $\tau$")
+plt.savefig("Results/tau.jpeg")
 plt.show()
