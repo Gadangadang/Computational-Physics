@@ -34,6 +34,7 @@ S = np.asarray(S)
 t = np.asarray(t)
 T = np.max(t)
 
+
 for i in range(len(t)):
     plt.plot(S, V[i, :], label="V(S,t={:.1f})".format(T - t[i]))
 
