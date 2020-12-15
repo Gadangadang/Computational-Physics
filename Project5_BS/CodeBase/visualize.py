@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from scipy import special, stats
 from scipy.interpolate import UnivariateSpline
 from autograd import elementwise_grad as egrad
+from scipy.misc import derivative
 
 sigma = 0.4
 E = 50
@@ -99,12 +100,10 @@ def delta(V, S):
 
 
 def gamma(V, S):
-    #V_spl = UnivariateSpline(S, V, s=0, k=4)
-    #firstdiv = egrad(egrad(V_spl(S)))(S)
-
     dvds = np.diff(V,1)/np.diff(S,1)
     ddvdds = np.diff(dvds,1) / np.diff(0.5*(S[:-1] + S[1:]),1)
-    return dvds
+
+    return ddvdds
 
 
 sdata = open("greeks_s.txt","r")
@@ -158,7 +157,7 @@ plt.savefig("Results/delta.jpeg")
 plt.show()
 
 for i in range(1, len(t)):
-    plt.plot(S[1:-2], gamma(V[i, 1:-1], S[1:-1]),
+    plt.plot(S[1:-3], gamma(V[i, 1:-1], S[1:-1]),
              label=r"$\gamma$ for t = {:.1f}".format(T - t[i]))
 plt.legend()
 plt.xlabel("Price of underlying asset")
