@@ -129,6 +129,7 @@ plt.legend()
 plt.xlabel("Price of underlying asset")
 plt.ylabel(r"$\Delta$ ")
 plt.title(r"Greek $\Delta$ as function of stock price")
+plt.savefig("Results/delta.jpeg")
 plt.show()
 
 for i in range(1, len(t)):
@@ -148,7 +149,6 @@ dVdt = np.zeros((len(V),len(S)))
 for i in range(len(V)):
     dVdt[:,i] = theta(V[:, i], tgrad)
 
-print(np.shape(dVdt))
 
 for i in range(len(t)):
     plt.plot(S, dVdt[i,:],
