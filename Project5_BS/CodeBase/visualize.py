@@ -102,8 +102,8 @@ def gamma(V, S):
     #V_spl = UnivariateSpline(S, V, s=0, k=4)
     #firstdiv = egrad(egrad(V_spl(S)))(S)
 
-    dvds = np.diff(V)/np.diff(S)
-    ddvdds = np.diff(dvds) / np.diff(np.diff(S))
+    dvds = np.diff(V,1)/np.diff(S,1)
+    ddvdds = np.diff(dvds,1) / np.diff(0.5*(S[:-1] + S[1:]),1)
     return dvds
 
 
@@ -196,7 +196,7 @@ def theta(vtid, t):
     dvdt = -np.diff(vtid)/np.diff(t)
     return dvdt
 
-plt.plot(t[-1],theta(vtid,t),label=r"$\Theta$ as function of time")
+plt.plot(t[:-1],theta(vtid,t),label=r"$\Theta$ as function of time")
 plt.legend()
 plt.xlabel(r"Time $\tau$")
 plt.ylabel(r"$\tau$ ")
