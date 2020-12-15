@@ -76,6 +76,39 @@ void Black_scholes::Crank_Nic(){
   }
   cout << " "<<endl;
 }
+
+vec Black_scholes::Tridiag(){
+  vec d(m_N-1); d.fill(2.+2.*m_alpha*m_sigma2);
+  vec b(m_N-2); b.fill(-m_alpha*m_sigma2);
+  vec u = m_utilde;
+  //Forward eliminate:
+  for(int i = 1; i < m_N-2; i++){
+    //Normalize row
+    b(i-1) /= d(i-1);
+    u(i) /= d(i-1);
+    d(i-1) = 1.;
+    //Eliminate
+    u(i+1) += u(i)*m_alpha*m_sigma2;
+    d(i) += b(i-1)*m_alpha*m_sigma2;
+  }
+  b(m_N-3) /=d(m_N-3);
+  u(m_N-2) /= d(m_N-3);
+  d(m_N-3) = 1.;
+  //Backward eliminate
+  for(int i = m_N-1; i > 1; i--){
+    u(i-1) -= u(i)*b(i-2);
+  }
+  return u;
+}
+
+
+vec Black_scholes::transform_u_V(vec u,double t){
+  vec V = vec(m_N);
+  for(int i =0;i<m_N;i++){
+    V(i) = u(i)*exp(-(m_a*m_x(i)+m_b*t));
+  }
+  return V;
+}
 void Black_scholes::Greeks(vec sigma,vec r, string rfilename,string sfilename){
   double r_fast = 0.04;
   double simga_fast = 0.4;
@@ -115,39 +148,6 @@ void Black_scholes::Greeks(vec sigma,vec r, string rfilename,string sfilename){
     ofile << setw(20) << setprecision(8) << r(k) << endl;
   }
     ofile.close();
-}
-
-vec Black_scholes::Tridiag(){
-  vec d(m_N-1); d.fill(2.+2.*m_alpha*m_sigma2);
-  vec b(m_N-2); b.fill(-m_alpha*m_sigma2);
-  vec u = m_utilde;
-  //Forward eliminate:
-  for(int i = 1; i < m_N-2; i++){
-    //Normalize row
-    b(i-1) /= d(i-1);
-    u(i) /= d(i-1);
-    d(i-1) = 1.;
-    //Eliminate
-    u(i+1) += u(i)*m_alpha*m_sigma2;
-    d(i) += b(i-1)*m_alpha*m_sigma2;
-  }
-  b(m_N-3) /=d(m_N-3);
-  u(m_N-2) /= d(m_N-3);
-  d(m_N-3) = 1.;
-  //Backward eliminate
-  for(int i = m_N-1; i > 1; i--){
-    u(i-1) -= u(i)*b(i-2);
-  }
-  return u;
-}
-
-
-vec Black_scholes::transform_u_V(vec u,double t){
-  vec V = vec(m_N);
-  for(int i =0;i<m_N;i++){
-    V(i) = u(i)*exp(-(m_a*m_x(i)+m_b*t));
-  }
-  return V;
 }
 void Black_scholes::init_print(){
   ofstream ofile;
