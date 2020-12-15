@@ -76,6 +76,46 @@ void Black_scholes::Crank_Nic(){
   }
   cout << " "<<endl;
 }
+void Black_scholes::Greeks(vec sigma,vec r, string rfilename,string sfilename){
+  double r_fast = 0.04;
+  double simga_fast = 0.4;
+  double T = 1;
+  double X=0.5;
+  int N=2e2;
+  double D=0.12;
+  double E=50;
+  string filename="NAN.txt";
+
+  ofstream ofile;
+  ofile.open(sfilename);
+  int N1 = sigma.n_elem;
+  int N2 = r.n_elem;
+  for(int s =0;s<N1;s++){
+    Initialize(T,X,N,filename,r_fast,D,sigma(s),E);
+    double t = 0.1;
+    m_utilde(m_N-1)=(m_S(m_N-1)*exp(-t*m_D)-m_E*exp(-m_r*t))*exp(m_a*m_x(m_N-1)+m_b*t);
+    calc_utilde(t);
+    vec u = Tridiag();
+    vec V = transform_u_V(u,t);
+    ofile << setw(20) << setprecision(8) << V(N1-2) << " ";
+    ofile << setw(20) << setprecision(8) << sigma(s) << endl;
+  }
+  ofile.close();
+
+  ofile.open(rfilename);
+
+  for(int k=0;k<N2;k++){
+    Initialize(T,X,N,filename,r(k),D,simga_fast,E);
+    double t = 0.1;
+    m_utilde(m_N-1)=(m_S(m_N-1)*exp(-t*m_D)-m_E*exp(-m_r*t))*exp(m_a*m_x(m_N-1)+m_b*t);
+    calc_utilde(t);
+    vec u = Tridiag();
+    vec V = transform_u_V(u,t);
+    ofile << setw(20) << setprecision(8) << V(N1-2) << " ";
+    ofile << setw(20) << setprecision(8) << r(k) << endl;
+  }
+    ofile.close();
+}
 
 vec Black_scholes::Tridiag(){
   vec d(m_N-1); d.fill(2.+2.*m_alpha*m_sigma2);

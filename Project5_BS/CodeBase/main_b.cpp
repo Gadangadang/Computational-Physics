@@ -20,11 +20,15 @@ int main(int argc, char* argv[])
    Black_scholes SC;
    clock_t start, finish;
    start = clock();
-   double T = 1; double X=0.75; int N=1e4;
+   double T = 1; double X=0.75; int N=1e3;
+
    string filename="u.txt";double r = 0.04; double D=0.12; double sigma=0.4; double E=50;
    SC.Initialize(T,X,N,filename,r,D,sigma,E);
    //SC.D1d_explicit();
    SC.Crank_Nic();
+   vec sigma_vec =linspace(0.1,1.,1e2); vec r_vec = linspace(0.01,0.5,1e2);
+   string rfilename = "greeks_r.txt";string sfilename = "greeks_s.txt";
+   SC.Greeks(sigma_vec,r_vec, rfilename, sfilename);
    finish = clock();
    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
    cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
