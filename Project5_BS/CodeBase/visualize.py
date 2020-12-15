@@ -164,6 +164,7 @@ plt.legend()
 plt.xlabel("Price of underlying asset")
 plt.ylabel(r"$\gamma$ ")
 plt.title(r"Greek $\gamma$ as function of stock price")
+plt.savefig("Results/gamma.jpeg")
 plt.show()
 
 
