@@ -4,6 +4,7 @@ from scipy import special, stats
 from scipy.interpolate import UnivariateSpline
 from autograd import elementwise_grad as egrad
 from scipy.misc import derivative
+import autograd.numpy as npa
 
 sigma = 0.4
 E = 50
@@ -62,12 +63,12 @@ def N(d):
     return stats.norm.cdf(d)  # (special.erf(d/np.sqrt(2)) + 1)/np.sqrt(2)
 
 
-def Vana(S_t, ti):
+def Vana(S_t, ti,sigma,r):
     return N(d1(S_t, ti)) * S_t - N(d2(S_t, ti)) * E * np.exp(-r * (np.max(t) - ti))
 
 
 for i in range(1, len(t)):
-    plt.plot(S[1:-1], Vana(S[1:-1], T - t[i]),
+    plt.plot(S[1:-1], Vana(S[1:-1], T - t[i],sigma,r),
              label="V(S,t={:.1f})".format(T - t[i]))
 
 plt.legend()
@@ -81,7 +82,7 @@ start = int(np.where(np.abs(S-30) < 0.1)[0][0])
 end = int(np.where(np.abs(S-(np.max(S)/2 + 15)) < 0.1)[0][0])"""
 
 for i in range(1, len(t)):
-    plt.plot(S, np.abs(V[i, :] - Vana(S, T - t[i])),
+    plt.plot(S, np.abs(V[i, :] - Vana(S, T - t[i],sigma,r)),
              label="|V_dif|,t={:.1f}".format(T - t[i]))
 plt.legend()
 plt.xlabel("Price of underlying asset")
@@ -203,4 +204,26 @@ plt.xlabel(r"Time $\tau$")
 plt.ylabel(r"$\tau$ ")
 plt.title(r"Greek $\Theta$ as function of $\tau$")
 plt.savefig("Results/tau.jpeg")
+plt.show()
+
+#Derivation of anaytical expression
+
+
+
+def delta_ana():
+    return 0
+def theta_ana():
+    return 0
+def rho_ana():
+    return 0
+def vega_ana():
+    return 0
+
+for i in range(1,len(t)):
+    plt.plot(S,egrad(Vana)(S,T-t[i],sigma,r), label=r"$\Delta$ for t = {:.1f}".format(T - t[i]))
+plt.title(r"Analytical $\Delta = \partial V / \partial S$")
+plt.xlabel("Stock price S")
+plt.ylabel(r"$\Delta_{analytical}$")
+plt.legend()
+plt.savefig("Results/delta_ana.jpeg")
 plt.show()
