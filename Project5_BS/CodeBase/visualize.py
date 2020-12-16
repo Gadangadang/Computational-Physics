@@ -77,9 +77,7 @@ plt.ylabel("Value of option")
 plt.title("Analytical solution to Black-Scholes")
 plt.savefig("Results/Av_sol.jpeg")
 plt.show()
-"""
-start = int(np.where(np.abs(S-30) < 0.1)[0][0])
-end = int(np.where(np.abs(S-(np.max(S)/2 + 15)) < 0.1)[0][0])"""
+
 
 for i in range(1, len(t)):
     plt.plot(S, np.abs(V[i, :] - Vana(S, T - t[i], sigma, r)),
@@ -131,7 +129,7 @@ tsigma = np.asarray(tsigma)
 
 
 def vega(VS, sig):
-    print(np.shape(sig))
+
     firstdiv = np.diff(VS) / np.diff(sig)
     return firstdiv
 
@@ -175,6 +173,7 @@ plt.title(r"Greek $\Delta$ as function of stock price")
 plt.savefig("Results/delta.jpeg")
 plt.show()
 
+
 for i in range(1, len(t)):
     plt.plot(S[1:-3], gamma(V[i, 1:-1], S[1:-1]),
              label=r"$\gamma$ for t = {:.1f}".format(T - t[i]))
@@ -198,6 +197,7 @@ plt.title(r"Greek vega as function of volatility")
 plt.savefig("Results/vega.jpeg")
 plt.show()
 
+
 for i in range(len(trho)):
     plt.plot(rho[:-1], rhos(VR[i], rho),
              label=r"$\rho$(r), t={:.1f}".format(T - trho[i]))
@@ -208,6 +208,7 @@ plt.ylabel(r"$\rho$ ")
 plt.title(r"Greek $\rho$ as function of risk free interest rate")
 plt.savefig("Results/rho.jpeg")
 plt.show()
+
 
 # FOOOR TAUUU
 
@@ -232,8 +233,8 @@ plt.show()
 # Derivation of anaytical expression
 
 
-def delta_ana():
-    a = (np.erf((np.log(S / E)) / (np.sqrt(2) * sigma * tau))) / np.sqrt(2)
+def delta_ana(S, tau):
+    a = (special.erf((np.log(S / E)) / (np.sqrt(2) * sigma * tau))) / np.sqrt(2)
     b = - (np.exp(-np.log(S / E)**2 / (2 * sigma**2 * tau))) / \
         (S * sigma * np.sqrt(np.pi * tau))
     c = np.exp(-np.log(S / E)**2 / (2 * sigma**2 * tau)) / \
@@ -241,24 +242,94 @@ def delta_ana():
     return a + b + c
 
 
-def gamma_ana():
+def gamma_ana(S, tau):
     a = -np.exp((-np.log(S / E)**2) / (2 * sigma**2 * tau) - r *
                 tau) / (np.sqrt(np.pi) * sigma**3 * tau**(3 / 2) * S**2)
-    b = (np.exp(r * tau) * S - E) * no.log(S / E) - sigma**2 * \
+    b = (np.exp(r * tau) * S - E) * np.log(S / E) - sigma**2 * \
         tau * np.exp(r * tau) * S - E * sigma**2 * tau
     return a * b
 
 
-def theta_ana():
+def theta_ana(tau, S):
     a = E / np.sqrt(2) * np.exp(-r * tau) * (-(np.sqrt(2) * np.log(S / E) * np.exp((-np.log(
         S / E)**2) / (2 * sigma**2 * tau))) / (np.sqrt(np.pi * tau) * sigma**2) - np.sqrt(tau))
-    b = -E * r * np.exp(-r * tau) / np.sqrt(2) * (np.erf(np.log(S / E) /
-                                                         (np.sqrt(2 * tau) * sigma)) - sigma * sqrt(tau))
-    c = (S * np.log(S / E) * np.exp((-no.log(S / E)**2) /
+    b = -E * r * np.exp(-r * tau) / np.sqrt(2) * (special.erf(np.log(S / E) /
+                                                              (np.sqrt(2 * tau) * sigma)) - sigma * np.sqrt(tau))
+    c = (S * np.log(S / E) * np.exp((-np.log(S / E)**2) /
                                     (2 * sigma**2 * tau))) / (2 * np.sqrt(np.pi) * sigma * tau**(3 / 2))
     return a + b + c
 
-def vega_ana():
-    return 0
-def rho_ana():
-    return 0
+
+def vega_ana(sigma, S, tau):
+    a = (E * np.exp(-r * tau)) / (np.sqrt(2)) * ((-np.sqrt(2) * np.log(S / E) *\
+         np.exp((-np.log(S / E)**2) / (2 * sigma**2 * tau))) / (np.sqrt(np.pi * tau) * \
+         sigma**2) - np.sqrt(tau))
+
+    b = (S * np.log(S / E) * np.exp((-np.log(S / E)**2) /\
+        (2 * sigma**2 * tau))) / (np.sqrt(np.pi * tau) * sigma**2)
+
+
+    return a + b
+
+
+def rho_ana(r, S, tau):
+    a = E * tau * np.exp(-r * tau) / np.sqrt(2)
+    b = sigma * np.sqrt(tau) - special.erf(np.log(S / E) /
+                                           (np.sqrt(2 * tau) * sigma))
+    return a * b
+
+print(trho)
+
+for i in range(len(trho)-1):
+    plt.plot(S, delta_ana(S, trho[i]),
+             label=r"$\Delta$ for t = {:.1f}".format(T - trho[i]))
+plt.legend()
+plt.xlabel("Price of underlying asset")
+plt.ylabel(r"$\Delta_{analytical}$ ")
+plt.title(r"Greek $\Delta_{analytical}$ as function of stock price")
+plt.savefig("Results/delta_ana.jpeg")
+plt.show()
+
+for i in range(len(trho)-1):
+    plt.plot(S, gamma_ana(S, trho[i]),
+             label=r"$\gamma$ for t = {:.1f}".format(T - trho[i]))
+plt.legend()
+plt.xlabel("Price of underlying asset")
+plt.ylabel(r"$\gamma_{analytical}$ ")
+plt.title(r"Greek $\gamma_{analytical}$ as function of stock price")
+plt.savefig("Results/gamma_ana.jpeg")
+plt.show()
+
+St = np.max(S)
+
+
+plt.plot(trho, theta_ana(St, trho),
+         label=r"$\Theta$($\tau$)")
+plt.legend()
+plt.xlabel(r"Time $\tau$ ")
+plt.ylabel(r"$\Theta_{analytical}$ ")
+plt.title(r"Greek $\Theta_{analytical}$ as function of time")
+plt.savefig("Results/theta_ana.jpeg")
+plt.show()
+
+for i in range(len(tsigma)-1):
+    plt.plot(sig, vega_ana(sig, St, tsigma[i]),
+             label=r"$\nu$ for t = {:.1f}".format(T - tsigma[i]))
+plt.legend()
+plt.xlabel(r"Volatility $\sigma$")
+plt.ylabel(r"$\nu_{analytical}$ ")
+plt.title(r"Greek $\nu_{analytical}$ as function of volatility")
+plt.savefig("Results/vega_ana.jpeg")
+plt.show()
+
+
+
+for i in range(len(trho)-1):
+    plt.plot(rho, rho_ana(rho, St, trho[i]),
+             label=r"$\rho$ for t = {:.1f}".format(T - trho[i]))
+plt.legend()
+plt.xlabel("Risk free interest rate")
+plt.ylabel(r"$\rho_{analytical}$ ")
+plt.title(r"Greek $\rho_{analytical}$ as function of risk free interest rate")
+plt.savefig("Results/rho_ana.jpeg")
+plt.show()
