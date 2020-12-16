@@ -28,28 +28,28 @@ execute:
 #### Instructions for running code
 a makefile comment is a '#' character. To configure the Makefile you uncomment the files you would like to run. Do this under both the 'Compile' and 'Execution' sections. For example to run our implementation of c):
 
-  - uncomment the line containing main_c under the 'compile' section
-  - uncomment the line containing main_c.x under the 'execute' section
+  - Uncomment the line containing main_c under the 'compile' section
+  - Uncomment the line containing main_c.x under the 'execute' section
   
 to run the makefile open a terminal and go to the 'Project4' folder. Type 'make all' and execute.
 
 
 
 ### Expected result for b):
- -Terminal statement with time used to run computation
- -Plot showing numerical solution to Black-Scholes equation for multiple timesteps
- -Plot showing analytical solution to Black-Scholes equation for multiple timesteps
- -Plot showing absolute difference between numerical and analytical solution to Black-Scholes equation for multiple timesteps
- -Plot showing numerical solution to greek &Delta for multiple timesteps
- -Plot showing numerical solution to greek &gamma for multiple timesteps
- -Plot showing numerical solution to greek &nu for multiple timesteps
- -Plot showing numerical solution to greek &rho for multiple timesteps
- -Plot showing numerical solution to greek &Theta for multiple timesteps
- -Plot showing analytical solution to greek &Delta for multiple timesteps
- -Plot showing analytical solution to greek &gamma for multiple timesteps
- -Plot showing analytical solution to greek &Theta for multiple timesteps
- -Plot showing analytical solution to greek &nu for multiple timesteps
- -Plot showing analytical solution to greek &rho for multiple timesteps
+ - Terminal statement with time used to run computation
+ - Plot showing numerical solution to Black-Scholes equation for multiple timesteps
+ - Plot showing analytical solution to Black-Scholes equation for multiple timesteps
+ - Plot showing absolute difference between numerical and analytical solution to Black-Scholes equation for multiple timesteps
+ - Plot showing numerical solution to greek &Delta for multiple timesteps
+ - Plot showing numerical solution to greek &gamma for multiple timesteps
+ - Plot showing numerical solution to greek &nu for multiple timesteps
+ - Plot showing numerical solution to greek &rho for multiple timesteps
+ - Plot showing numerical solution to greek &Theta for multiple timesteps
+ - Plot showing analytical solution to greek &Delta for multiple timesteps
+ - Plot showing analytical solution to greek &gamma for multiple timesteps
+ - Plot showing analytical solution to greek &Theta for multiple timesteps
+ - Plot showing analytical solution to greek &nu for multiple timesteps
+ - Plot showing analytical solution to greek &rho for multiple timesteps
  
 
 
