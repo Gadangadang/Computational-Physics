@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
    string filename="Aker_numeric.txt";double r = 0.11; double D=0.051; double sigma=0.04; double E=215;
    SC.Initialize(T,X,N,filename,r,D,sigma,E);
    //SC.D1d_explicit();
-   SC.Crank_Nic();
+   SC.Crank_Nic(print_per);
    finish = clock();
    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
    cout << setprecision(10) << "Time used  for computing (single thread) = " << timeused  << " Seconds"<<endl;
