@@ -45,7 +45,6 @@ to run the makefile open a terminal and go to the 'Project4' folder. Type 'make 
  -Plot showing numerical solution to greek &nu for multiple timesteps
  -Plot showing numerical solution to greek &rho for multiple timesteps
  -Plot showing numerical solution to greek &Theta for multiple timesteps
- 
  -Plot showing analytical solution to greek &Delta for multiple timesteps
  -Plot showing analytical solution to greek &gamma for multiple timesteps
  -Plot showing analytical solution to greek &Theta for multiple timesteps
