@@ -112,17 +112,27 @@ sdata = open("greeks_s.txt","r")
 
 VS = []
 sig = []
+tsigma = []
+
+for val in sdata.readline().split():
+    sig.append(float(val))
 
 for line in sdata:
-    x1 = line.split()[0]
-    x2 = line.split()[1]
-    VS.append(float(x1))
-    sig.append(float(x2))
+    tsigma.append(float(line.split()[0]))
+    rest_list = []
+
+    for element in line.split()[1:]:
+        rest_list.append(float(element))
+
+    VS.append(rest_list)
 
 VS = np.asarray(VS)
 sig = np.asarray(sig)
+tsigma = np.asarray(tsigma)
+
 
 def vega(VS,sig):
+    print(np.shape(sig))
     firstdiv = np.diff(VS)/np.diff(sig)
     return firstdiv
 
@@ -131,15 +141,25 @@ def vega(VS,sig):
 rdata = open("greeks_r.txt","r")
 VR = []
 rho = []
+trho = []
+
+for val in rdata.readline().split():
+    rho.append(float(val))
 
 for line in rdata:
-    x1 = line.split()[0]
-    x2 = line.split()[1]
-    VR.append(float(x1))
-    rho.append(float(x2))
+    trho.append(float(line.split()[0]))
+    rest_list = []
+
+    for element in line.split()[1:]:
+        rest_list.append(float(element))
+
+    VR.append(rest_list)
 
 VR = np.asarray(VR)
 rho = np.asarray(rho)
+trho = np.asarray(trho)
+
+
 
 
 def rhos(VR,rho):
@@ -170,7 +190,8 @@ plt.show()
 
 
 # Rho and Vega
-plt.plot(sig[:-1],vega(VS,sig),label=r"vega as function of $\sigma$")
+for i in range(len(tsigma)):
+    plt.plot(sig[:-1],vega(VS[i],sig),label=r"$\nu$($\sigma$), t={:.1f}".format(tsigma[i]))
 
 plt.legend()
 plt.xlabel("Volatility")
@@ -179,7 +200,8 @@ plt.title(r"Greek vega as function of volatility")
 plt.savefig("Results/vega.jpeg")
 plt.show()
 
-plt.plot(rho[:-1],rhos(VR,rho),label=r"$\rho$ as function of r")
+for i in range(len(trho)):
+    plt.plot(rho[:-1],rhos(VR[i],rho),label=r"$\rho$(r), t={:.1f}".format(trho[i]))
 
 plt.legend()
 plt.xlabel("Risk free interest rate")
@@ -207,23 +229,3 @@ plt.savefig("Results/tau.jpeg")
 plt.show()
 
 #Derivation of anaytical expression
-
-
-
-def delta_ana():
-    return 0
-def theta_ana():
-    return 0
-def rho_ana():
-    return 0
-def vega_ana():
-    return 0
-
-for i in range(1,len(t)):
-    plt.plot(S,egrad(Vana)(S,T-t[i],sigma,r), label=r"$\Delta$ for t = {:.1f}".format(T - t[i]))
-plt.title(r"Analytical $\Delta = \partial V / \partial S$")
-plt.xlabel("Stock price S")
-plt.ylabel(r"$\Delta_{analytical}$")
-plt.legend()
-plt.savefig("Results/delta_ana.jpeg")
-plt.show()
