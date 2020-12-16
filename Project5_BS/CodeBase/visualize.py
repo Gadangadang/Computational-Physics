@@ -191,7 +191,7 @@ plt.show()
 
 # Rho and Vega
 for i in range(len(tsigma)):
-    plt.plot(sig[:-1],vega(VS[i],sig),label=r"$\nu$($\sigma$), t={:.1f}".format(tsigma[i]))
+    plt.plot(sig[:-1],vega(VS[i],sig),label=r"$\nu$($\sigma$), t={:.1f}".format(T-tsigma[i]))
 
 plt.legend()
 plt.xlabel("Volatility")
@@ -201,7 +201,7 @@ plt.savefig("Results/vega.jpeg")
 plt.show()
 
 for i in range(len(trho)):
-    plt.plot(rho[:-1],rhos(VR[i],rho),label=r"$\rho$(r), t={:.1f}".format(trho[i]))
+    plt.plot(rho[:-1],rhos(VR[i],rho),label=r"$\rho$(r), t={:.1f}".format(T-trho[i]))
 
 plt.legend()
 plt.xlabel("Risk free interest rate")
