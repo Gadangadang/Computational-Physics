@@ -63,12 +63,12 @@ def N(d):
     return stats.norm.cdf(d)  # (special.erf(d/np.sqrt(2)) + 1)/np.sqrt(2)
 
 
-def Vana(S_t, ti,sigma,r):
+def Vana(S_t, ti, sigma, r):
     return N(d1(S_t, ti)) * S_t - N(d2(S_t, ti)) * E * np.exp(-r * (np.max(t) - ti))
 
 
 for i in range(1, len(t)):
-    plt.plot(S[1:-1], Vana(S[1:-1], T - t[i],sigma,r),
+    plt.plot(S[1:-1], Vana(S[1:-1], T - t[i], sigma, r),
              label="V(S,t={:.1f})".format(T - t[i]))
 
 plt.legend()
@@ -82,7 +82,7 @@ start = int(np.where(np.abs(S-30) < 0.1)[0][0])
 end = int(np.where(np.abs(S-(np.max(S)/2 + 15)) < 0.1)[0][0])"""
 
 for i in range(1, len(t)):
-    plt.plot(S, np.abs(V[i, :] - Vana(S, T - t[i],sigma,r)),
+    plt.plot(S, np.abs(V[i, :] - Vana(S, T - t[i], sigma, r)),
              label="|V_dif|,t={:.1f}".format(T - t[i]))
 plt.legend()
 plt.xlabel("Price of underlying asset")
@@ -100,52 +100,69 @@ def delta(V, S):
     return V_spl_1d(S)
 
 
-
 def gamma(V, S):
-    dvds = np.diff(V,1)/np.diff(S,1)
-    ddvdds = np.diff(dvds,1) / np.diff(0.5*(S[:-1] + S[1:]),1)
+    dvds = np.diff(V, 1) / np.diff(S, 1)
+    ddvdds = np.diff(dvds, 1) / np.diff(0.5 * (S[:-1] + S[1:]), 1)
 
     return ddvdds
 
 
-sdata = open("greeks_s.txt","r")
+sdata = open("greeks_s.txt", "r")
 
 VS = []
 sig = []
+tsigma = []
+
+for val in sdata.readline().split():
+    sig.append(float(val))
 
 for line in sdata:
-    x1 = line.split()[0]
-    x2 = line.split()[1]
-    VS.append(float(x1))
-    sig.append(float(x2))
+    tsigma.append(float(line.split()[0]))
+    rest_list = []
+
+    for element in line.split()[1:]:
+        rest_list.append(float(element))
+
+    VS.append(rest_list)
 
 VS = np.asarray(VS)
 sig = np.asarray(sig)
+tsigma = np.asarray(tsigma)
 
-def vega(VS,sig):
-    firstdiv = np.diff(VS)/np.diff(sig)
+
+def vega(VS, sig):
+    print(np.shape(sig))
+    firstdiv = np.diff(VS) / np.diff(sig)
     return firstdiv
 
 # Usikker på denne også, mtp at vi plotter for t slik vi gjør, så ja..
 
-rdata = open("greeks_r.txt","r")
+
+rdata = open("greeks_r.txt", "r")
 VR = []
 rho = []
+trho = []
+
+for val in rdata.readline().split():
+    rho.append(float(val))
 
 for line in rdata:
-    x1 = line.split()[0]
-    x2 = line.split()[1]
-    VR.append(float(x1))
-    rho.append(float(x2))
+    trho.append(float(line.split()[0]))
+    rest_list = []
+
+    for element in line.split()[1:]:
+        rest_list.append(float(element))
+
+    VR.append(rest_list)
 
 VR = np.asarray(VR)
 rho = np.asarray(rho)
+trho = np.asarray(trho)
 
 
-def rhos(VR,rho):
-    firstdiv = np.diff(VR)/np.diff(rho)
+def rhos(VR, rho):
+    firstdiv = np.diff(VR) / np.diff(rho)
     return firstdiv
-
 
 
 for i in range(1, len(t)):
@@ -170,7 +187,9 @@ plt.show()
 
 
 # Rho and Vega
-plt.plot(sig[:-1],vega(VS,sig),label=r"vega as function of $\sigma$")
+for i in range(len(tsigma)):
+    plt.plot(sig[:-1], vega(VS[i], sig),
+             label=r"$\nu$($\sigma$), t={:.1f}".format(T - tsigma[i]))
 
 plt.legend()
 plt.xlabel("Volatility")
@@ -179,7 +198,9 @@ plt.title(r"Greek vega as function of volatility")
 plt.savefig("Results/vega.jpeg")
 plt.show()
 
-plt.plot(rho[:-1],rhos(VR,rho),label=r"$\rho$ as function of r")
+for i in range(len(trho)):
+    plt.plot(rho[:-1], rhos(VR[i], rho),
+             label=r"$\rho$(r), t={:.1f}".format(T - trho[i]))
 
 plt.legend()
 plt.xlabel("Risk free interest rate")
@@ -192,13 +213,15 @@ plt.show()
 
 vtid = np.zeros(len(t))
 for i in range(len(t)):
-    vtid[i] = V[i,-1]
+    vtid[i] = V[i, -1]
+
 
 def theta(vtid, t):
-    dvdt = -np.diff(vtid)/np.diff(t)
+    dvdt = -np.diff(vtid) / np.diff(t)
     return dvdt
 
-plt.plot(t[:-1],theta(vtid,t),label=r"$\Theta$ as function of time")
+
+plt.plot(t[:-1], theta(vtid, t), label=r"$\Theta$ as function of time")
 plt.legend()
 plt.xlabel(r"Time $\tau$")
 plt.ylabel(r"$\tau$ ")
@@ -206,24 +229,36 @@ plt.title(r"Greek $\Theta$ as function of $\tau$")
 plt.savefig("Results/tau.jpeg")
 plt.show()
 
-#Derivation of anaytical expression
-
+# Derivation of anaytical expression
 
 
 def delta_ana():
-    return 0
+    a = (np.erf((np.log(S / E)) / (np.sqrt(2) * sigma * tau))) / np.sqrt(2)
+    b = - (np.exp(-np.log(S / E)**2 / (2 * sigma**2 * tau))) / \
+        (S * sigma * np.sqrt(np.pi * tau))
+    c = np.exp(-np.log(S / E)**2 / (2 * sigma**2 * tau)) / \
+        (sigma * np.sqrt(np.pi * tau))
+    return a + b + c
+
+
+def gamma_ana():
+    a = -np.exp((-np.log(S / E)**2) / (2 * sigma**2 * tau) - r *
+                tau) / (np.sqrt(np.pi) * sigma**3 * tau**(3 / 2) * S**2)
+    b = (np.exp(r * tau) * S - E) * no.log(S / E) - sigma**2 * \
+        tau * np.exp(r * tau) * S - E * sigma**2 * tau
+    return a * b
+
+
 def theta_ana():
+    a = E / np.sqrt(2) * np.exp(-r * tau) * (-(np.sqrt(2) * np.log(S / E) * np.exp((-np.log(
+        S / E)**2) / (2 * sigma**2 * tau))) / (np.sqrt(np.pi * tau) * sigma**2) - np.sqrt(tau))
+    b = -E * r * np.exp(-r * tau) / np.sqrt(2) * (np.erf(np.log(S / E) /
+                                                         (np.sqrt(2 * tau) * sigma)) - sigma * sqrt(tau))
+    c = (S * np.log(S / E) * np.exp((-no.log(S / E)**2) /
+                                    (2 * sigma**2 * tau))) / (2 * np.sqrt(np.pi) * sigma * tau**(3 / 2))
+    return a + b + c
+
+def vega_ana():
     return 0
 def rho_ana():
     return 0
-def vega_ana():
-    return 0
-
-for i in range(1,len(t)):
-    plt.plot(S,egrad(Vana)(S,T-t[i],sigma,r), label=r"$\Delta$ for t = {:.1f}".format(T - t[i]))
-plt.title(r"Analytical $\Delta = \partial V / \partial S$")
-plt.xlabel("Stock price S")
-plt.ylabel(r"$\Delta_{analytical}$")
-plt.legend()
-plt.savefig("Results/delta_ana.jpeg")
-plt.show()

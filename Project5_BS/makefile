@@ -10,4 +10,4 @@ execute:
 	CodeBase/./main_d.x
 	#python3 CodeBase/visualize.py
 	#CodeBase/./unit.x
-	python3 CodeBase/Akerbp.py
+	#python3 CodeBase/Akerbp.py

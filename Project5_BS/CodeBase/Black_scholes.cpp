@@ -123,31 +123,54 @@ void Black_scholes::Greeks(vec sigma,vec r, string rfilename,string sfilename){
   ofile.open(sfilename);
   int N1 = sigma.n_elem;
   int N2 = r.n_elem;
-  for(int s =0;s<N1;s++){
-    Initialize(T,X,N,filename,r_fast,D,sigma(s),E);
-    double t = 0.1;
-    m_utilde(m_N-1)=(m_S(m_N-1)*exp(-t*m_D)-m_E*exp(-m_r*t))*exp(m_a*m_x(m_N-1)+m_b*t);
-    calc_utilde(t);
-    vec u = Tridiag();
-    vec V = transform_u_V(u,t);
-    ofile << setw(20) << setprecision(8) << V(N1-2) << " ";
-    ofile << setw(20) << setprecision(8) << sigma(s) << endl;
+
+  cout << N1 << endl;
+
+  for (int j = 0; j < N1; j++){
+    ofile << setw(20) << setprecision(8) << sigma(j) << " ";
+  }
+  ofile << setw(20) << setprecision(8) << " " << endl;
+
+  double t = 0;
+  for (int i = 1; i < 6; i++){
+    t = i/5. * T;
+    ofile << setw(20) << setprecision(8) << t << " ";
+    for(int s =0;s<N1;s++){
+      Initialize(t,X,N,filename,r_fast,D,sigma(s),E);
+
+      m_utilde(m_N-1)=(m_S(m_N-1)*exp(-t*m_D)-m_E*exp(-m_r*t))*exp(m_a*m_x(m_N-1)+m_b*t);
+      calc_utilde(t);
+      vec u = Tridiag();
+      vec V = transform_u_V(u,t);
+
+      ofile << setw(20) << setprecision(8) << V(N1-2) << " ";
+    }
+    ofile << setw(20) << setprecision(8) <<  " " << endl;
   }
   ofile.close();
 
   ofile.open(rfilename);
-
-  for(int k=0;k<N2;k++){
-    Initialize(T,X,N,filename,r(k),D,simga_fast,E);
-    double t = 0.1;
-    m_utilde(m_N-1)=(m_S(m_N-1)*exp(-t*m_D)-m_E*exp(-m_r*t))*exp(m_a*m_x(m_N-1)+m_b*t);
-    calc_utilde(t);
-    vec u = Tridiag();
-    vec V = transform_u_V(u,t);
-    ofile << setw(20) << setprecision(8) << V(N1-2) << " ";
-    ofile << setw(20) << setprecision(8) << r(k) << endl;
+  for (int j = 0; j < N1; j++){
+    ofile << setw(20) << setprecision(8) << r(j)<< " ";
   }
-    ofile.close();
+  ofile << setw(20) << setprecision(8) << " " << endl;
+  double t2 = 0;
+  for (int i = 1; i < 6; i++){
+    t2 = i/5. * T;
+    ofile << setw(20) << setprecision(8) << t2 << " ";
+    for(int k=0;k<N2;k++){
+      Initialize(t2,X,N,filename,r(k),D,simga_fast,E);
+      m_utilde(m_N-1)=(m_S(m_N-1)*exp(-t*m_D)-m_E*exp(-m_r*t))*exp(m_a*m_x(m_N-1)+m_b*t);
+      calc_utilde(t);
+      vec u = Tridiag();
+      vec V = transform_u_V(u,t);
+
+      ofile << setw(20) << setprecision(8) << V(N1-2) << " ";
+    }
+    ofile << setw(20) << setprecision(8) <<  " " << endl;
+  }
+  ofile.close();
+
 }
 void Black_scholes::init_print(){
   ofstream ofile;
@@ -160,6 +183,7 @@ void Black_scholes::init_print(){
   print_vals(V_0,0);
   ofile.close();
 }
+
 void Black_scholes::print_vals(vec u,double t){
   ofstream ofile;
   ofile.open(m_filename, fstream::app);
