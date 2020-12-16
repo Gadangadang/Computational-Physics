@@ -8,6 +8,7 @@ from scipy.misc import derivative
 sigma = 0.4
 E = 50
 r = 0.04
+D = 0.12
 
 
 data = open("u.txt", "r")
@@ -46,16 +47,14 @@ plt.savefig("Results/Num_sol.jpeg")
 plt.show()
 
 
-def d1(S_t, ti):
-    global t
-    global sigma
-    global E
+def d1(S_t, ti,sigma):
+
 
     return 1 / (sigma * np.sqrt(np.max(t) - ti)) * (np.log(S_t / E) + (r + sigma**2 / 2) * (np.max(t) - ti))
 
 
-def d2(S_t, ti):
-    return d1(S_t, ti) - sigma * np.sqrt(np.max(t) - ti)
+def d2(S_t, ti,sigma):
+    return d1(S_t, ti,sigma) - sigma * np.sqrt(np.max(t) - ti)
 
 
 def N(d):
@@ -63,7 +62,7 @@ def N(d):
 
 
 def Vana(S_t, ti, sigma, r):
-    return N(d1(S_t, ti)) * S_t - N(d2(S_t, ti)) * E * np.exp(-r * (np.max(t) - ti))
+    return N(d1(S_t, ti,sigma)) * S_t - N(d2(S_t, ti,sigma)) * E * np.exp(-r * (np.max(t) - ti))
 
 
 for i in range(1, len(t)):
@@ -174,6 +173,7 @@ plt.savefig("Results/delta.jpeg")
 plt.show()
 
 
+
 for i in range(1, len(t)):
     plt.plot(S[1:-3], gamma(V[i, 1:-1], S[1:-1]),
              label=r"$\gamma$ for t = {:.1f}".format(T - t[i]))
@@ -183,7 +183,6 @@ plt.ylabel(r"$\gamma$ ")
 plt.title(r"Greek $\gamma$ as function of stock price")
 plt.savefig("Results/gamma.jpeg")
 plt.show()
-
 
 # Rho and Vega
 for i in range(len(tsigma)):
@@ -195,7 +194,6 @@ plt.ylabel(r"vega ")
 plt.title(r"Greek vega as function of volatility")
 plt.savefig("Results/vega.jpeg")
 plt.show()
-
 
 for i in range(len(trho)):
     plt.plot(rho[:-1], rhos(VR[i], rho),
@@ -279,8 +277,32 @@ def rho_ana(r, S, tau):
 
 print(trho)
 
+
+
+St = np.max(S)
+
+def n(x):
+    return np.exp(-x**2/2)/(np.sqrt(2*np.pi))
+
+def altdelta(St,tau):
+    return np.exp(-D*tau)*N(d1(St,tau,sigma))
+
+def altgamma(S,tau):
+    return np.exp(-D*tau)*n(d1(S,tau,sigma))/(np.sqrt(tau)*S*sigma)
+
+def altvega(S,tau,sig):
+    return S*np.exp(-D*tau)*n(d1(S,tau,sig))
+
+def alttheta(S,tau):
+    return -np.exp(-D*tau)*S*n(d1(S,tau,sigma))*sigma/(np.sqrt(tau)*2) - \
+    E*r*np.exp(-r*tau)*N(d2(S,tau,sigma)) + D*S*np.exp(-D*tau)*N(d1(S,tau,sigma))
+
+
+def altrho(r,tau):
+    return E*tau*np.exp(-r*tau)*N(d1(St,tau,sigma))
+
 for i in range(len(trho)-1):
-    plt.plot(S, delta_ana(S, trho[i]),
+    plt.plot(S, altdelta(S, trho[i]),
              label=r"$\Delta$ for t = {:.1f}".format(T - trho[i]))
 plt.legend()
 plt.xlabel("Price of underlying asset")
@@ -289,8 +311,9 @@ plt.title(r"Greek $\Delta_{analytical}$ as function of stock price")
 plt.savefig("Results/delta_ana.jpeg")
 plt.show()
 
+
 for i in range(len(trho)-1):
-    plt.plot(S, gamma_ana(S, trho[i]),
+    plt.plot(S, altgamma(S, trho[i]),
              label=r"$\gamma$ for t = {:.1f}".format(T - trho[i]))
 plt.legend()
 plt.xlabel("Price of underlying asset")
@@ -299,10 +322,7 @@ plt.title(r"Greek $\gamma_{analytical}$ as function of stock price")
 plt.savefig("Results/gamma_ana.jpeg")
 plt.show()
 
-St = np.max(S)
-
-
-plt.plot(trho, theta_ana(St, trho),
+plt.plot(trho, alttheta(St, trho),
          label=r"$\Theta$($\tau$)")
 plt.legend()
 plt.xlabel(r"Time $\tau$ ")
@@ -312,7 +332,7 @@ plt.savefig("Results/theta_ana.jpeg")
 plt.show()
 
 for i in range(len(tsigma)-1):
-    plt.plot(sig, vega_ana(sig, St, tsigma[i]),
+    plt.plot(sig, altvega(St, tsigma[i],sig),
              label=r"$\nu$ for t = {:.1f}".format(T - tsigma[i]))
 plt.legend()
 plt.xlabel(r"Volatility $\sigma$")
@@ -322,9 +342,8 @@ plt.savefig("Results/vega_ana.jpeg")
 plt.show()
 
 
-
 for i in range(len(trho)-1):
-    plt.plot(rho, rho_ana(rho, St, trho[i]),
+    plt.plot(rho, altrho(rho,trho[i]),
              label=r"$\rho$ for t = {:.1f}".format(T - trho[i]))
 plt.legend()
 plt.xlabel("Risk free interest rate")
