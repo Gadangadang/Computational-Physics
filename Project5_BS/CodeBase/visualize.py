@@ -2,9 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import special, stats
 from scipy.interpolate import UnivariateSpline
-from autograd import elementwise_grad as egrad
 from scipy.misc import derivative
-import autograd.numpy as npa
+
 
 sigma = 0.4
 E = 50
