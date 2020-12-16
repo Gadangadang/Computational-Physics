@@ -5,7 +5,7 @@ Here are the instructions for operating the numerical machinery.
 ## preamble:
 Due to the nature of the solution there are different mains for different tasks. This is because our solver class is very general, and therefore requires specialized input for different solutions. Therefore, all code is inside the 'CodeBase' folder and you will execute the different aspects by editing and running the makefile. Its intended to run only one main_X at a time. We have not tested with multiple mains, but it should work.
 
-```
+
 
 ### Makefile setup
 The contents of the makefile look like this:
@@ -24,6 +24,7 @@ execute:
 	#CodeBase/./unit.x
 	#python3 CodeBase/Akerbp.py
 ```
+
 #### Instructions for running code
 a makefile comment is a '#' character. To configure the Makefile you uncomment the files you would like to run. Do this under both the 'Compile' and 'Execution' sections. For example to run our implementation of c):
 
