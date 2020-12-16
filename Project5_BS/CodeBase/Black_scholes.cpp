@@ -58,7 +58,7 @@ void Black_scholes::calc_utilde(double t){
     m_utilde(i) = m_sigma2*m_alpha*m_uPrev(i-1) + (2.0-m_sigma2*2.*m_alpha)*m_uPrev(i) +m_sigma2*m_alpha*m_uPrev(i+1);
   }
 }
-void Black_scholes::Crank_Nic(){
+void Black_scholes::Crank_Nic(int print_per){
   init_print();
   double t = 0;
   for(int y = 1; y < m_N+1; y++){
@@ -67,7 +67,7 @@ void Black_scholes::Crank_Nic(){
     calc_utilde(t);
     vec u = Tridiag();
     m_uPrev = u;
-    if(y%(m_N/10)==0){
+    if(y%(m_N/print_per)==0){
       vec V = transform_u_V(u,t);
       print_vals(V,t);
     }

@@ -35,7 +35,7 @@ class Black_scholes
       void calc_utilde(double t);
       void print_vals(vec u, double t);
       void init_print();
-      void Crank_Nic();
+      void Crank_Nic(int print_per);
       void Greeks(vec sigma,vec r, string rfilename,string sfilename);
       vec transform_u_V(vec u,double t);
       vec Tridiag();
