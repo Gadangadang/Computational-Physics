@@ -168,6 +168,7 @@ def rhos(VR, rho):
 for i in range(1, len(t)):
     plt.plot(S[1:-1], delta(V[i, 1:-1], S[1:-1]),
              label=r"$\Delta$ for t = {:.1f}".format(T - t[i]))
+
 plt.legend()
 plt.xlabel("Price of underlying asset")
 plt.ylabel(r"$\Delta$ ")
@@ -190,7 +191,6 @@ plt.show()
 for i in range(len(tsigma)):
     plt.plot(sig[:-1], vega(VS[i], sig),
              label=r"$\nu$($\sigma$), t={:.1f}".format(T - tsigma[i]))
-
 plt.legend()
 plt.xlabel("Volatility")
 plt.ylabel(r"vega ")
