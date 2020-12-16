@@ -20,10 +20,10 @@ int main(int argc, char* argv[])
    Black_scholes SC;
    clock_t start, finish;
    start = clock();
-   double T = 8; double X=2; int N=1e4;
+   double T = 8; double X=0.25; int N=1e3;
    int print_per =8;
-   double D =(1.83989+1.85169+2.02683+5.4525)/((double)217.20)
-   string filename="Aker_numeric.txt";double r = 0.11; double D=0.051; double sigma=0.04; double E=215;
+   double D =(1.83989+1.85169+2.02683+5.4525)/((double)217.20);
+   string filename="Aker_numeric.txt";double r = 0.11; double sigma=36; double E=215.;
    SC.Initialize(T,X,N,filename,r,D,sigma,E);
    //SC.D1d_explicit();
    SC.Crank_Nic(print_per);

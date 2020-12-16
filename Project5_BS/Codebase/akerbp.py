@@ -3,11 +3,6 @@ import matplotlib.pyplot as plt
 from scipy import special, stats
 from scipy.interpolate import UnivariateSpline
 
-sigma = 0.4
-E = 215
-r = 0.04
-S = 216.90
-
 data = open("Akerbp.txt", "r")
 
 V1 = []
@@ -36,12 +31,25 @@ for line in data:
 
     V2.append(rest_list)
 
-V2 = np.asarray(V2)
-X2 = np.log(np.asarray(S2)/E)
-plt.scatter(S1,V1,label='AkerBP-Reele options verdier')
-#plt.plot(X2,V2[-1,:],label='AkerBP-numerisk options verdier')
-#plt.xlim([X1[-1],X1[0]])
+S1 = np.asarray(S1)
+time = ['10.12','11.12','14.12','15.12']
+ac_tim = [-1,-2,-5,-6]
+plt.scatter(S1,np.asarray(V1),label='Reele options verdier')
+for i, txt in enumerate(time):
+    plt.annotate(txt, (S1[i], V1[i]))
+
+V_num=[]
+S_num = []
+for j in range(len(time)):
+    indx = int(np.where(np.abs(S1[j]-S2)==min(np.abs(S1[j]-S2)))[0][0])
+    S_num.append(S2[indx])
+    V_num.append(V2[int(-j-1)][indx])
+plt.scatter(S_num,V_num,label='Numeriske options verdier')
+for i, txt in enumerate(time):
+    plt.annotate(txt, (S_num[i], V_num[i]))
+
+
 plt.legend()
-plt.xlabel('Stock-prizes)')
+plt.xlabel('Stock-prizes')
 plt.ylabel('Option-vals')
 plt.show()

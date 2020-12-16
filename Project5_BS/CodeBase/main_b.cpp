@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
    string filename="u.txt";double r = 0.04; double D=0.12; double sigma=0.4; double E=50;
    SC.Initialize(T,X,N,filename,r,D,sigma,E);
    //SC.D1d_explicit();
-   SC.Crank_Nic();
+   SC.Crank_Nic(print_per);
    vec sigma_vec =linspace(0.1,1.,1e2); vec r_vec = linspace(0.01,0.5,1e2);
    string rfilename = "greeks_r.txt";string sfilename = "greeks_s.txt";
    SC.Greeks(sigma_vec,r_vec, rfilename, sfilename);
