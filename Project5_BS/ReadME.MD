@@ -26,12 +26,12 @@ execute:
 ```
 
 #### Instructions for running code
-a makefile comment is a '#' character. To configure the Makefile you uncomment the files you would like to run. Do this under both the 'Compile' and 'Execution' sections. For example to run our implementation of c):
+a makefile comment is a '#' character. To configure the Makefile you uncomment the files you would like to run. Do this under both the 'Compile' and 'Execution' sections. For example to run our implementation of b):
 
-  - Uncomment the line containing main_c under the 'compile' section
-  - Uncomment the line containing main_c.x under the 'execute' section
+  - Uncomment the line containing main_b under the 'compile' section
+  - Uncomment the line containing main_b.x under the 'execute' section
   
-to run the makefile open a terminal and go to the 'Project4' folder. Type 'make all' and execute.
+to run the makefile open a terminal and go to the 'Project5_BS' folder. Type 'make all' and execute.
 
 
 
