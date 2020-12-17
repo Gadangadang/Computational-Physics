@@ -76,10 +76,11 @@ TEST_CASE( "Check for errors in code" ) {
   SECTION("Check if value of option is negative at any time"){
     double T = 1; double X=0.75; int N=1e4;
     string filename="u.txt";
+    int print_per =10;
     double r = 0.04; double D=0.12;
     double sigma=0.4; double E=50;
     SC.Initialize(T,X,N,filename,r,D,sigma,E);
-    SC.Crank_Nic();
+    SC.Crank_Nic(print_per);
 
 
     vector<vector<double> > matrix = readMatrix(filename);
@@ -103,17 +104,17 @@ TEST_CASE( "Check for errors in code" ) {
     double T = 1; double X=0.75;
     double r = 0.04; double D=0.12;
     double sigma=0.4; double E=50;
-
+    int print_per = 10;
     int N1=1e3;
     string filename1="N1e3.txt";
     SC.Initialize(T,X,N1,filename1,r,D,sigma,E);
-    SC.Crank_Nic();
+    SC.Crank_Nic(print_per);
     vector<vector<double> > matrix1 = readMatrix(filename1);
 
     int N2=1e4;
     string filename2 ="N1e4.txt";
     SC.Initialize(T,X,N2,filename2,r,D,sigma,E);
-    SC.Crank_Nic();
+    SC.Crank_Nic(print_per);
 
     vector<vector<double> > matrix2 = readMatrix(filename2);
     double sum1=0;double sum2=0;
@@ -137,6 +138,7 @@ TEST_CASE( "Check for errors in code" ) {
     double Rnum = ((double)rand()) / ((double)RAND_MAX) / 2.0 + 0.1 ;
 
     double T = 1; double X=0.75; int N=1e4;
+    int print_per = 10;
     string filename="u.txt";
     string filename2 = "u2.txt";
     double r = 0.04; double D=0.12;
@@ -144,12 +146,11 @@ TEST_CASE( "Check for errors in code" ) {
     double E=50;
     //First volatility
     SC.Initialize(T,X,N,filename,r,D,sigma,E);
-    SC.Crank_Nic();
+    SC.Crank_Nic(print_per);
 
     //Second volatility
-    Black_scholes BS;
-    BS.Initialize(T,X,N,filename2,r,D,sigma2,E);
-    BS.Crank_Nic();
+    SC.Initialize(T,X,N,filename2,r,D,sigma2,E);
+    SC.Crank_Nic(print_per);
 
 
 

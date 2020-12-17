@@ -202,8 +202,6 @@ def altdelta(St,tau):
 def altgamma(S,tau):
     return np.exp(-D*tau)*n(d1(S,tau,sigma))/(np.sqrt(tau)*S*sigma)
 
-"""def altvega(S,tau,sig):
-    return S*np.exp(-D*tau)*n(d1(S,tau,sig))*np.sqrt(tau)"""
 def altvega(S,tau,sig):
     return E*np.exp(-r*tau)*n(d2(S,tau,sig))*np.sqrt(tau)
 
