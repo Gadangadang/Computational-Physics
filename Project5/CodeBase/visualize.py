@@ -78,7 +78,7 @@ plt.show()
 
 
 for i in range(1, len(t)):
-    plt.plot(S, np.abs(V[i, :] - Vana(S,t[i], sigma, r)),
+    plt.plot(S, (np.abs(V[i, :] - Vana(S,t[i], sigma, r))),
              label="|V_dif|,t={:.1f}".format(T - t[i]))
 plt.legend()
 plt.xlabel("Price of underlying asset")
