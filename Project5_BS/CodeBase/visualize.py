@@ -156,8 +156,11 @@ rho = np.asarray(rho)
 trho = np.asarray(trho)
 
 
+
+
 def rhos(VR, rho):
     firstdiv = np.diff(VR) / np.diff(rho)
+    print(firstdiv)
     return firstdiv
 
 
@@ -280,6 +283,7 @@ print(trho)
 
 
 St = S[-1]
+print(St)
 
 def n(x):
     return np.exp(-x**2/2)/(np.sqrt(2*np.pi))

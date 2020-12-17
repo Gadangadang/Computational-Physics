@@ -124,8 +124,6 @@ void Black_scholes::Greeks(vec sigma,vec r, string rfilename,string sfilename){
   int N1 = sigma.n_elem;
   int N2 = r.n_elem;
 
-  cout << N1 << endl;
-
   for (int j = 0; j < N1; j++){
     ofile << setw(20) << setprecision(8) << sigma(j) << " ";
   }
