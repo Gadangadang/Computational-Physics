@@ -31,7 +31,7 @@ a makefile comment is a '#' character. To configure the Makefile you uncomment t
   - Uncomment the line containing main_b under the 'compile' section
   - Uncomment the line containing main_b.x under the 'execute' section
   
-to run the makefile open a terminal and go to the 'Project5_BS' folder. Type 'make all' and execute.
+to run the makefile open a terminal and go to the 'Project5' folder. Type 'make all' and execute.
 
 
 
