@@ -5,15 +5,15 @@ Here are the instructions for operating the numerical machinery.
 ## preamble:
 Due to the nature of the solution there are different mains for different tasks. This is because our solver class is very general, and therefore requires specialized input for different solutions. All code is inside the 'CodeBase' folder and you will execute the different aspects by editing and running the makefile. Its intended to run only one main_X at a time. We have not tested with multiple mains, but it should work. This code was tested with Python version 3.7.6, Clang version 4.0.1, and GCC version 9.3.0. Tested on Windows and Mac OS.
 
-### The following C++ and Python packages are required:
-Python:
-	numpy 1.19.4
-	matplotlib 3.3.3
-	scipy 1.5.4
-C++:
-	armadillo 9.800.4
-	blas 3.9.0
-	lapack 3.9.0
+### The following C++ and Python packages are required:  
+Python:  
+	numpy 1.19.4  
+	matplotlib 3.3.3  
+	scipy 1.5.4  
+C++:  
+	armadillo 9.800.4  
+	blas 3.9.0  
+	lapack 3.9.0  
 
 ### Makefile setup
 The contents of the makefile look like this:
