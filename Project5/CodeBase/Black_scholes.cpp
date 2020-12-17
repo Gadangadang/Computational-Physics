@@ -19,7 +19,7 @@
 using namespace arma;
 using namespace std;
 
-
+//Initialize the boundary, intial conditions and all parameters needed for calc.
 void Black_scholes::Initialize(double T,double L, int N,string filename,
                                 double r, double D, double sigma, double E){
   m_filename = filename;
@@ -52,12 +52,14 @@ void Black_scholes::Initialize(double T,double L, int N,string filename,
     m_uPrev(i)= exp(m_x(i)*m_a)*E*std::max(0.,exp(m_x(i))-1.);
   }
 }
-
+//Calculates our V_tilde, aka our know vector in the tridiag algorithm.
 void Black_scholes::calc_utilde(double t){
   for(int i=1;i<m_N-1; i++){
     m_utilde(i) = m_sigma2*m_alpha*m_uPrev(i-1) + (2.0-m_sigma2*2.*m_alpha)*m_uPrev(i) +m_sigma2*m_alpha*m_uPrev(i+1);
   }
 }
+//Used as our main algorithm when running all the functions and impliments the Crank_Nic
+//scheme.
 void Black_scholes::Crank_Nic(int print_per){
   init_print();
   double t = 0;
@@ -76,7 +78,7 @@ void Black_scholes::Crank_Nic(int print_per){
   }
   cout << " "<<endl;
 }
-
+//Impliments the tridiagonal matrix algorithm.
 vec Black_scholes::Tridiag(){
   vec d(m_N-1); d.fill(2.+2.*m_alpha*m_sigma2);
   vec b(m_N-2); b.fill(-m_alpha*m_sigma2);
@@ -101,7 +103,7 @@ vec Black_scholes::Tridiag(){
   return u;
 }
 
-
+//Transforms our calculated u(x,\tau) to V(S,t)
 vec Black_scholes::transform_u_V(vec u,double t){
   vec V = vec(m_N);
   for(int i =0;i<m_N;i++){
@@ -109,6 +111,9 @@ vec Black_scholes::transform_u_V(vec u,double t){
   }
   return V;
 }
+//Used to run all funtions to spesifically find the greeks. Could have been made
+//smarter, but we decided that it was not a good use of time as it is only
+//used to vizuallize the greeks once.
 void Black_scholes::Greeks(vec sigma,vec r, string rfilename,string sfilename){
   double r_fast = 0.04;
   double simga_fast = 0.4;
@@ -117,19 +122,21 @@ void Black_scholes::Greeks(vec sigma,vec r, string rfilename,string sfilename){
   int N=2e2;
   double D=0.12;
   double E=50;
+  double t = 0;
+  double t2 = 0;
+  int N1 = sigma.n_elem;
+  int N2 = r.n_elem;
   string filename="NAN.txt";
 
   ofstream ofile;
   ofile.open(sfilename);
-  int N1 = sigma.n_elem;
-  int N2 = r.n_elem;
+
 
   for (int j = 0; j < N1; j++){
     ofile << setw(20) << setprecision(8) << sigma(j) << " ";
   }
   ofile << setw(20) << setprecision(8) << " " << endl;
 
-  double t = 0;
   for (int i = 1; i < 6; i++){
     t = i/5. * T;
     ofile << setw(20) << setprecision(8) << t << " ";
@@ -152,24 +159,24 @@ void Black_scholes::Greeks(vec sigma,vec r, string rfilename,string sfilename){
     ofile << setw(20) << setprecision(8) << r(j)<< " ";
   }
   ofile << setw(20) << setprecision(8) << " " << endl;
-  double t2 = 0;
+
   for (int i = 1; i < 6; i++){
-    t2 = i/5. * T;
+    t2 = (double)i/5. * T;
     ofile << setw(20) << setprecision(8) << t2 << " ";
     for(int k=0;k<N2;k++){
       Initialize(t2,X,N,filename,r(k),D,simga_fast,E);
-      m_utilde(m_N-1)=(m_S(m_N-1)*exp(-t*m_D)-m_E*exp(-m_r*t))*exp(m_a*m_x(m_N-1)+m_b*t);
-      calc_utilde(t);
+      m_utilde(m_N-1)=(m_S(m_N-1)*exp(-t2*m_D)-m_E*exp(-m_r*t2))*exp(m_a*m_x(m_N-1)+m_b*t2);
+      calc_utilde(t2);
       vec u = Tridiag();
-      vec V = transform_u_V(u,t);
+      vec V = transform_u_V(u,t2);
 
       ofile << setw(20) << setprecision(8) << V(N1-2) << " ";
     }
     ofile << setw(20) << setprecision(8) <<  " " << endl;
   }
   ofile.close();
-
 }
+//Empties the txt file, and adds the S-values at the top.
 void Black_scholes::init_print(){
   ofstream ofile;
   ofile.open(m_filename);
@@ -181,7 +188,7 @@ void Black_scholes::init_print(){
   print_vals(V_0,0);
   ofile.close();
 }
-
+//Print all V values.
 void Black_scholes::print_vals(vec u,double t){
   ofstream ofile;
   ofile.open(m_filename, fstream::app);

@@ -4,12 +4,14 @@ from scipy import special, stats
 from scipy.interpolate import UnivariateSpline
 from scipy.misc import derivative
 
-
+"""
+This code is used to calculate analytical values for thr greeks and vizuallize
+the numerical and analytical values for the greeks.
+"""
 sigma = 0.4
 E = 50
 r = 0.04
 D = 0.12
-
 
 data = open("u.txt", "r")
 
@@ -19,7 +21,6 @@ t = []
 
 for val in data.readline().split():
     S.append(float(val))
-
 
 for line in data:
     t.append(float(line.split()[0]))
