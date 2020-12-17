@@ -62,7 +62,7 @@ def N(d):
 
 
 def Vana(S_t, ti, sigma, r):
-    return N(d1(S_t, ti,sigma)) * S_t - N(d2(S_t, ti,sigma)) * E * np.exp(-r * (np.max(t) - ti))
+    return N(d1(S_t, ti,sigma)) * S_t - N(d2(S_t, ti,sigma)) * E * np.exp(-r * (ti))
 
 
 for i in range(1, len(t)):
