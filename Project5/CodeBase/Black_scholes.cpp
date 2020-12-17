@@ -118,8 +118,9 @@ void Black_scholes::Greeks(vec sigma,vec r, string rfilename,string sfilename){
   double r_fast = 0.04;
   double simga_fast = 0.4;
   double T = 1;
-  double X=0.5;
-  int N=2e2;
+  //Note: X and N have to be the same as for main_b
+  double X=0.75;
+  int N=1e3;
   double D=0.12;
   double E=50;
   double t = 0;
@@ -138,24 +139,22 @@ void Black_scholes::Greeks(vec sigma,vec r, string rfilename,string sfilename){
   ofile << setw(20) << setprecision(8) << " " << endl;
 
   for (int i = 1; i < 6; i++){
-    t = i/5. * T;
+    t = (double)i/5. * T;
     ofile << setw(20) << setprecision(8) << t << " ";
     for(int s =0;s<N1;s++){
-      Initialize(t,X,N,filename,r_fast,D,sigma(s),E);
-
+      Initialize(T,X,N,filename,r_fast,D,sigma(s),E);
       m_utilde(m_N-1)=(m_S(m_N-1)*exp(-t*m_D)-m_E*exp(-m_r*t))*exp(m_a*m_x(m_N-1)+m_b*t);
       calc_utilde(t);
       vec u = Tridiag();
       vec V = transform_u_V(u,t);
-
-      ofile << setw(20) << setprecision(8) << V(N1-2) << " ";
+      ofile << setw(20) << setprecision(8) << V(m_N-2) << " ";
     }
     ofile << setw(20) << setprecision(8) <<  " " << endl;
   }
   ofile.close();
 
   ofile.open(rfilename);
-  for (int j = 0; j < N1; j++){
+  for (int j = 0; j < N2; j++){
     ofile << setw(20) << setprecision(8) << r(j)<< " ";
   }
   ofile << setw(20) << setprecision(8) << " " << endl;
@@ -164,13 +163,13 @@ void Black_scholes::Greeks(vec sigma,vec r, string rfilename,string sfilename){
     t2 = (double)i/5. * T;
     ofile << setw(20) << setprecision(8) << t2 << " ";
     for(int k=0;k<N2;k++){
-      Initialize(t2,X,N,filename,r(k),D,simga_fast,E);
+      Initialize(T,X,N,filename,r(k),D,simga_fast,E);
       m_utilde(m_N-1)=(m_S(m_N-1)*exp(-t2*m_D)-m_E*exp(-m_r*t2))*exp(m_a*m_x(m_N-1)+m_b*t2);
       calc_utilde(t2);
       vec u = Tridiag();
       vec V = transform_u_V(u,t2);
 
-      ofile << setw(20) << setprecision(8) << V(N1-2) << " ";
+      ofile << setw(20) << setprecision(8) << V(m_N-2) << " ";
     }
     ofile << setw(20) << setprecision(8) <<  " " << endl;
   }

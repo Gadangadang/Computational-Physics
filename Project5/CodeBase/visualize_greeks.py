@@ -191,7 +191,7 @@ plt.show()
 
 # Derivation of anaytical expression
 
-St = S[-1]
+St = S[-2]
 
 def n(x):
     return np.exp(-x**2/2)/(np.sqrt(2*np.pi))
@@ -202,8 +202,10 @@ def altdelta(St,tau):
 def altgamma(S,tau):
     return np.exp(-D*tau)*n(d1(S,tau,sigma))/(np.sqrt(tau)*S*sigma)
 
+"""def altvega(S,tau,sig):
+    return S*np.exp(-D*tau)*n(d1(S,tau,sig))*np.sqrt(tau)"""
 def altvega(S,tau,sig):
-    return S*np.exp(-D*tau)*n(d1(S,tau,sig))
+    return E*np.exp(-r*tau)*n(d2(S,tau,sig))*np.sqrt(tau)
 
 def alttheta(S,tau):
     return -np.exp(-D*tau)*S*n(d1(S,tau,sigma))*sigma/(np.sqrt(tau)*2) - \
