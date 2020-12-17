@@ -91,6 +91,6 @@ return 0;
 }
 
 ```
-Note that the Initializer needs Black-Scholes variables E, sigma, D, and r
-Furthermore X defines the interval of S values, T is total time, and N is the number of points in the interval.
+Note that the Initializer needs Black-Scholes variables E, sigma, D, and r  
+Furthermore, X defines the interval of S values, T is total time, and N is the number of points in the interval.
 
