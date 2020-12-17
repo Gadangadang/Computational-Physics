@@ -50,11 +50,11 @@ plt.show()
 def d1(S_t, ti,sigma):
 
 
-    return 1 / (sigma * np.sqrt(np.max(t) - ti)) * (np.log(S_t / E) + (r + sigma**2 / 2) * (np.max(t) - ti))
+    return 1 / (sigma * np.sqrt(ti)) * (np.log(S_t / E) + (r + sigma**2 / 2) * (ti))
 
 
 def d2(S_t, ti,sigma):
-    return d1(S_t, ti,sigma) - sigma * np.sqrt(np.max(t) - ti)
+    return d1(S_t, ti,sigma) - sigma * np.sqrt(ti)
 
 
 def N(d):
@@ -66,7 +66,7 @@ def Vana(S_t, ti, sigma, r):
 
 
 for i in range(1, len(t)):
-    plt.plot(S[1:-1], Vana(S[1:-1], T - t[i], sigma, r),
+    plt.plot(S[1:-1], Vana(S[1:-1], t[i], sigma, r),
              label="V(S,t={:.1f})".format(T - t[i]))
 
 plt.legend()
@@ -78,7 +78,7 @@ plt.show()
 
 
 for i in range(1, len(t)):
-    plt.plot(S, np.abs(V[i, :] - Vana(S, T - t[i], sigma, r)),
+    plt.plot(S, np.abs(V[i, :] - Vana(S,t[i], sigma, r)),
              label="|V_dif|,t={:.1f}".format(T - t[i]))
 plt.legend()
 plt.xlabel("Price of underlying asset")
@@ -228,8 +228,8 @@ plt.savefig("Results/tau.jpeg")
 plt.show()
 
 # Derivation of anaytical expression
-
-
+# Something is wrong with most of these, not sure why
+"""
 def delta_ana(S, tau):
     a = (special.erf((np.log(S / E)) / (np.sqrt(2) * sigma * tau))) / np.sqrt(2)
     b = - (np.exp(-np.log(S / E)**2 / (2 * sigma**2 * tau))) / \
@@ -274,12 +274,12 @@ def rho_ana(r, S, tau):
     b = sigma * np.sqrt(tau) - special.erf(np.log(S / E) /
                                            (np.sqrt(2 * tau) * sigma))
     return a * b
-
+"""
 print(trho)
 
 
 
-St = np.max(S)
+St = S[-1]
 
 def n(x):
     return np.exp(-x**2/2)/(np.sqrt(2*np.pi))
@@ -322,7 +322,7 @@ plt.title(r"Greek $\gamma_{analytical}$ as function of stock price")
 plt.savefig("Results/gamma_ana.jpeg")
 plt.show()
 
-plt.plot(trho, alttheta(St, trho),
+plt.plot(t[1:], alttheta(St, t[1:]),
          label=r"$\Theta$($\tau$)")
 plt.legend()
 plt.xlabel(r"Time $\tau$ ")
