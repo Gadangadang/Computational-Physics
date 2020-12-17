@@ -7,14 +7,16 @@ Due to the nature of the solution there are different mains for different tasks.
 
 ### The following C++ and Python packages are required:  
 Python:  
+  
 	numpy 1.19.4  
 	matplotlib 3.3.3  
 	scipy 1.5.4  
 C++:  
+  
 	armadillo 9.800.4  
 	blas 3.9.0  
 	lapack 3.9.0  
-
+  
 ### Makefile setup
 The contents of the makefile look like this:
 ```
